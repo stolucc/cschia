@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, FormField
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length, Optional
 from app.models import User
 
 class LoginForm(FlaskForm):
@@ -30,3 +30,16 @@ class EditProfileForm(FlaskForm):
     username = StringField("Username", validators = [DataRequired() ])
     about_me = TextAreaField("About me", validators = [Length(min=0, max=140) ])
     submit = SubmitField("Submit")
+
+class GeneralInformationForm(FlaskForm):
+    firstName = StringField("First name", validators=[DataRequired() ])
+    lastName = StringField("Last name", validators=[DataRequired() ])
+    jobTitle = StringField("Job title", validators=[DataRequired() ])
+    #prefix = "Drop down menu or radio buttons *required*"
+    suffix = StringField("Suffix", validators=[Optional() ])
+    phoneNum = StringField("Phone number", validators=[Optional() ])
+    email = StringField("Email address", validators=[DataRequired(), Email() ])
+    orcid = StringField("ORCID number", validators=[Optional() ])
+    submit = SubmitField("Save")
+
+

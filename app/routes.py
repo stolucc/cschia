@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInformationForm
+from app.models import User, UserGeneralInformation
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
@@ -90,3 +90,46 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template("edit_profile.html", title="Edit Profile", form=form) 
+
+@app.route("/general_information", methods=["GET", "POST"])
+@login_required
+def edit_general_information():
+
+    form = GeneralInformationForm()
+    check_if_exists = UserGeneralInformation.query.filter_by(user_id=current_user.id).first()
+
+    if form.validate_on_submit():
+        if check_if_exists is None:
+            user = UserGeneralInformation(user_id=current_user.id)
+            db.session.add(user)
+            user.firstName = form.firstName.data
+            user.lastName = form.lastName.data
+            user.jobTitle = form.jobTitle.data
+            user.suffix = form.suffix.data
+            user.phoneNum = form.phoneNum.data
+            user.email = form.email.data
+            user.orcid = form.orcid.data
+            db.session.commit()
+        else:
+            check_if_exists.firstName = form.firstName.data
+            check_if_exists.lastName = form.lastName.data
+            check_if_exists.jobTitle = form.jobTitle.data
+            check_if_exists.suffix = form.suffix.data
+            check_if_exists.phoneNUm = form.phoneNum.data
+            check_if_exists.email = form.email.data
+            check_if_exists.orcid = form.orcid.data
+            db.session.commit()
+        flash("Your changes have been saved.")
+        return redirect(url_for("edit_general_information"))
+
+    elif request.method == "GET" and check_if_exists is not None:
+        form.firstName.data = check_if_exists.firstName
+        form.lastName.data = check_if_exists.lastName
+        form.jobTitle.data = check_if_exists.jobTitle
+        form.suffix.data = check_if_exists.suffix
+        form.phoneNum.data = check_if_exists.phoneNum
+        form.email.data = check_if_exists.email
+        form.orcid.data = check_if_exists.orcid 
+
+    return render_template("general_information.html", title="Edit general info", form=form)
+

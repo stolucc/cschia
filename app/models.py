@@ -14,6 +14,8 @@ class User(UserMixin, db.Model):
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
+    child = db.relationship("UserGeneralInformation", uselist=False, backref="user")
+
     def __repr__(self):
         return "<User {}>".format(self.username)
 
@@ -35,6 +37,24 @@ class Post(db.Model):
 
     def __repr__(self):
         return "<Post {}>".format(self.body)
+
+class UserGeneralInformation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    parent = db.relationship("User", backref="usergeneralinformation")
+    
+    firstName = db.Column(db.String(64))
+    lastName = db.Column(db.String(64))
+    jobTitle = db.Column(db.String(64))
+    prefix = db.Column(db.String(16))
+    suffix = db.Column(db.String(64))
+    phoneNum = db.Column(db.String(64))
+    email = db.Column(db.String(128))
+    orcid = db.Column(db.String(64))
+
+    def __repr__(self):
+        return "<UserGeneralInformation {}".format(self.body)
+
 
 @login.user_loader
 def load_user(id):
