@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, FormField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, SelectField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length, Optional
 from app.models import User
 
@@ -35,8 +35,11 @@ class GeneralInformationForm(FlaskForm):
     firstName = StringField("First name", validators=[DataRequired() ])
     lastName = StringField("Last name", validators=[DataRequired() ])
     jobTitle = StringField("Job title", validators=[DataRequired() ])
-    #prefix = "Drop down menu or radio buttons *required*"
+    prefix = SelectField(u"Prefix", choices=\
+    [("dr", "Dr"), ("prof", "Prof"), ("mr", "Mr"), ("mrs", "Mrs"), ("ms", "Ms")], \
+    validators=[DataRequired() ])
     suffix = StringField("Suffix", validators=[Optional() ])
+    phoneNumPrefix = StringField("Phone prefix", validators=[Optional() ])
     phoneNum = StringField("Phone number", validators=[Optional() ])
     email = StringField("Email address", validators=[DataRequired(), Email() ])
     orcid = StringField("ORCID number", validators=[Optional() ])

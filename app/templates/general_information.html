@@ -25,6 +25,13 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+        <p>
+            {{ form.prefix.label }}<br>
+            {{ form.prefix }}<br>
+            {% for error in form.prefix.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
          <p>
             {{ form.suffix.label }}<br>
             {{ form.suffix(size=5) }}<br>
@@ -33,8 +40,15 @@
             {% endfor %}
         </p>
          <p>
+            {{ form.phoneNumPrefix.label }}<br>
+            {{ form.phoneNumPrefix(size=5) }}<br>
+            {% for error in form.phoneNumPrefix.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+         <p>
             {{ form.phoneNum.label }}<br>
-            {{ form.phoneNum(size=32) }}<br>
+            {{ form.phoneNum(size=15) }}<br>
             {% for error in form.phoneNum.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}

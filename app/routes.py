@@ -106,7 +106,7 @@ def edit_general_information():
             user.lastName = form.lastName.data
             user.jobTitle = form.jobTitle.data
             user.suffix = form.suffix.data
-            user.phoneNum = form.phoneNum.data
+            # user.phoneNum = form.phoneNum.data
             user.email = form.email.data
             user.orcid = form.orcid.data
             db.session.commit()
@@ -115,7 +115,7 @@ def edit_general_information():
             check_if_exists.lastName = form.lastName.data
             check_if_exists.jobTitle = form.jobTitle.data
             check_if_exists.suffix = form.suffix.data
-            check_if_exists.phoneNUm = form.phoneNum.data
+            # check_if_exists.phoneNUm = form.phoneNum.data
             check_if_exists.email = form.email.data
             check_if_exists.orcid = form.orcid.data
             db.session.commit()
@@ -127,7 +127,7 @@ def edit_general_information():
         form.lastName.data = check_if_exists.lastName
         form.jobTitle.data = check_if_exists.jobTitle
         form.suffix.data = check_if_exists.suffix
-        form.phoneNum.data = check_if_exists.phoneNum
+        # form.phoneNum.data = check_if_exists.phoneNum
         form.email.data = check_if_exists.email
         form.orcid.data = check_if_exists.orcid 
 
