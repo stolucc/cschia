@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, SelectField
-from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length, Optional
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, \
+TextAreaField, IntegerField, SelectField, DateField
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length, \
+Optional
 from app.models import User
 
 class LoginForm(FlaskForm):
@@ -45,4 +47,10 @@ class GeneralInformationForm(FlaskForm):
     orcid = StringField("ORCID number", validators=[Optional() ])
     submit = SubmitField("Save")
 
-
+class EducationInformationForm(FlaskForm):
+    degree = StringField("Degree", validators=[DataRequired() ])
+    fieldOfStudy = StringField("Field of study", validators=[DataRequired() ])
+    institution = StringField("Institution", validators=[DataRequired() ])
+    location = StringField("Location", validators=[DataRequired() ])
+    yearOfDegreeAward = DateField("Year of degree award", validators=[DataRequired() ])
+    submit = SubmitField("Save")
