@@ -57,7 +57,7 @@ class EducationInformationForm(FlaskForm):
     submit = SubmitField("Save")
 
 class EmploymentInformationForm(FlaskForm):
-    compnay = StringField("Institution/Company", validators=[DataRequired() ])
+    company = StringField("Institution/Company", validators=[DataRequired() ])
     location = StringField("Location", validators=[DataRequired() ])
     years = StringField("Years", validators=[DataRequired() ])
     submit = SubmitField("Save")

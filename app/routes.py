@@ -1,6 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInformationForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInformationForm, \
+EducationInformationForm, EmploymentInformationForm
 from app.models import User, UserGeneralInformation
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -133,3 +134,18 @@ def edit_general_information():
 
     return render_template("general_information.html", title="Edit general info", form=form)
 
+@app.route("/education_information", methods=["GET", "POST"])
+@login_required
+def edit_education_information():
+
+    form = EducationInformationForm()
+
+    return render_template("education_information.html", title="Edit education info", form=form)
+
+@app.route("/employment_information", methods=["GET", "POST"])
+@login_required
+def edit_employment_information():
+
+    form = EmploymentInformationForm()
+
+    return render_template("employment_information.html", title="Edit employment info", form=form)
