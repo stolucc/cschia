@@ -60,3 +60,13 @@ class EmploymentInformationForm(FlaskForm):
     location = StringField("Location", validators=[DataRequired() ])
     years = StringField("Years", validators=[DataRequired() ])
     submit = SubmitField("Save")
+
+class SocietiesInformationForm(FlaskForm):
+    startDate = DateField("Start date", validators=[DataRequired() ])
+    ednDate = DateField("End date", validators=[Optional() ])
+    nameOfSociety = StringField("Name of society", validators=[DataRequired() ])
+    typeOfMembership = StringField("Type of membership", validators=[DataRequired() ])
+    #This field will depend on the date - grey out it end date entered 
+    status = SelectField(u"Status(if active)", choices=\
+    [("yes", "Yes"), ("no", "No")], validators=[DataRequired() ])
+    submit = SubmitField("Save")
