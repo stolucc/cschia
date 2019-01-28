@@ -66,6 +66,18 @@ def register():
         return redirect(url_for("login"))
     return render_template("register.html", title="Register", form=form)
 
+@app.route("/admin_register_user", methods=["GET", "POST"])
+def admin_register_user():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash("Congratulation, You Have Now Registered a User!")
+        return redirect(url_for("login"))
+    return render_template("register.html", title="Register", form=form)
+
 @app.route("/user/<username>")
 @login_required
 def user(username):
