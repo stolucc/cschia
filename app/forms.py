@@ -15,7 +15,8 @@ class RegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
-    password2 = PasswordField("Repeat password", validators=[DataRequired(), EqualTo("password")])
+    password2 = PasswordField("Repeat password", validators=[DataRequired(), \
+    EqualTo("password")])
     submit = SubmitField("Register")
 
     def validate_username(self, username):
@@ -70,3 +71,31 @@ class SocietiesInformationForm(FlaskForm):
     status = SelectField(u"Status(if active)", choices=\
     [("yes", "Yes"), ("no", "No")], validators=[DataRequired() ])
     submit = SubmitField("Save")
+
+class AwardsInformationForm(FlaskForm):
+    year = StringField("Year", validators=[DataRequired() ])
+    awardingBody = StringField("Awarding body", validators=[DataRequired() ])
+    details = TextAreaField("Details of award", validators = [Length(min=0, max=140), \
+    DataRequired() ])
+    teamMemberName = StringField("Team member name", validators=[Optional() ])
+    submit = SubmitField("Save")
+
+class FundingDiversificationForm(FlaskForm):
+    startDate = DateField("Start date", validators=[DataRequired() ])
+    ednDate = DateField("End date", validators=[Optional() ])
+    amount = StringField("Amount of funding", validators=[DataRequired() ])
+    fundingBody = StringField("Funding Body", validators=[DataRequired() ])
+    fundingProgramme = StringField("Funding programme", validators=[DataRequired() ])
+    status = SelectField(u"Status(if active or expired)", choices=\
+    #This field will depend on the date - grey out it end date entered or set to yes
+    [("yes", "Yes"), ("no", "No")], validators=[DataRequired() ])
+    primaryAttribution = StringField("Primary attribution(grant number to which funding is linked)", \
+    validators=[DataRequired() ])
+
+class TeamMembersForm(FlaskForm):
+    startDate = DateField("Start date with team", validators=[DataRequired() ])
+    departureDate = DateField("Departure date", validators=[DataRequired() ])
+    name = StringField("Name", validators=[DataRequired() ])
+    position = StringField("Position within the team", validators=[DataRequired() ])
+    primaryAttribution = StringField("Primary attribution(grant number)", \
+    validators=[DataRequired() ])
