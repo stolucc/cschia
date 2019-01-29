@@ -39,3 +39,26 @@ class Post(db.Model):
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+
+class FundingCall(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    rolling = db.Column(db.Boolean)
+    deadline = db.Column(db.DateTime)
+    # award amount in cents, Euro
+    award_amount = db.Column(db.Integer)
+    duration = db.Column(db.String(64))
+
+    title = db.Column(db.String(128))
+    blurb = db.Column(db.String(1024))
+    body = db.Column(db.Text)
+
+    attachments = db.relationship("FundingCallAttachment")
+
+
+class FundingCallAttachment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    call_id = db.Column(db.Integer, db.ForeignKey('funding_call.id'))
+    name = db.Column(db.String(128))
+    path = db.Column(db.String(128))
