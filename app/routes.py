@@ -6,7 +6,7 @@ AwardsInformationForm, FundingDiversificationForm, ImpactsForm, \
 InnovationAndCommercialisationForm, PublicationsForm, PresentationsForm, \
 AcademicCollaborationsForm, NonAcademicCollaborationsForm, EventsForms, \
 EducationAndPublicEngagementForm
-from app.models import User, UserGeneralInformation
+from app.models import User, GeneralInformation
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
