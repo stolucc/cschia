@@ -15,6 +15,23 @@ class User(UserMixin, db.Model):
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
+    general_information = db.relationship("GeneralInformation", uselist=False, back_populates="user_id")
+    education_information = db.relationship("EducationInformation")
+    employment_information = db.relationship("EmploymentInformation")
+    societies_information = db.relationship("SocietiesInformation")
+    awards_information = db.relationship("AwardsInformation")
+    funding_diversification = db.relationship("FundingDiversification")
+    impacts = db.relationship("Impacts")
+    innovation_and_commercialisation = db.relationship("InnovationAndCommercialisation")
+    publications = db.relationship("Publications")
+    presentations = db.relationship("Presentations")
+    academic_collaborations = db.relationship("AcademicCollaborations")
+    non_academic_collaborations = db.relationship("NonAcademicCollaborations")
+    events = db.relationship("Events")
+    communications_overview = db.relationship("CommunicationsOverview")
+    sfi_funding_ratio = db.relationship("SfiFundingRatio")
+    education_public_engagement = db.relationship("EducationPublicEngagement")
+
     def __repr__(self):
         return "<User {}>".format(self.username)
 
@@ -60,6 +77,103 @@ class FundingCall(db.Model):
 
 class FundingCallAttachment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    call_id = db.Column(db.Integer, db.ForeignKey('funding_call.id'))
+    call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
     name = db.Column(db.String(128))
     path = db.Column(db.String(128))
+
+
+class GeneralInformation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user = db.relationship("User", back_populates="general_information")
+    data = db.Column(db.JSON)
+
+
+class EducationInformation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
+
+
+class EmploymentInformation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
+
+
+class SocietiesInformation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
+
+
+class AwardsInformation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
+
+
+class FundingDiversification(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
+
+
+class Impacts(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
+
+
+class InnovationAndCommercialisation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
+
+
+class Publications(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
+
+
+class Presentations(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
+
+
+class AcademicCollaborations(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
+
+
+class NonAcademicCollaborations(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
+
+
+class Events(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
+
+
+class CommunicationsOverview(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
+
+
+class SfiFundingRatio(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
+
+
+class EducationPublicEngagement(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    data = db.Column(db.JSON)
