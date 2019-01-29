@@ -6,6 +6,7 @@ from app.models import User, UserGeneralInformation
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
+import json
 
 @app.before_request
 def before_request():
@@ -13,9 +14,11 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
 
-@app.route("/")
+#not needed
+#@app.route("/")
 @app.route("/index")
 @login_required
+
 def index():
     user = {"username": "Miguel"}
     posts = [
@@ -31,6 +34,7 @@ def index():
         ]
     return render_template("index.html", title="Home ", posts=posts)
 
+@app.route("/")
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
@@ -53,6 +57,7 @@ def logout():
     logout_user()
     return redirect(url_for("index"))
 
+#not needed
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
@@ -67,6 +72,7 @@ def register():
         return redirect(url_for("login"))
     return render_template("register.html", title="Register", form=form)
 
+# not needed
 @app.route("/user/<username>")
 @login_required
 def user(username):
@@ -76,6 +82,13 @@ def user(username):
         {"author": user, "body": "Test post #2"}
     ]
     return render_template("user.html", user=user, posts=posts)
+
+@app.route("/profile", methods=["GET"])
+@login_required
+def show_profile():
+    check_if_exists = UserGeneralInformation.query.filter_by(user_id=current_user.id).first()
+
+    return render_template("profile.html", title="View Profile", info=check_if_exists)
 
 @app.route("/edit_profile", methods=["GET", "POST"])
 @login_required
@@ -134,6 +147,7 @@ def edit_general_information():
 
     return render_template("general_information.html", title="Edit general info", form=form)
 
+"""
 @app.route("/education_information", methods=["GET", "POST"])
 @login_required
 def edit_education_information():
@@ -149,3 +163,4 @@ def edit_employment_information():
     form = EmploymentInformationForm()
 
     return render_template("employment_information.html", title="Edit employment info", form=form)
+"""
