@@ -3,6 +3,7 @@ from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from hashlib import md5
+import json
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -37,24 +38,6 @@ class Post(db.Model):
 
     def __repr__(self):
         return "<Post {}>".format(self.body)
-
-class UserGeneralInformation(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    parent = db.relationship("User", backref="usergeneralinformation")
-    
-    firstName = db.Column(db.String(64))
-    lastName = db.Column(db.String(64))
-    jobTitle = db.Column(db.String(64))
-    prefix = db.Column(db.String(16))
-    suffix = db.Column(db.String(64))
-    phoneNum = db.Column(db.String(64))
-    email = db.Column(db.String(128))
-    orcid = db.Column(db.String(64))
-
-    def __repr__(self):
-        return "<UserGeneralInformation {}".format(self.body)
-
 
 @login.user_loader
 def load_user(id):

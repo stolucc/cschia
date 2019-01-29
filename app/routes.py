@@ -1,7 +1,11 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInformationForm, \
-EducationInformationForm, EmploymentInformationForm
+EducationInformationForm, EmploymentInformationForm, SocietiesInformationForm, \
+AwardsInformationForm, FundingDiversificationForm, ImpactsForm, \
+InnovationAndCommercialisationForm, PublicationsForm, PresentationsForm, \
+AcademicCollaborationsForm, NonAcademicCollaborationsForm, EventsForms, \
+EducationAndPublicEngagementForm
 from app.models import User, UserGeneralInformation
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -90,6 +94,8 @@ def show_profile():
 
     return render_template("profile.html", title="View Profile", info=check_if_exists)
 
+# change to change login and password 
+"""
 @app.route("/edit_profile", methods=["GET", "POST"])
 @login_required
 def edit_profile():
@@ -104,7 +110,29 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template("edit_profile.html", title="Edit Profile", form=form) 
+"""
 
+"""
+@app.route("/edit_profile", methods=["GET", "POST"])
+@login_required
+def edit_profile():
+    gen_info_form = GeneralInformationForm()
+    edu_info_form = EducationInformationForm()
+    employ_info_form =  EmploymentInformationForm()
+    soc_info_forn = SocietiesInformationForm()
+    award_info_form = AwardsInformationForm()
+    funding_div_form = FundingDiversificationForm()
+    impact_form = ImpactsForm()
+    in_com_form = InnovationAndCommercialisationForm()
+    pub_form = PublicationsForm()
+    pres_form = PresentationsForm()
+    ac_col_form = AcademicCollaborationsForm()
+    nonac_col_form = NonAcademicCollaborationsForm()
+    events_form = EventsForms()
+    ed_pub_eng_form = EducationAndPublicEngagementForm()
+"""
+
+# not needed
 @app.route("/general_information", methods=["GET", "POST"])
 @login_required
 def edit_general_information():
