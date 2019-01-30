@@ -1,7 +1,10 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInformationForm, \
-EducationInformationForm, EmploymentInformationForm
+EducationInformationForm, EmploymentInformationForm, \
+SocietiesInformationForm, AwardsInformationForm, \
+FundingDiversificationForm, TeamMembersForm, ImpactsForm, \
+InnovationAndCommercialisationForm
 from app.models import User, UserGeneralInformation
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -80,17 +83,35 @@ def user(username):
 @app.route("/edit_profile", methods=["GET", "POST"])
 @login_required
 def edit_profile():
-    form = EditProfileForm()
-    if form.validate_on_submit():
-        current_user.username = form.username.data
-        current_user.about_me = form.about_me.data
-        db.session.commit()
-        flash("Your changes have been saved.")
-        return redirect(url_for("user", username=current_user.username))
-    elif request.method == "GET":
-        form.username.data = current_user.username
-        form.about_me.data = current_user.about_me
-    return render_template("edit_profile.html", title="Edit Profile", form=form) 
+    gen_info_form = GeneralInformationForm()
+    edu_form = EducationInformationForm()
+    employ_form = EmploymentInformationForm()
+    soc_form = SocietiesInformationForm()
+    awards_form = AwardsInformationForm()
+    funding_div_form = FundingDiversificationForm()
+    team_mem_form = TeamMembersForm()
+    impacts_form = ImpactsForm()
+    innov_form = InnovationAndCommercialisationForm()
+    #if form.submit.data and form.validate_on_submit():
+    #    current_user.username = form.username.data
+    #    current_user.about_me = form.about_me.data
+    #    db.session.commit()
+    #    flash("Your changes have been saved.")
+    #    return redirect(url_for("user", username=current_user.username))
+    #elif request.method == "GET":
+    #    form.username.data = current_user.username
+    #    form.about_me.data = current_user.about_me
+    return render_template("edit_profile.html",
+                            title="Edit Profile",
+                            genInfoForm=gen_info_form,
+                            eduForm=edu_form,
+                            employForm=employ_form,
+                            socForm=soc_form,
+                            awardsForm=awards_form,
+                            fundingDivForm=funding_div_form,
+                            teamMemForm=team_mem_form,
+                            impactsForm=impacts_form,
+                            innovForm=innov_form) 
 
 @app.route("/general_information", methods=["GET", "POST"])
 @login_required
