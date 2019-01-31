@@ -15,7 +15,7 @@ class User(UserMixin, db.Model):
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
-    general_information = db.relationship("GeneralInformation", uselist=False, back_populates="user_id")
+    general_information = db.relationship("GeneralInformation", uselist=False)
     education_information = db.relationship("EducationInformation")
     employment_information = db.relationship("EmploymentInformation")
     societies_information = db.relationship("SocietiesInformation")
