@@ -4,7 +4,9 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInfor
 EducationInformationForm, EmploymentInformationForm, \
 SocietiesInformationForm, AwardsInformationForm, \
 FundingDiversificationForm, TeamMembersForm, ImpactsForm, \
-InnovationAndCommercialisationForm
+InnovationAndCommercialisationForm, PublicationsForm, \
+PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
+EventsForms, CommunicationsOverview, SfiFundingRatio, EducationAndPublicEngagementForm
 from app.models import User, UserGeneralInformation
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -92,15 +94,26 @@ def edit_profile():
     team_mem_form = TeamMembersForm()
     impacts_form = ImpactsForm()
     innov_form = InnovationAndCommercialisationForm()
-    #if form.submit.data and form.validate_on_submit():
+    pub_form = PublicationsForm()
+    pres_form = PresentationsForm()
+    academic_collabs_form = AcademicCollaborationsForm()
+    non_academic_collabs_form = NonAcademicCollaborationsForm()
+    events_form = EventsForms()
+    comm_form = CommunicationsOverview()
+    fund_ratio_form = SfiFundingRatio()
+    pub_engage_form = EducationAndPublicEngagementForm()
+    
+    #if gen_info_form.genSubmit.data and gen_info_form.validate_on_submit():
+        # db connect and update for every form
     #    current_user.username = form.username.data
     #    current_user.about_me = form.about_me.data
     #    db.session.commit()
     #    flash("Your changes have been saved.")
     #    return redirect(url_for("user", username=current_user.username))
     #elif request.method == "GET":
-    #    form.username.data = current_user.username
-    #    form.about_me.data = current_user.about_me
+        # populate all fields
+    #    gen_info_form.firstName.data = current_user.username
+    
     return render_template("edit_profile.html",
                             title="Edit Profile",
                             genInfoForm=gen_info_form,
@@ -111,7 +124,15 @@ def edit_profile():
                             fundingDivForm=funding_div_form,
                             teamMemForm=team_mem_form,
                             impactsForm=impacts_form,
-                            innovForm=innov_form) 
+                            innovForm=innov_form,
+                            pubForm=pub_form,
+                            presForm=pres_form,
+                            academicCollabsForm=academic_collabs_form,
+                            nonAcademicCollabsForm=non_academic_collabs_form,
+                            eventsForm=events_form,
+                            commForm=comm_form,
+                            fundRatioForm=fund_ratio_form,
+                            pubEngageForm=pub_engage_form) 
 
 @app.route("/general_information", methods=["GET", "POST"])
 @login_required
