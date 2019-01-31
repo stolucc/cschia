@@ -1,11 +1,12 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInformationForm, \
-EducationInformationForm, EmploymentInformationForm, SocietiesInformationForm, \
-AwardsInformationForm, FundingDiversificationForm, ImpactsForm, \
-InnovationAndCommercialisationForm, PublicationsForm, PresentationsForm, \
-AcademicCollaborationsForm, NonAcademicCollaborationsForm, EventsForms, \
-EducationAndPublicEngagementForm
+EducationInformationForm, EmploymentInformationForm, \
+SocietiesInformationForm, AwardsInformationForm, \
+FundingDiversificationForm, TeamMembersForm, ImpactsForm, \
+InnovationAndCommercialisationForm, PublicationsForm, \
+PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
+EventsForms, CommunicationsOverview, SfiFundingRatio, EducationAndPublicEngagementForm
 from app.models import User, GeneralInformation
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -106,42 +107,58 @@ def show_profile():
 
     return render_template("profile.html", title="View Profile", info=check_if_exists)
 
-"""
-@app.route("/edit_profile", methods=["GET", "POST"])
-@login_required
-def edit_profile():
-    form = EditProfileForm()
-    if form.validate_on_submit():
-        current_user.username = form.username.data
-        current_user.about_me = form.about_me.data
-        db.session.commit()
-        flash("Your changes have been saved.")
-        return redirect(url_for("user", username=current_user.username))
-    elif request.method == "GET":
-        form.username.data = current_user.username
-        form.about_me.data = current_user.about_me
-    return render_template("edit_profile.html", title="Edit Profile", form=form) 
-"""
 
-"""
 @app.route("/edit_profile", methods=["GET", "POST"])
 @login_required
 def edit_profile():
     gen_info_form = GeneralInformationForm()
-    edu_info_form = EducationInformationForm()
-    employ_info_form =  EmploymentInformationForm()
-    soc_info_forn = SocietiesInformationForm()
-    award_info_form = AwardsInformationForm()
+    edu_form = EducationInformationForm()
+    employ_form = EmploymentInformationForm()
+    soc_form = SocietiesInformationForm()
+    awards_form = AwardsInformationForm()
     funding_div_form = FundingDiversificationForm()
-    impact_form = ImpactsForm()
-    in_com_form = InnovationAndCommercialisationForm()
+    team_mem_form = TeamMembersForm()
+    impacts_form = ImpactsForm()
+    innov_form = InnovationAndCommercialisationForm()
     pub_form = PublicationsForm()
     pres_form = PresentationsForm()
-    ac_col_form = AcademicCollaborationsForm()
-    nonac_col_form = NonAcademicCollaborationsForm()
+    academic_collabs_form = AcademicCollaborationsForm()
+    non_academic_collabs_form = NonAcademicCollaborationsForm()
     events_form = EventsForms()
-    ed_pub_eng_form = EducationAndPublicEngagementForm()
-"""
+    comm_form = CommunicationsOverview()
+    fund_ratio_form = SfiFundingRatio()
+    pub_engage_form = EducationAndPublicEngagementForm()
+    
+    #if gen_info_form.genSubmit.data and gen_info_form.validate_on_submit():
+        # db connect and update for every form
+    #    current_user.username = form.username.data
+    #    current_user.about_me = form.about_me.data
+    #    db.session.commit()
+    #    flash("Your changes have been saved.")
+    #    return redirect(url_for("user", username=current_user.username))
+    #elif request.method == "GET":
+        # populate all fields
+    #    gen_info_form.firstName.data = current_user.username
+    
+    return render_template("edit_profile.html",
+                            title="Edit Profile",
+                            genInfoForm=gen_info_form,
+                            eduForm=edu_form,
+                            employForm=employ_form,
+                            socForm=soc_form,
+                            awardsForm=awards_form,
+                            fundingDivForm=funding_div_form,
+                            teamMemForm=team_mem_form,
+                            impactsForm=impacts_form,
+                            innovForm=innov_form,
+                            pubForm=pub_form,
+                            presForm=pres_form,
+                            academicCollabsForm=academic_collabs_form,
+                            nonAcademicCollabsForm=non_academic_collabs_form,
+                            eventsForm=events_form,
+                            commForm=comm_form,
+                            fundRatioForm=fund_ratio_form,
+                            pubEngageForm=pub_engage_form) 
 
 # not needed
 @app.route("/general_information", methods=["GET", "POST"])
@@ -149,11 +166,11 @@ def edit_profile():
 def edit_general_information():
 
     form = GeneralInformationForm()
-    check_if_exists = UserGeneralInformation.query.filter_by(user_id=current_user.id).first()
+    check_if_exists = GeneralInformation.query.filter_by(user_id=current_user.id).first()
 
     if form.validate_on_submit():
         if check_if_exists is None:
-            user = UserGeneralInformation(user_id=current_user.id)
+            user = GeneralInformation(user_id=current_user.id)
             db.session.add(user)
             user.firstName = form.firstName.data
             user.lastName = form.lastName.data
