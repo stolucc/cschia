@@ -134,26 +134,31 @@ def edit_profile():
     
     if request.method == "POST":
 
-        flash(request.form)
-
         if genInfoForm.validate_on_submit and "genSubmit" in request.form:
 
-            userInfo = GeneralInformation(user_id=current_user.id)
-            db.session.add(userInfo)
+            check_if_exists = GeneralInformation.query.filter_by(user_id=current_user.id).first()
+
             info = {
-                "firstName" : genInfoForm.firstName.data,
-                "lastName" : genInfoForm.lastName.data,
-                "jobTitle" : genInfoForm.jobTitle.data,
-                "prefix" : genInfoForm.prefix.data, 
-                "suffix" : genInfoForm.suffix.data,
-                "phoneNumPrefix" : genInfoForm.phoneNumPrefix.data,
-                "phoneNum" : genInfoForm.phoneNum.data,
-                "email" : genInfoForm.email.data,
-                "orcid" : genInfoForm.orcid.data
-            }
-         
+                    "firstName" : genInfoForm.firstName.data,
+                    "lastName" : genInfoForm.lastName.data,
+                    "jobTitle" : genInfoForm.jobTitle.data,
+                    "prefix" : genInfoForm.prefix.data, 
+                    "suffix" : genInfoForm.suffix.data,
+                    "phoneNumPrefix" : genInfoForm.phoneNumPrefix.data,
+                    "phoneNum" : genInfoForm.phoneNum.data,
+                    "email" : genInfoForm.email.data,
+                    "orcid" : genInfoForm.orcid.data
+                }
+
             infoJson = json.dumps(info)
-            userInfo.data = infoJson
+
+            if check_if_exists is None:
+                userInfo = GeneralInformation(user_id=current_user.id)
+                db.session.add(userInfo)
+            
+                userInfo.data = infoJson
+            else:
+                check_if_exists.data = infoJson
 
             db.session.commit()
             flash("changes saved")
