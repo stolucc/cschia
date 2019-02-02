@@ -98,7 +98,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ genInfoForm.genSubmit(class="btn btn-primary") }}
+                    {{ genInfoForm.genSubmit(class="btn btn-primary", action="genSubmit") }}
                 </div>
             </form><hr>
         </div>
@@ -144,7 +144,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ eduForm.eduSubmit(class="btn btn-primary") }}
+                    {{ eduForm.eduSubmit(class="btn btn-primary", action="eduSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#education-show" aria-expanded="false" aria-controls="education-show">Show current</button>
                 </div>
@@ -185,7 +185,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ employForm.employSubmit(class="btn btn-primary") }}
+                    {{ employForm.employSubmit(class="btn btn-primary", action="employSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#employment-show" aria-expanded="false" aria-controls="employment-show">Show current</button>
                 </div>
@@ -241,7 +241,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ socForm.socSubmit(class="btn btn-primary") }}
+                    {{ socForm.socSubmit(class="btn btn-primary", action="socSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#societies-show" aria-expanded="false" aria-controls="societies-show">Show current</button>
                 </div>
@@ -290,7 +290,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ awardsForm.awardsSubmit(class="btn btn-primary") }}
+                    {{ awardsForm.awardsSubmit(class="btn btn-primary", action="awardsSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#awards-show" aria-expanded="false" aria-controls="awards-show">Show current</button>
                 </div>
@@ -359,7 +359,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ fundingDivForm.fundingDivSubmit(class="btn btn-primary") }}
+                    {{ fundingDivForm.fundingDivSubmit(class="btn btn-primary", action="fundingDivSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#fundingDiv-show" aria-expanded="false" aria-controls="fundingDiv-show">Show current</button>
                 </div>
@@ -414,7 +414,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ teamMemForm.teamMemSubmit(class="btn btn-primary") }}
+                    {{ teamMemForm.teamMemSubmit(class="btn btn-primary", action="teamMemSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#teamMembers-show" aria-expanded="false" aria-controls="teamMembers-show">Show current</button>
                 </div>
@@ -462,7 +462,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ impactsForm.impactsSubmit(class="btn btn-primary") }}
+                    {{ impactsForm.impactsSubmit(class="btn btn-primary", action="impactsSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#impacts-show" aria-expanded="false" aria-controls="impacts-show">Show current</button>
                 </div>
@@ -510,7 +510,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ innovForm.innovSubmit(class="btn btn-primary") }}
+                    {{ innovForm.innovSubmit(class="btn btn-primary", action="innovSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#innovCom-show" aria-expanded="false" aria-controls="innovCom-show">Show current</button>
                 </div>
@@ -579,7 +579,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ pubForm.pubSubmit(class="btn btn-primary") }}
+                    {{ pubForm.pubSubmit(class="btn btn-primary", action="pubSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#publications-show" aria-expanded="false" aria-controls="publications-show">Show current</button>
                 </div>
@@ -641,7 +641,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ presForm.presSubmit(class="btn btn-primary") }}
+                    {{ presForm.presSubmit(class="btn btn-primary", action="presSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#presentations-show" aria-expanded="false" aria-controls="presentations-show">Show current</button>
                 </div>
@@ -717,7 +717,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ academicCollabsForm.academicCollabsSubmit(class="btn btn-primary") }}
+                    {{ academicCollabsForm.academicCollabsSubmit(class="btn btn-primary", action="academicCollabsSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#academicCollabs-show" aria-expanded="false" aria-controls="academicCollabs-show">Show current</button>
                 </div>
@@ -793,7 +793,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ nonAcademicCollabsForm.nonAcademicCollabsSubmit(class="btn btn-primary") }}
+                    {{ nonAcademicCollabsForm.nonAcademicCollabsSubmit(class="btn btn-primary", action="nonAcademicCollabsSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs-show" aria-expanded="false" aria-controls="nonAcademicCollabs-show">Show current</button>
                 </div>
@@ -862,7 +862,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ eventsForm.eventsSubmit(class="btn btn-primary") }}
+                    {{ eventsForm.eventsSubmit(class="btn btn-primary", action="eventsSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#events-show" aria-expanded="false" aria-controls="events-show">Show current</button>
                 </div>
@@ -910,7 +910,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ commForm.commSubmit(class="btn btn-primary") }}
+                    {{ commForm.commSubmit(class="btn btn-primary", action="commSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#communications-show" aria-expanded="false" aria-controls="communications-show">Show current</button>
                 </div>
@@ -944,7 +944,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ fundRatioForm.sfiFundingRatioSubmit(class="btn btn-primary") }}
+                    {{ fundRatioForm.sfiFundingRatioSubmit(class="btn btn-primary", action="fundRatioSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#sfiFundingRatio-show" aria-expanded="false" aria-controls="sfiFundingRatio-show">Show current</button>
                 </div>
@@ -1027,7 +1027,7 @@
                     {% endfor %}
                 </div>
                 <div class="form-group">
-                    {{ pubEngageForm.pubEngageSubmit(class="btn btn-primary") }}
+                    {{ pubEngageForm.pubEngageSubmit(class="btn btn-primary", action="pubEngageSubmit") }}
 
                     <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#pubEngage-show" aria-expanded="false" aria-controls="pubEngage-show">Show current</button>
                 </div>

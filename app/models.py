@@ -88,83 +88,113 @@ class GeneralInformation(db.Model):
     user = db.relationship("User", back_populates="general_information")
     data = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<General Information {}>".format(self.data, self.id)
+
 
 class EducationInformation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<EducationInformation {}>".format(self.data, self.id)
 
 class EmploymentInformation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<EmploymentInformation {}>".format(self.data, self.id)
 
 class SocietiesInformation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<SocietiesInformation {}>".format(self.data, self.id)
 
 class AwardsInformation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<AwardsInformation {}>".format(self.data, self.id)
 
 class FundingDiversification(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<FundingDiversification {}>".format(self.data, self.id)
 
 class Impacts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<Impacts {}>".format(self.data, self.id)
 
 class InnovationAndCommercialisation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<InnovationAndCommercialisation {}>".format(self.data, self.id)
 
 class Publications(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<Publications {}>".format(self.data, self.id)
 
 class Presentations(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<Presentations {}>".format(self.data, self.id)
 
 class AcademicCollaborations(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<AcademicCollaborations {}>".format(self.data, self.id)
 
 class NonAcademicCollaborations(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<NonAcademicCollaborations {}>".format(self.data, self.id)
 
 class Events(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<Events {}>".format(self.data, self.id)
 
 class CommunicationsOverview(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
+
+    def __repr__(self):
+        return "<CommunicationsOverview {}>".format(self.data, self.id)
 
 
 class SfiFundingRatio(db.Model):
@@ -172,8 +202,14 @@ class SfiFundingRatio(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<SfiFundingRatio {}>".format(self.data, self.id)
+
 
 class EducationPublicEngagement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
+
+    def __repr__(self):
+        return "<EducationPublicEngagement {}>".format(self.data, self.id)
