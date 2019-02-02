@@ -99,8 +99,27 @@
                 </div>
                 <div class="form-group">
                     {{ genInfoForm.genSubmit(class="btn btn-primary", action="genSubmit") }}
+
+                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#general-show" aria-expanded="false" aria-controls="general-show">Show current</button>
                 </div>
-            </form><hr>
+            </form>
+            <div class="collapse" id="general-show">
+                <p>
+                    <h2>  Current General Information </h2>
+                    <ul>
+                        <li> {{ getGenInfo["firstName"] }} </li>
+                        <li> {{ getGenInfo["lastName"] }} </li>
+                        <li> {{ getGenInfo["jobTitle"] }} </li>
+                        <li> {{ getGenInfo["prefix"] }} </li>
+                        <li> {{ getGenInfo["suffix"] }} </li>
+                        <li> {{ getGenInfo["phoneNumPrefix"] }} </li>
+                        <li> {{ getGenInfo["phoneNum"] }} </li>
+                        <li> {{ getGenInfo["email"] }} </li>
+                        <li> {{ getGenInfo["orcid"] }} </li>
+                    </il>
+                </p>
+            </div>
+            <hr>
         </div>
 
         <!-- EDUCATION -->
@@ -152,7 +171,17 @@
             
             <div class="collapse" id="education-show">
                 <p>
-                    content - here
+                    <h2> Current education information </h2>
+                    {% for item in getEduInfo %}
+                    <h3> Education Form </h3>
+                    <ul>
+                        <li> {{ item["degree"] }} </li>
+                        <li> {{ item["fieldOfStudy"] }} </li>
+                        <li> {{ item["institution"] }} </li>
+                        <li> {{ item["location"] }} </li>
+                        <li> {{ item["yearOfDegreeAward"] }} </li>
+                    </ul>  
+                    {% endfor %}                           
                 </p>
             </div>
             <hr>
@@ -193,7 +222,15 @@
             
             <div class="collapse" id="employment-show">
                 <p>
-                    content - here
+                    <h2> Current employment information </h2>
+                    {% for item in getEmployInfo %}
+                    <h3> Employment Form </h3>
+                    <ul>
+                        <li> {{ item["company"] }} </li>
+                        <li> {{ item["location"] }} </li>
+                        <li> {{ item["years"] }} </li>
+                    </ul>  
+                    {% endfor %}
                 </p>
             </div>
             <hr>
@@ -249,7 +286,17 @@
             
             <div class="collapse" id="societies-show">
                 <p>
-                    content - here
+                    <h2> Current societies information </h2>
+                    {% for item in getSocInfo %}
+                    <h3> Societies Form </h3>
+                    <ul>
+                        <li> {{ item["startDate"] }} </li>
+                        <li> {{ item["endDate"] }} </li>
+                        <li> {{ item["nameOfSociety"] }} </li>
+                        <li> {{ item["typeOfMembership"] }} </li>
+                        <li> {{ item["status"] }} </li>
+                    </ul>  
+                    {% endfor %}
                 </p>
             </div>
             <hr>
@@ -298,7 +345,16 @@
             
             <div class="collapse" id="awards-show">
                 <p>
-                    content - here
+                    <h2> Current awards information </h2>
+                    {% for item in getAwardInfo %}
+                    <h3> Awards Form </h3>
+                    <ul>
+                        <li> {{ item["year"] }} </li>
+                        <li> {{ item["awardingBody"] }} </li>
+                        <li> {{ item["details"] }} </li>
+                        <li> {{ item["teamMemberName"] }} </li>
+                    </ul>  
+                    {% endfor %}
                 </p>
             </div>
             <hr>
@@ -367,7 +423,19 @@
             
             <div class="collapse" id="fundingDiv-show">
                 <p>
-                    content - here
+                    <h2> Current funding diversification information </h2>
+                    {% for item in getFundInfo %}
+                    <h3> Funding diversification Form </h3>
+                    <ul>
+                        <li> {{ item["startDate"] }} </li>
+                        <li> {{ item["endDate"] }} </li>
+                        <li> {{ item["amount"] }} </li>
+                        <li> {{ item["fundingBody"] }} </li>
+                        <li> {{ item["fundingProgramme"] }} </li>
+                        <li> {{ item["status"] }} </li>
+                        <li> {{ item["primaryAttribution"] }} </li>
+                    </ul>  
+                    {% endfor %}
                 </p>
             </div>
             <hr>
@@ -470,7 +538,16 @@
             
             <div class="collapse" id="impacts-show">
                 <p>
-                    content - here
+                    <h2> Current impacts information </h2>
+                    {% for item in getImpInfo %}
+                    <h3> Impacts Form </h3>
+                    <ul>
+                        <li> {{ item["title"] }} </li>
+                        <li> {{ item["category"] }} </li>
+                        <li> {{ item["primaryBeneficiary"] }} </li>
+                        <li> {{ item["primaryAttribution"] }} </li>
+                    </ul>  
+                    {% endfor %}
                 </p>
             </div>
             <hr>
@@ -518,7 +595,16 @@
             
             <div class="collapse" id="innovCom-show">
                 <p>
-                    content - here
+                    <h2> Current innovation and commercialisation information </h2>
+                    {% for item in getInnInfo %}
+                    <h3> Innovation and commercialisation Form </h3>
+                    <ul>
+                        <li> {{ item["year"] }} </li>
+                        <li> {{ item["type"] }} </li>
+                        <li> {{ item["title"] }} </li>
+                        <li> {{ item["primaryAttribution"] }} </li>
+                    </ul>  
+                    {% endfor %}
                 </p>
             </div>
             <hr>
@@ -587,7 +673,19 @@
             
             <div class="collapse" id="publications-show">
                 <p>
-                    content - here
+                    <h2> Current publications information </h2>
+                    {% for item in getPubInfo %}
+                    <h3> Publications Form </h3>
+                    <ul>
+                        <li> {{ item["year"] }} </li>
+                        <li> {{ item["type"] }} </li>
+                        <li> {{ item["title"] }} </li>
+                        <li> {{ item["name"] }} </li>
+                        <li> {{ item["publicationStatus"] }} </li>
+                        <li> {{ item["doi"] }} </li>
+                        <li> {{ item["primaryAttribution"] }} </li>
+                    </ul>  
+                    {% endfor %}
                 </p>
             </div>
             <hr>
@@ -649,7 +747,18 @@
             
             <div class="collapse" id="presentations-show">
                 <p>
-                    content - here
+                    <h2> Current presentations information </h2>
+                    {% for item in getPresInfo %}
+                    <h3> Presentations Form </h3>
+                    <ul>
+                        <li> {{ item["year"] }} </li>
+                        <li> {{ item["title"] }} </li>
+                        <li> {{ item["eventType"] }} </li>
+                        <li> {{ item["organisingBody"] }} </li>
+                        <li> {{ item["location"] }} </li>
+                        <li> {{ item["primaryAttribution"] }} </li>
+                    </ul>  
+                    {% endfor %}
                 </p>
             </div>
             <hr>
@@ -725,7 +834,21 @@
             
             <div class="collapse" id="academicCollabs-show">
                 <p>
-                    content - here
+                    <h2> Current academic collaborations information </h2>
+                    {% for item in getAcInfo %}
+                    <h3> Academic collaborations Form </h3>
+                    <ul>
+                        <li> {{ item["startDate"] }} </li>
+                        <li> {{ item["endDate"] }} </li>
+                        <li> {{ item["nameOfInstitution"] }} </li>
+                        <li> {{ item["department"] }} </li>
+                        <li> {{ item["location"] }} </li>
+                        <li> {{ item["nameOfCollaborator"] }} </li>
+                        <li> {{ item["goal"] }} </li>
+                        <li> {{ item["frequency"] }} </li>
+                        <li> {{ item["primaryAttribution"] }} </li>
+                    </ul>  
+                    {% endfor %}
                 </p>
             </div>
             <hr>
@@ -801,7 +924,21 @@
             
             <div class="collapse" id="nonAcademicCollabs-show">
                 <p>
-                    content - here
+                    <h2> Current non academic collaborations information </h2>
+                    {% for item in getNonAcInfo %}
+                    <h3> Non academic collaborations Form </h3>
+                    <ul>
+                        <li> {{ item["startDate"] }} </li>
+                        <li> {{ item["endDate"] }} </li>
+                        <li> {{ item["nameOfInstitution"] }} </li>
+                        <li> {{ item["department"] }} </li>
+                        <li> {{ item["location"] }} </li>
+                        <li> {{ item["nameOfCollaborator"] }} </li>
+                        <li> {{ item["goal"] }} </li>
+                        <li> {{ item["frequency"] }} </li>
+                        <li> {{ item["primaryAttribution"] }} </li>
+                    </ul>  
+                    {% endfor %}
                 </p>
             </div>
             <hr>
@@ -870,7 +1007,19 @@
             
             <div class="collapse" id="events-show">
                 <p>
-                    content - here
+                    <h2> Current events information </h2>
+                    {% for item in getEvInfo %}
+                    <h3> Events Form </h3>
+                    <ul>
+                        <li> {{ item["startDate"] }} </li>
+                        <li> {{ item["endDate"] }} </li>
+                        <li> {{ item["title"] }} </li>
+                        <li> {{ item["eventType"] }} </li>
+                        <li> {{ item["role"] }} </li>
+                        <li> {{ item["location"] }} </li>
+                        <li> {{ item["primaryAttribution"] }} </li>
+                    </ul>  
+                    {% endfor %}
                 </p>
             </div>
             <hr>
@@ -918,7 +1067,16 @@
             
             <div class="collapse" id="communications-show">
                 <p>
-                    content - here
+                    <h2> Current communications overview information </h2>
+                    {% for item in getCommInfo %}
+                    <h3> Communications overview Form </h3>
+                    <ul>
+                        <li> {{ item["year"] }} </li>
+                        <li> {{ item["numberOfLectures"] }} </li>
+                        <li> {{ item["numberOfVisits"] }} </li>
+                        <li> {{ item["numberOfMediaInteracations"] }} </li>
+                    </ul>  
+                    {% endfor %}
                 </p>
             </div>
             <hr>
@@ -952,7 +1110,14 @@
             
             <div class="collapse" id="sfiFundingRatio-show">
                 <p>
-                    content - here
+                    <h2> Current SFI funding ratio information </h2>
+                    {% for item in getSfiInfo %}
+                    <h3> SFI funding ratio Form </h3>
+                    <ul>
+                        <li> {{ item["year"] }} </li>
+                        <li> {{ item["percentage"] }} </li>
+                    </ul>  
+                    {% endfor %}
                 </p>
             </div>
             <hr>
@@ -1035,7 +1200,21 @@
             
             <div class="collapse" id="pubEngage-show">
                 <p>
-                    content - here
+                    <h2> Current education and public engagement information </h2>
+                    {% for item in getEdInfo %}
+                    <h3> Education and public engagement Form </h3>
+                    <ul>
+                        <li> {{ item["nameOfProject"] }} </li>
+                        <li> {{ item["startDate"] }} </li>
+                        <li> {{ item["endDate"] }} </li>
+                        <li> {{ item["activityType"] }} </li>
+                        <li> {{ item["otherType"] }} </li>
+                        <li> {{ item["projectTopic"] }} </li>
+                        <li> {{ item["otherTopic"] }} </li>
+                        <li> {{ item["target"] }} </li>
+                        <li> {{ item["localCountry"] }} </li>
+                    </ul>  
+                    {% endfor %}
                 </p>
             </div>
             <hr>

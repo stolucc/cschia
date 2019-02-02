@@ -110,6 +110,11 @@ def show_profile():
 
     return render_template("profile.html", title="View Profile", info=check_if_exists)
 
+def get_list(q):
+    lst = []
+    for item in q:
+        lst.append(json.loads(item.data))
+    return lst
 
 @app.route("/edit_profile", methods=["GET", "POST"])
 @login_required
@@ -131,6 +136,57 @@ def edit_profile():
     commForm = CommunicationsOverviewForm()
     fundRatioForm = SfiFundingRatioForm()
     pubEngageForm = EducationAndPublicEngagementForm()
+
+    jsonGenInfo = GeneralInformation.query.filter_by(user_id=current_user.id).first()
+    if jsonGenInfo is not None:
+        getGenInfo = json.loads(jsonGenInfo.data)
+
+    jsonEduInfo = EducationInformation.query.filter_by(user_id=current_user.id).all()
+    getEduInfo = get_list(jsonEduInfo)
+    
+    jsonEmployInfo = EmploymentInformation.query.filter_by(user_id=current_user.id).all()
+    getEmployInfo = get_list(jsonEmployInfo)
+
+    jsonSocInfo = SocietiesInformation.query.filter_by(user_id=current_user.id).all()
+    getSocInfo = get_list(jsonSocInfo)
+
+    jsonAwardInfo = AwardsInformation.query.filter_by(user_id=current_user.id).all()
+    getAwardInfo = get_list(jsonAwardInfo)
+
+    jsonFundInfo = FundingDiversification.query.filter_by(user_id=current_user.id).all()
+    getFundInfo = get_list(jsonFundInfo)
+    
+    jsonImpInfo = Impacts.query.filter_by(user_id=current_user.id).all()
+    getImpInfo = get_list(jsonImpInfo)
+
+    jsonInnInfo = InnovationAndCommercialisation.query.filter_by(user_id=current_user.id).all()
+    getInnInfo = get_list(jsonInnInfo)
+
+    jsonPubInfo = Publications.query.filter_by(user_id=current_user.id).all()
+    getPubInfo = get_list(jsonPubInfo)
+
+    jsonPresInfo = Presentations.query.filter_by(user_id=current_user.id).all()
+    getPresInfo = get_list(jsonPresInfo)
+
+    jsonAcInfo = AcademicCollaborations.query.filter_by(user_id=current_user.id).all()
+    getAcInfo = get_list(jsonAcInfo)
+
+    jsonNonAcInfo = NonAcademicCollaborations.query.filter_by(user_id=current_user.id).all()
+    getNonAcInfo = get_list(jsonNonAcInfo)
+
+    jsonEvInfo = Events.query.filter_by(user_id=current_user.id).all()
+    getEvInfo = get_list(jsonEvInfo)
+
+    jsonCommInfo = CommunicationsOverview.query.filter_by(user_id=current_user.id).all()
+    getCommInfo = get_list(jsonCommInfo)
+
+    jsonSfiInfo = SfiFundingRatio.query.filter_by(user_id=current_user.id).all()
+    getSfiInfo = get_list(jsonSfiInfo)
+
+    jsonEdInfo = EducationPublicEngagement.query.filter_by(user_id=current_user.id).all()
+    getEdInfo = get_list(jsonEdInfo)
+
+    
     
     if request.method == "POST":
 
@@ -162,6 +218,9 @@ def edit_profile():
 
             db.session.commit()
             flash("changes saved")
+
+        elif "genShow" in request:
+            flash(request)
            
         elif eduForm.validate_on_submit and "eduSubmit" in request.form:
            
@@ -468,47 +527,22 @@ def edit_profile():
                             eventsForm=eventsForm,
                             commForm=commForm,
                             fundRatioForm=fundRatioForm,
-                            pubEngageForm=pubEngageForm) 
+                            pubEngageForm=pubEngageForm,
+                            
+                            getGenInfo=getGenInfo,
+                            getEduInfo=getEduInfo,
+                            getEmployInfo=getEmployInfo, 
+                            getSocInfo=getSocInfo,
+                            getAwardInfo=getAwardInfo,
+                            getFundInfo=getFundInfo,
+                            getImpInfo=getImpInfo,
+                            getInnInfo=getInnInfo,
+                            getPubInfo=getPubInfo,
+                            getPresInfo=getPresInfo,
+                            getAcInfo=getAcInfo,
+                            getNonAcInfo=getNonAcInfo,
+                            getEvInfo=getEvInfo,
+                            getCommInfo=getCommInfo,
+                            getSfiInfo=getSfiInfo,
+                            getEdInfo=getEdInfo) 
 
-# not needed
-@app.route("/general_information", methods=["GET", "POST"])
-@login_required
-def edit_general_information():
-
-    form = GeneralInformationForm()
-    check_if_exists = GeneralInformation.query.filter_by(user_id=current_user.id).first()
-
-    if form.validate_on_submit():
-        if check_if_exists is None:
-            user = GeneralInformation(user_id=current_user.id)
-            db.session.add(user)
-            user.firstName = form.firstName.data
-            user.lastName = form.lastName.data
-            user.jobTitle = form.jobTitle.data
-            user.suffix = form.suffix.data
-            # user.phoneNum = form.phoneNum.data
-            user.email = form.email.data
-            user.orcid = form.orcid.data
-            db.session.commit()
-        else:
-            check_if_exists.firstName = form.firstName.data
-            check_if_exists.lastName = form.lastName.data
-            check_if_exists.jobTitle = form.jobTitle.data
-            check_if_exists.suffix = form.suffix.data
-            # check_if_exists.phoneNUm = form.phoneNum.data
-            check_if_exists.email = form.email.data
-            check_if_exists.orcid = form.orcid.data
-            db.session.commit()
-        flash("Your changes have been saved.")
-        return redirect(url_for("edit_general_information"))
-
-    elif request.method == "GET" and check_if_exists is not None:
-        form.firstName.data = check_if_exists.firstName
-        form.lastName.data = check_if_exists.lastName
-        form.jobTitle.data = check_if_exists.jobTitle
-        form.suffix.data = check_if_exists.suffix
-        # form.phoneNum.data = check_if_exists.phoneNum
-        form.email.data = check_if_exists.email
-        form.orcid.data = check_if_exists.orcid 
-
-    return render_template("general_information.html", title="Edit general info", form=form)
