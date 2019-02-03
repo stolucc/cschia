@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateField, FileField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User
 
@@ -30,3 +30,13 @@ class EditProfileForm(FlaskForm):
     username = StringField("Username", validators = [DataRequired() ])
     about_me = TextAreaField("About me", validators = [Length(min=0, max=140) ])
     submit = SubmitField("Submit")
+
+class ProposalForm(FlaskForm):
+    deadline = DateField("Deadline")
+    contact = StringField("Contact")
+    overview = TextAreaField("Overview", validators = [Length(min=0, max=1500)])
+    funding = TextAreaField("Funding", validators = [Length(min=0, max=1500)])
+    key_dates = TextAreaField("Key Dates", validators = [Length(min=0, max=1000)])
+    file_upload = FileField("Key Files")
+    submit = SubmitField("Submit")
+

@@ -1,10 +1,12 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, ProposalForm
 from app.models import User
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
+import os
+
 
 @app.before_request
 def before_request():
@@ -78,7 +80,16 @@ def admin_register_user():
         return redirect(url_for("login"))
     return render_template("register.html", title="Register", form=form)
 
-@app.route("/user/<username>")
+@app.route("/admin_publish_call", methods=["POST", "GET"])
+def publish():
+    form = ProposalForm()
+    if request.method == 'POST':
+        f = request.files.get('file')
+        f.save(os.path.join('./Uploads',f.filename))
+    return render_template("admin_publish_call.html", title="Publish", form=form)
+
+
+@app.route("/usr/<username>")
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
