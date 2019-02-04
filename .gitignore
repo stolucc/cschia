@@ -115,4 +115,4 @@ dmypy.json
 .pyre/
 
 # Pycharm stuff
-idea
+.idea
