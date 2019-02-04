@@ -33,8 +33,7 @@ class EditProfileForm(FlaskForm):
     username = StringField("Username", validators = [DataRequired() ])
     about_me = TextAreaField("About me", validators = [Length(min=0, max=140) ])
     submit = SubmitField("Submit")
-<<<<<<< HEAD
-=======
+
 
 class GeneralInformationForm(FlaskForm):
     firstName = StringField("First name", validators=[DataRequired() ])
@@ -231,4 +230,4 @@ class EducationAndPublicEngagementForm(FlaskForm):
     validators=[DataRequired() ])
     localCountry = StringField("If local (a specific county in Ireland)", validators=[Optional() ])
     pubEngageSubmit = SubmitField("Save")
->>>>>>> bbb9d2da423b39e184c72753acc50d14978e4290
+

@@ -8,9 +8,7 @@ EducationPublicEngagement
 
 @app.shell_context_processor
 def make_shell_context():
-<<<<<<< HEAD
-    return {"db" : db, "User" : User, "Post" : Post}
-=======
+
     return {
         "db" : db, 
         "User" : User, 
@@ -33,5 +31,6 @@ def make_shell_context():
         "CommunicationsOverview" : CommunicationsOverview,
         "SfiFundingRatio" : SfiFundingRatio,
         "EducationPublicEngagement" : EducationPublicEngagement
+
         }
->>>>>>> bbb9d2da423b39e184c72753acc50d14978e4290
+

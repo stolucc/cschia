@@ -89,7 +89,7 @@ class GeneralInformation(db.Model):
     data = db.Column(db.Text)
 
     def __repr__(self):
-        return "<General Information {}>".format(self.data, self.id)
+        return "<General Information {}>".format(self.id)
 
 
 class EducationInformation(db.Model):
