@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Edit education information</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.degree.label }}<br>
+            {{ form.degree(size=64) }}<br>
+            {% for error in form.degree.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.fieldOfStudy.label }}<br>
+            {{ form.fieldOfStudy(size=64) }}<br>
+            {% for error in form.fieldOfStudy.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+         <p>
+            {{ form.institution.label }}<br>
+            {{ form.institution(size=64) }}<br>
+            {% for error in form.institution.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.location.label }}<br>
+            {{ form.location(size=64) }}<br>
+            {% for error in form.location.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+         <p>
+            {{ form.yearOfDegreeAward.label }}<br>
+            {{ form.yearOfDegreeAward(size=4) }}<br>
+            {% for error in form.yearOfDegreeAward.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
