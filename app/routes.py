@@ -220,9 +220,6 @@ def edit_profile():
 
             db.session.commit()
             flash("changes saved")
-
-        elif "genShow" in request:
-            flash(request)
            
         elif eduForm.validate_on_submit and "eduSubmit" in request.form:
            
