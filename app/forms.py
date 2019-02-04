@@ -53,7 +53,7 @@ class EducationInformationForm(FlaskForm):
     fieldOfStudy = StringField("Field of study", validators=[DataRequired() ])
     institution = StringField("Institution", validators=[DataRequired() ])
     location = StringField("Location", validators=[DataRequired() ])
-    yearOfDegreeAward = DateField("Year of degree award", validators=[DataRequired() ])
+    yearOfDegreeAward = StringField("Year of degree award", validators=[DataRequired() ])
     eduSubmit = SubmitField("Save")
 
 class EmploymentInformationForm(FlaskForm):
@@ -191,7 +191,7 @@ class EventsForms(FlaskForm):
     primaryAttribution = StringField("Primary attribution", validators=[DataRequired() ])
     eventsSubmit = SubmitField("Save")
 
-class CommunicationsOverview(FlaskForm):
+class CommunicationsOverviewForm(FlaskForm):
     #total interaction per year
     year = StringField("Year", validators=[DataRequired() ])
     numberOfLectures = StringField("Number of public lectures/demonstrations", validators=[DataRequired() ])
@@ -199,7 +199,7 @@ class CommunicationsOverview(FlaskForm):
     numberOfMediaInteracations = StringField("Number of media interactions", validators=[DataRequired() ])
     commSubmit = SubmitField("Save")
 
-class SfiFundingRatio(FlaskForm):
+class SfiFundingRatioForm(FlaskForm):
     #once per year
     year = StringField("Year", validators=[DataRequired() ])
     # @TODO: should this be a dropdown of 0,20,40 etc.?
