@@ -105,6 +105,7 @@
             </form>
             <div class="collapse" id="general-show">
                 <p>
+                    {% if getGenInfo != "" %}
                     <h2>  Current General Information </h2>
                     <ul>
                         <li> {{ getGenInfo["firstName"] }} </li>
@@ -117,6 +118,7 @@
                         <li> {{ getGenInfo["email"] }} </li>
                         <li> {{ getGenInfo["orcid"] }} </li>
                     </il>
+                    {% endif %}
                 </p>
             </div>
             <hr>
