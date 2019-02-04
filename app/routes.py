@@ -140,6 +140,8 @@ def edit_profile():
     jsonGenInfo = GeneralInformation.query.filter_by(user_id=current_user.id).first()
     if jsonGenInfo is not None:
         getGenInfo = json.loads(jsonGenInfo.data)
+    else: 
+        getGenInfo = ""
 
     jsonEduInfo = EducationInformation.query.filter_by(user_id=current_user.id).all()
     getEduInfo = get_list(jsonEduInfo)
