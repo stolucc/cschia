@@ -118,10 +118,8 @@ def edit_account():
     emailForm = ChangeEmail()
 
     if request.method == "POST":
-        flash(request.form)
 
         if passwordForm.validate_on_submit and "passSubmit" in request.form:
-            flash(request.form)
 
             user = User.query.filter_by(id=current_user.id).first()
             user.set_password(passwordForm.newPassword2.data)
@@ -130,14 +128,28 @@ def edit_account():
             flash("Password has been changed!")
             return redirect(url_for("login"))
 
-        elif emailForm.validate_on_submit and "emailSubmit" in request.form:
+        elif emailForm.validate_on_submit: # and "emailSubmit" in request.form:
 
+            user = User.query.filter_by(email=emailForm.newEmail2.data).first()
+            if user is None:
+                user = User.query.filter_by(id=current_user.id).first()
+                user.email = emailForm.newEmail2.data
+                db.session.add(user)
+                db.session.commit()
+                flash("Email has been changed!")
+                return redirect(url_for("login"))
+            elif user.email == emailForm.newEmail2.data:
+                flash("Please use a different email address")
+
+            return redirect(url_for("edit_account"))
+            """
             user = User.query.filter_by(id=current_user.id).first()
             user.email = emailForm.newEmail2.data
             db.session.add(user)
             db.session.commit()
             flash("Email has been changed!")
             return redirect(url_for("login"))
+            """
 
     return render_template("edit_account.html", title="Edit Account", passwordForm=passwordForm,
                                                                         emailForm=emailForm)
