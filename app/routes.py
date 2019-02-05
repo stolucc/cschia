@@ -140,6 +140,8 @@ def edit_profile():
     jsonGenInfo = GeneralInformation.query.filter_by(user_id=current_user.id).first()
     if jsonGenInfo is not None:
         getGenInfo = json.loads(jsonGenInfo.data)
+    else:
+        getGenInfo = ""
 
     jsonEduInfo = EducationInformation.query.filter_by(user_id=current_user.id).all()
     getEduInfo = get_list(jsonEduInfo)
@@ -218,9 +220,9 @@ def edit_profile():
 
             db.session.commit()
             flash("changes saved")
-
-        elif "genShow" in request:
-            flash(request)
+        
+        #elif "genShow" in request:
+        #    flash(request)
            
         elif eduForm.validate_on_submit and "eduSubmit" in request.form:
            

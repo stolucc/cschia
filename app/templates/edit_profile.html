@@ -7,24 +7,71 @@
             <ul class="list-group list-group-flush" id="section-buttons">
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#general" aria-expanded="false" aria-controls="general">General Info</button>
-                    <span class="badge badge-primary badge-pill">14</span>
                 </li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#education" aria-expanded="false" aria-controls="education">Education</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#employment" aria-expanded="false" aria-controls="employment">Employment</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#societies" aria-expanded="false" aria-controls="societies">Societies</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#awards" aria-expanded="false" aria-controls="awards">Awards</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#fundingDiv" aria-expanded="false" aria-controls="fundingDiv">Funding Diversification</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#teamMembers" aria-expanded="false" aria-controls="teamMembers">Team Members</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#impacts" aria-expanded="false" aria-controls="impacts">Impacts</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#innovCom" aria-expanded="false" aria-controls="innovCom">Innovation and Commercialisation</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#publications" aria-expanded="false" aria-controls="publications">Publications</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#presentations" aria-expanded="false" aria-controls="presentations">Presentations</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#academicCollabs" aria-expanded="false" aria-controls="academicCollabs">Academic Collaborations</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs" aria-expanded="false" aria-controls="nonAcademicCollabs">Non Academic Collaborations</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#events" aria-expanded="false" aria-controls="events">Events</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#communications" aria-expanded="false" aria-controls="communications">Communications</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#sfiFundingRatio" aria-expanded="false" aria-controls="sfiFundingRatio">SFI Funding Ratio</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#pubEngage" aria-expanded="false" aria-controls="pubEngage">Education and Public Engagement</button></li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#education" aria-expanded="false" aria-controls="education">Education</button>
+                    <span class="badge badge-secondary badge-pill float-right float-right">{% if getEduInfo %}{{ getEduInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#employment" aria-expanded="false" aria-controls="employment">Employment</button>
+                    <span class="badge badge-secondary badge-pill float-right">{% if getEmployInfo %}{{ getEmployInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#societies" aria-expanded="false" aria-controls="societies">Societies</button>
+                    <span class="badge badge-secondary badge-pill float-right">{% if getSocInfo %}{{ getSocInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#awards" aria-expanded="false" aria-controls="awards">Awards</button>
+                    <span class="badge badge-secondary badge-pill float-right">{% if getAwardInfo %}{{ getAwardInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#fundingDiv" aria-expanded="false" aria-controls="fundingDiv">Funding Diversification</button>
+                    <span class="badge badge-secondary badge-pill float-right">{% if getFundInfo %}{{ getFundInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#teamMembers" aria-expanded="false" aria-controls="teamMembers">Team Members</button>
+                    <span class="badge badge-secondary badge-pill float-right"><!-- @TODO --></span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#impacts" aria-expanded="false" aria-controls="impacts">Impacts</button>
+                    <span class="badge badge-secondary badge-pill float-right">{% if getImpInfo %}{{ getImpInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#innovCom" aria-expanded="false" aria-controls="innovCom">Innovation and Commercialisation</button>
+                    <span class="badge badge-secondary badge-pill float-right">{% if getInnInfo %}{{ getInnInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#publications" aria-expanded="false" aria-controls="publications">Publications</button>
+                    <span class="badge badge-secondary badge-pill float-right">{% if getPubInfo %}{{ getPubInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#presentations" aria-expanded="false" aria-controls="presentations">Presentations</button>
+                    <span class="badge badge-secondary badge-pill float-right">{% if getPresInfo %}{{ getPresInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#academicCollabs" aria-expanded="false" aria-controls="academicCollabs">Academic Collaborations</button>
+                    <span class="badge badge-secondary badge-pill float-right">{% if getAcInfo %}{{ getAcInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs" aria-expanded="false" aria-controls="nonAcademicCollabs">Non Academic Collaborations</button>
+                    <span class="badge badge-secondary badge-pill float-right">{% if getNonAcInfo %}{{ getNonAcInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#events" aria-expanded="false" aria-controls="events">Events</button>
+                    <span class="badge badge-secondary badge-pill float-right">{% if getEvInfo %}{{ getEvInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#communications" aria-expanded="false" aria-controls="communications">Communications</button>
+                    <span class="badge badge-secondary badge-pill float-right">{% if getCommInfo %}{{ getCommInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#sfiFundingRatio" aria-expanded="false" aria-controls="sfiFundingRatio">SFI Funding Ratio</button>
+                    <span class="badge badge-secondary badge-pill float-right">{% if getSfiInfo %}{{ getSfiInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#pubEngage" aria-expanded="false" aria-controls="pubEngage">Education and Public Engagement</button>
+                    <span class="badge badge-secondary badge-pill float-right">{% if getEdInfo %}{{ getEdInfo|length }}{% endif %}</span>
+                </li>
             </ul>
         </div>
 
@@ -36,63 +83,63 @@
                     {{ genInfoForm.hidden_tag() }}
                     <div class="form-group">
                         {{ genInfoForm.firstName.label }}<br>
-                        {{ genInfoForm.firstName(class="form-control") }}<br>
+                        {{ genInfoForm.firstName(class="form-control", value=getGenInfo["firstName"]) }}<br>
                         {% for error in genInfoForm.firstName.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
                         {{ genInfoForm.lastName.label }}<br>
-                        {{ genInfoForm.lastName(class="form-control") }}<br>
+                        {{ genInfoForm.lastName(class="form-control", value=getGenInfo["lastName"]) }}<br>
                         {% for error in genInfoForm.lastName.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
                         {{ genInfoForm.jobTitle.label }}<br>
-                        {{ genInfoForm.jobTitle(class="form-control") }}<br>
+                        {{ genInfoForm.jobTitle(class="form-control", value=getGenInfo["jobTitle"]) }}<br>
                         {% for error in genInfoForm.jobTitle.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
                         {{ genInfoForm.prefix.label }}<br>
-                        {{ genInfoForm.prefix(class="form-control") }}<br>
+                        {{ genInfoForm.prefix(class="form-control", value=getGenInfo["prefix"]) }}<br>
                         {% for error in genInfoForm.lastName.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
                         {{ genInfoForm.suffix.label }}<br>
-                        {{ genInfoForm.suffix(class="form-control") }}<br>
+                        {{ genInfoForm.suffix(class="form-control", value=getGenInfo["suffix"]) }}<br>
                         {% for error in genInfoForm.suffix.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
                         {{ genInfoForm.phoneNumPrefix.label }}<br>
-                        {{ genInfoForm.phoneNumPrefix(class="form-control") }}<br>
+                        {{ genInfoForm.phoneNumPrefix(class="form-control", value=getGenInfo["phoneNumPrefix"]) }}<br>
                         {% for error in genInfoForm.phoneNumPrefix.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
                         {{ genInfoForm.phoneNum.label }}<br>
-                        {{ genInfoForm.phoneNum(class="form-control") }}<br>
+                        {{ genInfoForm.phoneNum(class="form-control", value=getGenInfo["phoneNum"]) }}<br>
                         {% for error in genInfoForm.phoneNum.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
                         {{ genInfoForm.email.label }}<br>
-                        {{ genInfoForm.email(class="form-control") }}<br>
+                        {{ genInfoForm.email(class="form-control", value=getGenInfo["email"]) }}<br>
                         {% for error in genInfoForm.email.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
                         {{ genInfoForm.orcid.label }}<br>
-                        {{ genInfoForm.orcid(class="form-control") }}<br>
+                        {{ genInfoForm.orcid(class="form-control", value=getGenInfo["orcid"]) }}<br>
                         {% for error in genInfoForm.orcid.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
@@ -148,37 +195,27 @@
                             <div class="form-group">
                                 {{ eduForm.eduSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#education-show" aria-expanded="false" aria-controls="education-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#education-show" aria-expanded="false" aria-controls="education-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
 
-                    <div class="collapse col-md-5 in" id="education-show">
-                        <div class="panel panel-default" id="edu1">
-                            <div class="panel-body">
-                                <p>Degree: <span class="eduDegree">BSc.</span></p>
-                                <p>Field of study: <span class="eduFieldOfStudy">Computer Science</span></p>
-                                <p>Institution: <span class="eduInstitution">University College Cork</span></p>
-                                <p>Location: <span class="eduLoc">Cork City</span></p>
-                                <p>Year of degree award: <span class="eduYearDegree">2020</span></p>
+                    <div class="collapse col-md-5 show" id="education-show">
+                        {% for item in getEduInfo %}
 
-                                <button class="btn btn-secondary" type="button" id="edu1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="edu1-edit">Edit</button>
+                        <div class="card mb-3" id="edu{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Degree: <span class="eduDegree">{{ item["degree"] }}</span></p>
+                                <p>Field of study: <span class="eduFieldOfStudy">{{ item["fieldOfStudy"] }}</span></p>
+                                <p>Institution: <span class="eduInstitution">{{ item["institution"] }}</span></p>
+                                <p>Location: <span class="eduLoc">{{ item["location"] }}</span></p>
+                                <p>Year of degree award: <span class="eduYearDegree">{{ item["yearOfDegreeAward"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="edu{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="edu{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
-
-                        <div class="panel panel-default" id="edu2">
-                            <div class="panel-body">
-                                <p>Degree: <span class="eduDegree">BSc.</span></p>
-                                <p>Field of study: <span class="eduFieldOfStudy">Software Development</span></p>
-                                <p>Institution: <span class="eduInstitution">Cork I.T.</span></p>
-                                <p>Location: <span class="eduLoc">Cork City</span></p>
-                                <p>Year of degree award: <span class="eduYearDegree">2022</span></p>
-                                
-                                <button class="btn btn-secondary" type="button" id="edu2-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="edu2-edit">Edit</button>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -216,22 +253,25 @@
                             <div class="form-group">
                                 {{ employForm.employSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#employment-show" aria-expanded="false" aria-controls="employment-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#employment-show" aria-expanded="false" aria-controls="employment-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
                 
-                    <div class="collapse col-md-5 in" id="employment-show">
-                        <div class="panel panel-default" id="employ1">
-                            <div class="panel-body">
-                                <p>Institution/company: <span class="employCompany">SN. Systems</span></p>
-                                <p>Location: <span class="employLoc">Dublin City</span></p>
-                                <p>Years: <span class="employYears">6</span></p>
+                    <div class="collapse col-md-5 show" id="employment-show">
+                        {% for item in getEmployInfo %}
 
-                                <button class="btn btn-secondary" type="button" id="employ1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="employ1-edit">Edit</button>
+                        <div class="card mb-3" id="employ{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Institution/company: <span class="employCompany">{{ item["company"] }}</span></p>
+                                <p>Location: <span class="employLoc">{{ item["location"] }}</span></p>
+                                <p>Years: <span class="employYears">{{ item["years"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="employ{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="employ{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -282,24 +322,27 @@
                             <div class="form-group">
                                 {{ socForm.socSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#societies-show" aria-expanded="false" aria-controls="societies-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#societies-show" aria-expanded="false" aria-controls="societies-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
                 
-                    <div class="collapse col-md-5 in" id="soc-show">
-                        <div class="panel panel-default" id="soc1">
-                            <div class="panel-body">
-                                <p>Start date: <span class="socStart">10-01-2018</span></p>
-                                <p>End date: <span class="socEnd">10-01-2019</span></p>
-                                <p>Name of society: <span class="socName">NetSoc</span></p>
-                                <p>Type of membership: <span class="socMembership">Regular</span></p>
-                                <p>Status (if active): <span class="socStatus">No</span></p>
+                    <div class="collapse col-md-5 show" id="societies-show">
+                        {% for item in getSocInfo %}
 
-                                <button class="btn btn-secondary" type="button" id="soc1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="soc1-edit">Edit</button>
+                        <div class="card mb-3" id="soc{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Start date: <span class="socStart">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="socEnd">{{ item["endDate"] }}</span></p>
+                                <p>Name of society: <span class="socName">{{ item["nameOfSociety"] }}</span></p>
+                                <p>Type of membership: <span class="socMembership">{{ item["typeOfMembership"]}}</span></p>
+                                <p>Status (if active): <span class="socStatus">{{ item["status"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="soc{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="soc{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -343,23 +386,26 @@
                             <div class="form-group">
                                 {{ awardsForm.awardsSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#awards-show" aria-expanded="false" aria-controls="awards-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#awards-show" aria-expanded="false" aria-controls="awards-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
                 
-                    <div class="collapse col-md-5 in" id="awards-show">
-                        <div class="panel panel-default" id="awards1">
-                            <div class="panel-body">
-                                <p>Year: <span class="awardYear">2017</span></p>
-                                <p>Awarding body: <span class="awardingBody">UCC</span></p>
-                                <p>Details of award: <span class="awardDetails">...</span></p>
+                    <div class="collapse col-md-5 show" id="awards-show">
+                        {% for item in getAwardInfo %}
+
+                        <div class="card mb-3" id="awards{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Year: <span class="awardYear">{{ item["year"] }}</span></p>
+                                <p>Awarding body: <span class="awardingBody">{{ item["awardingBody"] }}</span></p>
+                                <p>Details of award: <span class="awardDetails">{{ item["details"] }}</span></p>
                                 <p>Team member name: <span class="awardTeam">Team 9</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="awards1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="awards1-edit">Edit</button>
+                                <button class="btn btn-secondary" type="button" id="awards{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="awards{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -424,26 +470,29 @@
                             <div class="form-group">
                                 {{ fundingDivForm.fundingDivSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#fundingDiv-show" aria-expanded="false" aria-controls="fundingDiv-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#fundingDiv-show" aria-expanded="false" aria-controls="fundingDiv-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
                 
-                    <div class="collapse col-md-5 in" id="funding-show">
-                        <div class="panel panel-default" id="fund1">
-                            <div class="panel-body">
-                                <p>Start date: <span class="fundStartDate">10-01-2018</span></p>
-                                <p>End date: <span class="fundEndDate">10-01-2019</span></p>
-                                <p>Amount: <span class="fundAmount">15000000</span></p>
-                                <p>Funding body: <span class="fundBody">UCC</span></p>
-                                <p>Funding programme: <span class="fundProgramme">SEFS</span></p>
-                                <p>Status (if active or expired): <span class="fundStatus">Yes</span></p>
-                                <p>Primary attribution: <span class="fundPrimaryAttrib">TE543L</span></p>
+                    <div class="collapse col-md-5 show" id="funding-show">
+                        {% for item in getFundInfo %}
 
-                                <button class="btn btn-secondary" type="button" id="fund1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="fund1-edit">Edit</button>
+                        <div class="card mb-3" id="fund{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Start date: <span class="fundStartDate">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="fundEndDate">{{ item["endDate"] }}</span></p>
+                                <p>Amount: <span class="fundAmount">{{ item["amount"] }}</span></p>
+                                <p>Funding body: <span class="fundBody">{{ item["fundingBody"] }}</span></p>
+                                <p>Funding programme: <span class="fundProgramme">{{ item["fundingProgramme"] }}</span></p>
+                                <p>Status (if active or expired): <span class="fundStatus">{{ item["status"] }}</span></p>
+                                <p>Primary attribution: <span class="fundPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="fund{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="fund{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -494,24 +543,28 @@
                             <div class="form-group">
                                 {{ teamMemForm.teamMemSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#team-show" aria-expanded="false" aria-controls="team-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#team-show" aria-expanded="false" aria-controls="team-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
-                
-                    <div class="collapse col-md-5 in" id="team-show">
-                        <div class="panel panel-default" id="team1">
-                            <div class="panel-body">
+                    
+                    <!-- @TODO: update this -->
+                    <div class="collapse col-md-5 show" id="team-show">
+                        {% for item in getNonAcInfo %}
+
+                        <div class="card mb-3" id="team{{ loop.index }}">
+                            <div class="card-body">
                                 <p>Start date: <span class="teamStartDate">10-01-2018</span></p>
                                 <p>Departure date: <span class="teamDepartDate">10-01-2019</span></p>
                                 <p>Name: <span class="teamName">CHRX</span></p>
                                 <p>Position: <span class="teamPos">Project Manager</span></p>
                                 <p>Primary attribution: <span class="teamPrimaryAttrib">TL431I</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="team1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="team1-edit">Edit</button>
+                                <button class="btn btn-secondary" type="button" id="team{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="team{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -555,23 +608,26 @@
                             <div class="form-group">
                                 {{ impactsForm.impactsSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#impacts-show" aria-expanded="false" aria-controls="impacts-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#impacts-show" aria-expanded="false" aria-controls="impacts-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
                 
-                    <div class="collapse col-md-5 in" id="impacts-show">
-                        <div class="panel panel-default" id="impact1">
-                            <div class="panel-body">
-                                <p>Title: <span class="impactTitle">Impact 2</span></p>
-                                <p>Category: <span class="impactCategory">Computer Science</span></p>
-                                <p>Primary beneficiary: <span class="impactPrimaryBen">N/A</span></p>
-                                <p>Primary attribution: <span class="impactPrimaryAttrib">PS546L</span></p>
+                    <div class="collapse col-md-5 show" id="impacts-show">
+                        {% for item in getImpInfo %}
 
-                                <button class="btn btn-secondary" type="button" id="impact1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="impact1-edit">Edit</button>
+                        <div class="card mb-3" id="impact{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Title: <span class="impactTitle">{{ item["title"] }}</span></p>
+                                <p>Category: <span class="impactCategory">{{ item["category"] }}</span></p>
+                                <p>Primary beneficiary: <span class="impactPrimaryBen">{{ item["primaryBeneficiary"] }}</span></p>
+                                <p>Primary attribution: <span class="impactPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="impact{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="impact{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -615,23 +671,26 @@
                             <div class="form-group">
                                 {{ innovForm.innovSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#innovCom-show" aria-expanded="false" aria-controls="innovCom-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#innovCom-show" aria-expanded="false" aria-controls="innovCom-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
                 
-                    <div class="collapse col-md-5 in" id="innovCom-show">
-                        <div class="panel panel-default" id="innovCom1">
-                            <div class="panel-body">
-                                <p>Year: <span class="innovComYear">2018</span></p>
-                                <p>Type: <span class="innovComType">...</span></p>
-                                <p>Title: <span class="innovComTitle">...</span></p>
-                                <p>Primary attribution: <span class="innovComPrimaryAttrib">PL546A</span></p>
+                    <div class="collapse col-md-5 show" id="innovCom-show">
+                        {% for item in getInnInfo %}
 
-                                <button class="btn btn-secondary" type="button" id="innovCom1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="innovCom1-edit">Edit</button>
+                        <div class="card mb-3" id="innovCom{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Year: <span class="innovComYear">{{ item["year"] }}</span></p>
+                                <p>Type: <span class="innovComType">.{{ item["type"] }}</span></p>
+                                <p>Title: <span class="innovComTitle">{{ item["title"] }}</span></p>
+                                <p>Primary attribution: <span class="innovComPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="innovCom{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="innovCom{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -696,26 +755,29 @@
                             <div class="form-group">
                                 {{ pubForm.pubSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#publications-show" aria-expanded="false" aria-controls="publications-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#publications-show" aria-expanded="false" aria-controls="publications-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
                 
-                    <div class="collapse col-md-5 in" id="publications-show">
-                        <div class="panel panel-default" id="pub1">
-                            <div class="panel-body">
-                                <p>Year: <span class="pubYear">1970</span></p>
-                                <p>Type: <span class="pubType">Book</span></p>
-                                <p>Title: <span class="pubTitle">Proceedings IEEE WESCON</span></p>
-                                <p>Journal / Conference name: <span class="pubName">...</span></p>
-                                <p>Status: <span class="pubStatus">Published</span></p>
-                                <p>DOI: <span class="pubDOI">BL543KD</span></p>
-                                <p>Primary attribution: <span class="pubPrimaryAttrib">TL543I</span></p>
+                    <div class="collapse col-md-5 show" id="publications-show">
+                        {% for item in getPubInfo %}
 
-                                <button class="btn btn-secondary" type="button" id="pub1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="pub1-edit">Edit</button>
+                        <div class="card mb-3" id="pub{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Year: <span class="pubYear">{{ item["year"] }}</span></p>
+                                <p>Type: <span class="pubType">{{ item["type"] }}</span></p>
+                                <p>Title: <span class="pubTitle">{{ item["title"] }}</span></p>
+                                <p>Journal / Conference name: <span class="pubName">{{ item["name"] }}</span></p>
+                                <p>Status: <span class="pubStatus">{{ item["publicationStatus"] }}</span></p>
+                                <p>DOI: <span class="pubDOI">{{ item["doi"] }}</span></p>
+                                <p>Primary attribution: <span class="pubPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="pub{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="pub{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -773,25 +835,28 @@
                             <div class="form-group">
                                 {{ presForm.presSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#presentations-show" aria-expanded="false" aria-controls="presentations-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#presentations-show" aria-expanded="false" aria-controls="presentations-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
                 
-                    <div class="collapse col-md-5 in" id="presentations-show">
-                        <div class="panel panel-default" id="pres1">
-                            <div class="panel-body">
-                                <p>Year: <span class="presYear">2015</span></p>
-                                <p>Title: <span class="presTitle">...</span></p>
-                                <p>Event type: <span class="presEventType">Conference</span></p>
-                                <p>Organising body: <span class="presOrganBody">...</span></p>
-                                <p>Location: <span class="presLoc">UCC</span></p>
-                                <p>Primary attribution: <span class="presPrimaryAttrib">GL432I</span></p>
+                    <div class="collapse col-md-5 show" id="presentations-show">
+                        {% for item in getPresInfo %}
 
-                                <button class="btn btn-secondary" type="button" id="pres1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="pres1-edit">Edit</button>
+                        <div class="card mb-3" id="pres{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Year: <span class="presYear">{{ item["year"] }}</span></p>
+                                <p>Title: <span class="presTitle">{{ item["title"] }}</span></p>
+                                <p>Event type: <span class="presEventType">{{ item["eventType"] }}</span></p>
+                                <p>Organising body: <span class="presOrganBody">{{ item["organisingBody"] }}</span></p>
+                                <p>Location: <span class="presLoc">{{ item["location"] }}</span></p>
+                                <p>Primary attribution: <span class="presPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="pres{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="pres{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -863,27 +928,30 @@
                             <div class="form-group">
                                 {{ academicCollabsForm.academicCollabsSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#academicCollabs-show" aria-expanded="false" aria-controls="academicCollabs-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#academicCollabs-show" aria-expanded="false" aria-controls="academicCollabs-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
                 
-                    <div class="collapse col-md-5 in" id="academicCollabs-show">
-                        <div class="panel panel-default" id="acCol1">
-                            <div class="panel-body">
-                                <p>Start date: <span class="acColStartDate">10-01-2018</span></p>
-                                <p>End date: <span class="acColEndDate">10-01-2019</span></p>
-                                <p>Name of institution: <span class="acColInstitution">University College Cork</span></p>
-                                <p>Department within institution: <span class="acColDepartment">Computer Science</span></p>
-                                <p>Name of collaborator: <span class="acColName">Prof. K.M Reidy</span></p>
-                                <p>Primary goal: <span class="acColGoal">Joint publication</span></p>
-                                <p>Frequency of interaction: <span class="acColFreq">Weekly</span></p>
-                                <p>Primary attribution: <span class="acColPrimaryAttrib">TL4354IK</span></p>
+                    <div class="collapse col-md-5 show" id="academicCollabs-show">
+                        {% for item in getAcInfo %}
 
-                                <button class="btn btn-secondary" type="button" id="acCol1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="acCol1-edit">Edit</button>
+                        <div class="card mb-3" id="acCol{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Start date: <span class="acColStartDate">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="acColEndDate">{{ item["endDate"] }}</span></p>
+                                <p>Name of institution: <span class="acColInstitution">{{ item["nameOfInstitution"] }}</span></p>
+                                <p>Department within institution: <span class="acColDepartment">{{ item["department"] }}</span></p>
+                                <p>Name of collaborator: <span class="acColName">{{ item["nameOfCollaborator"] }}</span></p>
+                                <p>Primary goal: <span class="acColGoal">{{ item["goal"] }}</span></p>
+                                <p>Frequency of interaction: <span class="acColFreq">{{ item["frequency"] }}</span></p>
+                                <p>Primary attribution: <span class="acColPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="acCol{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="acCol{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -955,27 +1023,30 @@
                             <div class="form-group">
                                 {{ nonAcademicCollabsForm.nonAcademicCollabsSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs-show" aria-expanded="false" aria-controls="nonAcademicCollabs-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs-show" aria-expanded="false" aria-controls="nonAcademicCollabs-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
                 
-                    <div class="collapse col-md-5 in" id="nonAcademicCollabs-show">
-                        <div class="panel panel-default" id="nonAcCol1">
-                            <div class="panel-body">
-                                <p>Start date: <span class="nonAcColStartDate">10-01-2018</span></p>
-                                <p>End date: <span class="nonAcColEndDate">10-01-2019</span></p>
-                                <p>Name of institution: <span class="nonAcColInstitution">University College Cork</span></p>
-                                <p>Department within institution: <span class="nonAcColDepartment">Computer Science</span></p>
-                                <p>Name of collaborator: <span class="nonAcColName">Prof. K.M Reidy</span></p>
-                                <p>Primary goal: <span class="nonAcColGoal">Joint publication</span></p>
-                                <p>Frequency of interaction: <span class="nonAcColFreq">Weekly</span></p>
-                                <p>Primary attribution: <span class="nonAcColPrimaryAttrib">TL4354IK</span></p>
+                    <div class="collapse col-md-5 show" id="nonAcademicCollabs-show">
+                        {% for item in getNonAcInfo %}
 
-                                <button class="btn btn-secondary" type="button" id="nonAcCol1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="nonAcCol1-edit">Edit</button>
+                        <div class="card mb-3" id="nonAcCol{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Start date: <span class="acColStartDate">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="acColEndDate">{{ item["endDate"] }}</span></p>
+                                <p>Name of institution: <span class="acColInstitution">{{ item["nameOfInstitution"] }}</span></p>
+                                <p>Department within institution: <span class="acColDepartment">{{ item["department"] }}</span></p>
+                                <p>Name of collaborator: <span class="acColName">{{ item["nameOfCollaborator"] }}</span></p>
+                                <p>Primary goal: <span class="acColGoal">{{ item["goal"] }}</span></p>
+                                <p>Frequency of interaction: <span class="acColFreq">{{ item["frequency"] }}</span></p>
+                                <p>Primary attribution: <span class="acColPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="nonAcCol{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="nonAcCol{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -1040,26 +1111,29 @@
                             <div class="form-group">
                                 {{ eventsForm.eventsSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#events-show" aria-expanded="false" aria-controls="events-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#events-show" aria-expanded="false" aria-controls="events-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
                 
-                    <div class="collapse col-md-5 in" id="events-show">
-                        <div class="panel panel-default" id="event1">
-                            <div class="panel-body">
-                                <p>Start date: <span class="eventStartDate">10-01-2018</span></p>
-                                <p>End date: <span class="eventEndDate">10-01-2019</span></p>
-                                <p>Title: <span class="eventTitle">Prog. Olympiad</span></p>
-                                <p>Event type: <span class="eventEventType">Workshop</span></p>
-                                <p>Role: <span class="eventRole">Coordinator</span></p>
-                                <p>Location of event: <span class="eventLoc">UCC</span></p>
-                                <p>Primary attribution: <span class="eventPrimaryAttrib">WW25L</span></p>
+                    <div class="collapse col-md-5 show" id="events-show">
+                        {% for item in getEvInfo %}
 
-                                <button class="btn btn-secondary" type="button" id="event1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="event1-edit">Edit</button>
+                        <div class="card mb-3" id="event{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Start date: <span class="eventStartDate">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="eventEndDate">{{ item["endDate"] }}</span></p>
+                                <p>Title: <span class="eventTitle">{{ item["title"] }}</span></p>
+                                <p>Event type: <span class="eventEventType">{{ item["eventType"] }}</span></p>
+                                <p>Role: <span class="eventRole">{{ item["role"] }}</span></p>
+                                <p>Location of event: <span class="eventLoc">{{ item["location"] }}</span></p>
+                                <p>Primary attribution: <span class="eventPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="event{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="event{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -1103,23 +1177,26 @@
                             <div class="form-group">
                                 {{ commForm.commSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#communications-show" aria-expanded="false" aria-controls="communications-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#communications-show" aria-expanded="false" aria-controls="communications-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
                 
-                    <div class="collapse col-md-5 in" id="communications-show">
-                        <div class="panel panel-default" id="comm1">
-                            <div class="panel-body">
-                                <p>Year: <span class="commYear">2015</span></p>
-                                <p>Num. public lectures/demonstrations: <span class="commNumPublic">27</span></p>
-                                <p>Num. visits: <span class="commNumVisits">566</span></p>
-                                <p>Num. media interactions: <span class="commNumMedia">12</span></p>
+                    <div class="collapse col-md-5 show" id="communications-show">
+                        {% for item in getCommInfo %}
 
-                                <button class="btn btn-secondary" type="button" id="comm1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="comm1-edit">Edit</button>
+                        <div class="card mb-3" id="comm{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Year: <span class="commYear">{{ item["year"] }}</span></p>
+                                <p>Num. public lectures/demonstrations: <span class="commNumPublic">{{ item["numberOfLectures"] }}</span></p>
+                                <p>Num. visits: <span class="commNumVisits">{{ item["numberOfVisits"] }}</span></p>
+                                <p>Num. media interactions: <span class="commNumMedia">{{ item["numberOfMediaInteractions"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="comm{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="comm{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -1149,21 +1226,24 @@
                             <div class="form-group">
                                 {{ fundRatioForm.sfiFundingRatioSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#sfiFundingRatio-show" aria-expanded="false" aria-controls="sfiFundingRatio-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#sfiFundingRatio-show" aria-expanded="false" aria-controls="sfiFundingRatio-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
                 
-                   <div class="collapse col-md-5 in" id="sfiFundingRatio-show">
-                        <div class="panel panel-default" id="sfi1">
-                            <div class="panel-body">
-                                <p>Year: <span class="sfiYear">2017</span></p>
-                                <p>Percentage: <span class="sfiPercentage">21-40%</span></p>
+                   <div class="collapse col-md-5 show" id="sfiFundingRatio-show">
+                        {% for item in getSfiInfo %}
 
-                                <button class="btn btn-secondary" type="button" id="sfi1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="sfi1-edit">Edit</button>
+                        <div class="card mb-3" id="sfi{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Year: <span class="sfiYear">{{ item["year"] }}</span></p>
+                                <p>Percentage: <span class="sfiPercentage">{{ item["percentage"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="sfi{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="sfi{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -1242,28 +1322,31 @@
                             <div class="form-group">
                                 {{ pubEngageForm.pubEngageSubmit(class="btn btn-primary") }}
 
-                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#pubEngage-show" aria-expanded="false" aria-controls="pubEngage-show">Show / Hide current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#pubEngage-show" aria-expanded="false" aria-controls="pubEngage-show">Show / Hide current</button>
                             </div>
                         </form>
                     </div>
                 
-                    <div class="collapse col-md-5 in" id="pubEngage-show">
-                        <div class="panel panel-default" id="pEng1">
-                            <div class="panel-body">
-                                <p>Name of project: <span class="pEngName">NP-Complete Problems</span></p>
-                                <p>Start date: <span class="pEngStartDate">10-01-2018</span></p>
-                                <p>End date: <span class="pEngEndDate">10-01-2019</span></p>
-                                <p>Activity type: <span class="pEngActivityType">Public event</span></p>
-                                <p>If other selected: <span class="pEngActivityOther"></span></p>
-                                <p>Project topic: <span class="pEngTopic">Science</span></p>
-                                <p>If other selected: <span class="pEngTopicOther"></span></p>
-                                <p>Target geographical area: <span class="pEngArea">Local (a specific county in Ireland)</span></p>
-                                <p>If local: <span class="pEngAreaOther">Cork</span></p>
+                    <div class="collapse col-md-5 show" id="pubEngage-show">
+                        {% for item in getEdInfo %}
 
-                                <button class="btn btn-secondary" type="button" id="pEng1-clone">Clone</button>
-                                <button class="btn btn-secondary" type="button" id="pEng1-edit">Edit</button>
+                        <div class="card mb-3" id="pEng{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Name of project: <span class="pEngName">{{ item["nameOfProject"] }}</span></p>
+                                <p>Start date: <span class="pEngStartDate">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="pEngEndDate">{{ item["endDate"] }}</span></p>
+                                <p>Activity type: <span class="pEngActivityType">{{ item["activityType"] }}</span></p>
+                                <p>If other selected: <span class="pEngActivityOther">{{ item["otherType"] }}</span></p>
+                                <p>Project topic: <span class="pEngTopic">{{ item["projectTopic"] }}</span></p>
+                                <p>If other selected: <span class="pEngTopicOther">{{ item["otherTopic"] }}</span></p>
+                                <p>Target geographical area: <span class="pEngArea">{{ item["target"] }}</span></p>
+                                <p>If local: <span class="pEngAreaOther">{{ item["localCountry"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="pEng{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="pEng{{ loop.index }}-edit">Edit</button>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
