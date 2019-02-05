@@ -15,6 +15,8 @@ class User(UserMixin, db.Model):
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
+    groups = db.relationship("GroupMembership", back_populates="user")
+
     general_information = db.relationship("GeneralInformation", uselist=False)
     education_information = db.relationship("EducationInformation")
     employment_information = db.relationship("EmploymentInformation")
@@ -213,3 +215,16 @@ class EducationPublicEngagement(db.Model):
 
     def __repr__(self):
         return "<EducationPublicEngagement {}>".format(self.data, self.id)
+
+
+class ResearchGroup(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    users = db.relationship("GroupMembership", back_populates="group")
+
+
+class GroupMembership(db.Model):
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
+    group_id = db.Column(db.Integer, db.ForeignKey("research_group.id"), primary_key=True)
+
+    user = db.relationship("User", back_populates="groups")
+    group = db.relationship("ResearchGroup", back_populates="users")
