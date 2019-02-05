@@ -5,8 +5,11 @@ from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Le
 Optional
 from app.models import User
 
+#Account forms
+
 class LoginForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
+    # username = StringField("Username", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
     remember_me = BooleanField("Remember me")
     submit = SubmitField("Sign In")
@@ -34,6 +37,24 @@ class EditProfileForm(FlaskForm):
     about_me = TextAreaField("About me", validators = [Length(min=0, max=140) ])
     submit = SubmitField("Submit")
 
+class ChangePassword(FlaskForm):
+    # oldPassword = StringField("Old password", validators=[DataRequired() ])
+    newPassword1 = PasswordField("New password", validators=[DataRequired() ])
+    newPassword2 = PasswordField("Repeat new password", validators=[DataRequired(), EqualTo("newPassword1") ])
+    passSubmit = SubmitField("Change password")
+
+class ChangeEmail(FlaskForm):
+    # oldEmail = StringField("Old email", validators=[DataRequired(), Email()])
+    newEmail1 = StringField("New email", validators=[DataRequired(), Email()])
+    newEmail2 = StringField("Repeat new email", validators=[DataRequired(), Email(), EqualTo("newEmail1")])
+    emailSubmit = SubmitField("Change email")
+
+    def validate_email(self, newEmail2):
+        user = User.query.filter_by(email=newEmail2.data).first()
+        if user is not None:
+            raise ValidationError("Please use a different email address.")
+
+# Edit profile forms 
 
 class GeneralInformationForm(FlaskForm):
     firstName = StringField("First name", validators=[DataRequired() ])

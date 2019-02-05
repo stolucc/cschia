@@ -27,6 +27,8 @@
                 {% else %}
                 <li><a href="{{ url_for("logout") }}">Logout</a></li>
                 <li><a href="{{ url_for("user", username=current_user.username) }}">Profile</a></li>
+                <li><a href="{{url_for("edit_profile")}}">Edit Profile</a></li>
+                <li><a href="{{url_for("edit_account")}}">Edit Account</a></li>
                 {% endif %}
             </ul>
         </div>

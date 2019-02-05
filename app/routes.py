@@ -6,7 +6,8 @@ SocietiesInformationForm, AwardsInformationForm, \
 FundingDiversificationForm, TeamMembersForm, ImpactsForm, \
 InnovationAndCommercialisationForm, PublicationsForm, \
 PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
-EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm
+EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
+ChangePassword, ChangeEmail
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
 SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
 Publications, Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
@@ -49,9 +50,9 @@ def login():
         return redirect(url_for("index"))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = User.query.filter_by(email=form.email.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash("Invalid username or password")
+            flash("Invalid email or password")
             return redirect(url_for("login"))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get("next")
@@ -110,7 +111,38 @@ def show_profile():
 
     return render_template("profile.html", title="View Profile", info=check_if_exists)
 
-def get_list(q):
+@app.route("/edit_account", methods=["GET", "POST"])
+@login_required
+def edit_account():
+    passwordForm = ChangePassword()
+    emailForm = ChangeEmail()
+
+    if request.method == "POST":
+        flash(request.form)
+
+        if passwordForm.validate_on_submit and "passSubmit" in request.form:
+            flash(request.form)
+
+            user = User.query.filter_by(id=current_user.id).first()
+            user.set_password(passwordForm.newPassword2.data)
+            db.session.add(user)
+            db.session.commit()
+            flash("Password has been changed!")
+            return redirect(url_for("login"))
+
+        elif emailForm.validate_on_submit and "emailSubmit" in request.form:
+
+            user = User.query.filter_by(id=current_user.id).first()
+            user.email = emailForm.newEmail2.data
+            db.session.add(user)
+            db.session.commit()
+            flash("Email has been changed!")
+            return redirect(url_for("login"))
+
+    return render_template("edit_account.html", title="Edit Account", passwordForm=passwordForm,
+                                                                        emailForm=emailForm)
+
+def get_list(q):    
     lst = []
     for item in q:
         lst.append(json.loads(item.data))
