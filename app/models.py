@@ -4,6 +4,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from hashlib import md5
 
+class ReserchCenter(db.Model):
+    center_name = db.Column(db.String(64), index=True)
+    center_address = db.Column(db.String(128), index=True)
+    institution = db.Column(db.String(64), index=True)
+    admin = db.Column(db.String(64), index=True)
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)

@@ -11,6 +11,13 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField("Remember me")
     submit = SubmitField("Sign In")
 
+class Add_center(FlaskForm):
+    center_name = StringField("Center Name", validators=[DataRequired()])
+    center_address = StringField("Location", validators=[DataRequired()])
+    institution = StringField("Attached Institution")
+    admin = StringField("Admin Email", validators=[DataRequired()])
+    submit = SubmitField("Sign In")
+
 class RegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
