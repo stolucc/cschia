@@ -45,19 +45,21 @@ class ChangePassword(FlaskForm):
 
 class ChangeEmail(FlaskForm):
     # oldEmail = StringField("Old email", validators=[DataRequired(), Email()])
-    newEmail1 = StringField("New email", validators=[DataRequired(), Email() ])
-    newEmail2 = StringField("Repeat new email", validators=[DataRequired(), Email(), EqualTo("newEmail1")])
+    newEmail1 = StringField("New email", validators=[DataRequired() ])
+    newEmail2 = StringField("Repeat new email", validators=[DataRequired(), EqualTo("newEmail1")])
     emailSubmit = SubmitField("Change email")
 
-    def validate_newEmail1(form, newEmail1):
+    """
+    def validate_newEmail1(self, newEmail1):
         user = User.query.filter_by(email=newEmail1.data).first()
         if user is not None:
             raise ValidationError("Please use a different email address.")
 
-    def validate_newEmail2(form, newEmail2):
+    def validate_newEmail2(self, newEmail2):
         user = User.query.filter_by(email=newEmail2.data).first()
         if user is not None:
             raise ValidationError("Please use a different email address.")
+    """
 
 # Edit profile forms 
 

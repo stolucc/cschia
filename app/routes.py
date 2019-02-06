@@ -130,6 +130,7 @@ def edit_account():
 
         elif emailForm.validate_on_submit: # and "emailSubmit" in request.form:
 
+            
             user = User.query.filter_by(email=emailForm.newEmail2.data).first()
             if user is None:
                 user = User.query.filter_by(id=current_user.id).first()
