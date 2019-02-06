@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from hashlib import md5
 
 class ReserchCenter(db.Model):
-    center_name = db.Column(db.String(64), index=True)
+    center_name = db.Column(db.String(64), index=True ,primary_key=True,unique=True)
     center_address = db.Column(db.String(128), index=True)
     institution = db.Column(db.String(64), index=True)
     admin = db.Column(db.String(64), index=True)

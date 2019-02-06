@@ -28,7 +28,7 @@
         <p>
             {{ form.admin.label }}<br>
             {{ form.admin(size=64) }}<br>
-            {% for error in form.location.errors %}
+            {% for error in form.admin.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>

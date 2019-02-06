@@ -1,16 +1,16 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInformationForm, \
-EducationInformationForm, EmploymentInformationForm, \
-SocietiesInformationForm, AwardsInformationForm, \
-FundingDiversificationForm, TeamMembersForm, ImpactsForm, \
-InnovationAndCommercialisationForm, PublicationsForm, \
-PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
-EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm
+    EducationInformationForm, EmploymentInformationForm, \
+    SocietiesInformationForm, AwardsInformationForm, \
+    FundingDiversificationForm, TeamMembersForm, ImpactsForm, \
+    InnovationAndCommercialisationForm, PublicationsForm, \
+    PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
+    EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, AddCenter
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
-SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
-Publications, Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
-CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement
+    SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
+    Publications, Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
+    CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, ReserchCenter
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
@@ -91,6 +91,19 @@ def admin_register_user():
         flash("Congratulation, You Have Now Registered a User!")
         return redirect(url_for("login"))
     return render_template("register.html", title="Register", form=form)
+
+@app.route("/add_center", methods=["GET", "POST"])
+def add_center():
+    form = AddCenter()
+    if form.validate_on_submit():
+        center = ReserchCenter(center_name=form.center_name.data, center_address=form.center_address.data,
+        institution=form.institution.data,admin=form.admin.data)
+        db.session.add()
+        db.session.add(user)
+        db.session.commit()
+        flash("Congratulation, You Have Now Registered Research Center!")
+        return redirect(url_for("add_center"))
+    return render_template("add_center.html", title="Add Center", form=form)
 
 #not needed
 @app.route("/user/<username>")

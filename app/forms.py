@@ -11,12 +11,12 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField("Remember me")
     submit = SubmitField("Sign In")
 
-class Add_center(FlaskForm):
+class AddCenter(FlaskForm):
     center_name = StringField("Center Name", validators=[DataRequired()])
     center_address = StringField("Location", validators=[DataRequired()])
     institution = StringField("Attached Institution")
     admin = StringField("Admin Email", validators=[DataRequired()])
-    submit = SubmitField("Sign In")
+    submit = SubmitField("Submit Center")
 
 class RegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
