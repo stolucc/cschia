@@ -77,7 +77,7 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash("Congratulation, you are now a registered user!")
+        flash("Congratulations, you are now a registered user!")
         return redirect(url_for("login"))
     return render_template("register.html", title="Register", form=form)
 
@@ -89,9 +89,13 @@ def admin_register_user():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash("Congratulation, You Have Now Registered a User!")
+        flash("Congratulations, You Have Now Registered a User!")
         return redirect(url_for("login"))
     return render_template("register.html", title="Register", form=form)
+
+@app.route("/admin_publish_call")
+def publish_call():
+    form = ""
 
 #not needed
 @app.route("/user/<username>")

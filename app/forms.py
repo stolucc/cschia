@@ -236,6 +236,9 @@ class SfiFundingRatioForm(FlaskForm):
     validators=[DataRequired() ])
     sfiFundingRatioSubmit = SubmitField("Save")
 
+#class CallForProposalForm(FlaskForm):
+
+
 class EducationAndPublicEngagementForm(FlaskForm):
     nameOfProject = TextAreaField("Name of project", \
     validators = [Length(min=0, max=140) ])
