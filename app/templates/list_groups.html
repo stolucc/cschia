@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Your groups</h1>
+
+    <ul class="list-group">
+    {% for group in groups %}
+        <li class="list-group-item">
+            <h2><a href="{{ url_for('view_group', group_id=group.id) }}">Group "{{ group.name }}"</a></h2>
+            <p>{{ group.users|length }} members</p>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

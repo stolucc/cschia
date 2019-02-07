@@ -1,7 +1,7 @@
 from flask import Flask
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate 
+from flask_migrate import Migrate
 from flask_login import LoginManager
 import logging
 from logging.handlers import SMTPHandler
@@ -30,5 +30,5 @@ if not app.debug:
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
 
-        
-from app import routes, models, errors
+
+from app import routes, models, errors, groups

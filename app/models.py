@@ -219,6 +219,7 @@ class EducationPublicEngagement(db.Model):
 
 class ResearchGroup(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), index=True)
     users = db.relationship("GroupMembership", back_populates="group")
 
 
