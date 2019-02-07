@@ -6,7 +6,8 @@ SocietiesInformationForm, AwardsInformationForm, \
 FundingDiversificationForm, TeamMembersForm, ImpactsForm, \
 InnovationAndCommercialisationForm, PublicationsForm, \
 PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
-EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm
+EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
+ChangePassword, ChangeEmail
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
 SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
 Publications, Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
@@ -49,9 +50,9 @@ def login():
         return redirect(url_for("index"))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = User.query.filter_by(email=form.email.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash("Invalid username or password")
+            flash("Invalid email or password")
             return redirect(url_for("login"))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get("next")
@@ -92,6 +93,13 @@ def admin_register_user():
         return redirect(url_for("login"))
     return render_template("register.html", title="Register", form=form)
 
+
+@app.route("/admin_control")
+def admin_control():
+    print("testing testing 1 2 3 ")
+    return render_template("admin_control.html")
+
+
 #not needed
 @app.route("/user/<username>")
 @login_required
@@ -110,7 +118,51 @@ def show_profile():
 
     return render_template("profile.html", title="View Profile", info=check_if_exists)
 
-def get_list(q):
+@app.route("/edit_account", methods=["GET", "POST"])
+@login_required
+def edit_account():
+    passwordForm = ChangePassword()
+    emailForm = ChangeEmail()
+
+    if request.method == "POST":
+
+        if passwordForm.validate_on_submit and "passSubmit" in request.form:
+
+            user = User.query.filter_by(id=current_user.id).first()
+            user.set_password(passwordForm.newPassword2.data)
+            db.session.add(user)
+            db.session.commit()
+            flash("Password has been changed!")
+            return redirect(url_for("login"))
+
+        elif emailForm.validate_on_submit: # and "emailSubmit" in request.form:
+
+            
+            user = User.query.filter_by(email=emailForm.newEmail2.data).first()
+            if user is None:
+                user = User.query.filter_by(id=current_user.id).first()
+                user.email = emailForm.newEmail2.data
+                db.session.add(user)
+                db.session.commit()
+                flash("Email has been changed!")
+                return redirect(url_for("login"))
+            elif user.email == emailForm.newEmail2.data:
+                flash("Please use a different email address")
+
+            return redirect(url_for("edit_account"))
+            """
+            user = User.query.filter_by(id=current_user.id).first()
+            user.email = emailForm.newEmail2.data
+            db.session.add(user)
+            db.session.commit()
+            flash("Email has been changed!")
+            return redirect(url_for("login"))
+            """
+
+    return render_template("edit_account.html", title="Edit Account", passwordForm=passwordForm,
+                                                                        emailForm=emailForm)
+
+def get_list(q):    
     lst = []
     for item in q:
         lst.append(json.loads(item.data))
@@ -140,7 +192,7 @@ def edit_profile():
     jsonGenInfo = GeneralInformation.query.filter_by(user_id=current_user.id).first()
     if jsonGenInfo is not None:
         getGenInfo = json.loads(jsonGenInfo.data)
-    else: 
+    else:
         getGenInfo = ""
 
     jsonEduInfo = EducationInformation.query.filter_by(user_id=current_user.id).all()
@@ -237,7 +289,7 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
 
         elif employForm.validate_on_submit and "employSubmit" in request.form: 
             
@@ -253,7 +305,7 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
 
         elif socForm.validate_on_submit and "socSubmit" in request.form:
             
@@ -271,7 +323,7 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
 
         elif awardsForm.validate_on_submit and "awardsSubmit" in request.form:
             
@@ -288,7 +340,7 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
 
         elif fundingDivForm.validate_on_submit and "fundingDivSubmit" in request.form:
             
@@ -308,7 +360,7 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
 
         elif teamMemForm.validate_on_submit and "teamMemSubmit" in request.form:
             flash("testSuccessTea")
@@ -328,7 +380,7 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
 
         elif innovForm.validate_on_submit and "innovSubmit" in request.form:
             
@@ -345,7 +397,7 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
 
         elif pubForm.validate_on_submit and "pubSubmit" in request.form:
             
@@ -365,7 +417,7 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
 
         elif presForm.validate_on_submit and "presSubmit" in request.form:
             
@@ -384,7 +436,7 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
 
         elif academicCollabsForm.validate_on_submit and "academicCollabsSubmit" in request.form:
             
@@ -406,7 +458,7 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
 
         elif nonAcademicCollabsForm.validate_on_submit and "nonAcademicCollabsSubmit" in request.form:
             
@@ -428,7 +480,7 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
 
         elif eventsForm.validate_on_submit and  "eventsSubmit" in request.form:
             
@@ -448,7 +500,7 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
   
         elif commForm.validate_on_submit and "commSubmit" in request.form:
         
@@ -465,7 +517,7 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
 
         elif fundRatioForm.validate_on_submit and "sfiFundingRatioSubmit" in request.form:
            
@@ -480,7 +532,7 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
 
         elif pubEngageForm.validate_on_submit and "pubEngageSubmit" in request.form:
            
@@ -502,7 +554,123 @@ def edit_profile():
             userInfo.data = infoJson
 
             db.session.commit()
-            flash("changes saved")
+            flash("Changes saved.")
+        
+        elif "edu-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = EducationInformation.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+        elif "employ-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = EmploymentInformation.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+        elif "soc-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = SocietiesInformation.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+        elif "awards-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = AwardsInformation.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+        elif "fund-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = FundingDiversification.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+            """ Need to add a table to models.py
+            elif "team-delete" in request.form:
+                num = int([s for s in request.form.keys() if s.isdigit()][0])
+                userInfo = TeamMembersForm.query.filter_by(user_id=current_user.id).all()[num-1]
+                db.session.delete(userInfo)
+                db.session.commit()
+                flash("Entry successfully removed.")
+            """
+        elif "impacts-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = Impacts.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+        elif "innovCom-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = InnovationAndCommercialisation.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+        elif "publications-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = Publications.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+        elif "presentations-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = Presentations.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+        elif "acCol-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = AcademicCollaborations.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+        elif "nonAcCol-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = NonAcademicCollaborations.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+        elif "event-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = Events.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+        elif "comm-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = CommunicationsOverview.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+        elif "sfi-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = SfiFundingRatio.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+        elif "pEng-delete" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = EducationPublicEngagement.query.filter_by(user_id=current_user.id).all()[num-1]
+            db.session.delete(userInfo)
+            db.session.commit()
+            flash("Entry successfully removed.")
+        
+        elif eduForm.validate_on_submit and "eduEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = EducationInformation.query.filter_by(user_id=current_user.id).all()[num-1]
+            
+            info = {
+                "degree" : eduForm.degree.data,
+                "fieldOfStudy" : eduForm.fieldOfStudy.data,
+                "institution" : eduForm.institution.data,
+                "location" : eduForm.location.data, 
+                "yearOfDegreeAward" : eduForm.yearOfDegreeAward.data
+            }
+            
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
         
         return redirect(url_for("edit_profile"))
 

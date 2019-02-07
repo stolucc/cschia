@@ -4,9 +4,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
     {% if title %}
     <title>SESAME | {{title}}</title>
     {% else %}
@@ -15,18 +21,20 @@
 </head> 
 
 <body>
+    <div class="wrapper"></div>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="{{ url_for("index") }}">Home</a>
+                <img class="navbar-brand" src="../static/sfi_logo.png" height="100"/>
             </div>
             <ul class="nav navbar-nav">
                 {% if current_user.is_anonymous %}
-                <li><a href="{{ url_for("login") }}">Login</a>
-                </li>
+                <li><a href="{{ url_for("index") }}">Home</a></li>
+                <li><a href="{{ url_for("login") }}">Login</a></li>
                 {% else %}
                 <li><a href="{{ url_for("logout") }}">Logout</a></li>
-                <li><a href="{{ url_for("user", username=current_user.username) }}">Profile</a></li>
+                <li><a href="{{url_for("edit_profile")}}">Edit Profile</a></li>
+                <li><a href="{{url_for("edit_account")}}">Edit Account</a></li>
                 {% endif %}
             </ul>
         </div>
@@ -34,11 +42,9 @@
     
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-    
-        {% for message in messages %}
+    {% for message in messages %}
         <div class="alert alert-warning text-center" role="alert">{{ message }}</div>
         {% endfor %}
-    
     {% endif %}
     {% endwith %}
     {% block content %}{% endblock %}
