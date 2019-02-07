@@ -54,7 +54,8 @@ class EducationInformationForm(FlaskForm):
     institution = StringField("Institution", validators=[DataRequired() ])
     location = StringField("Location", validators=[DataRequired() ])
     yearOfDegreeAward = StringField("Year of degree award", validators=[DataRequired() ])
-    eduSubmit = SubmitField("Save")
+    eduSubmit = SubmitField("Add new")
+    eduEdit = SubmitField("Update")
 
 class EmploymentInformationForm(FlaskForm):
     company = StringField("Institution/Company", validators=[DataRequired() ])

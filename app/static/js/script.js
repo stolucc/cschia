@@ -5,8 +5,10 @@ $(document).ready(function() {
     });
 
     // Set up cloning of data in edit_profile
-    for (var i=1; i<3; i++) {
+    for (var i=1; i<parseInt($('#numEdu').text())+1; i++) {
         $('#edu'+i+'-clone').click(function() {
+            addMode('edu', 'Edu', 'Add Education Information');
+
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#eduDegree').val($('#edu'+id+' .eduDegree').text());
             $('#eduFieldOfStudy').val($('#edu'+id+' .eduFieldOfStudy').text());
@@ -16,7 +18,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numEmploy').text())+1; i++) {
         $('#employ'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#employCompany').val($('#employ'+id+' .employCompany').text());
@@ -25,7 +27,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numSoc').text())+1; i++) {
         $('#soc'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#socStart').val($('#soc'+id+' .socStart').text());
@@ -36,7 +38,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numAwards').text())+1; i++) {
         $('#awards'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#awardYear').val($('#awards'+id+' .awardYear').text());
@@ -46,7 +48,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numFund').text())+1; i++) {
         $('#fund'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#fundStartDate').val($('#fund'+id+' .fundStartDate').text());
@@ -59,7 +61,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numTeam').text())+1; i++) {
         $('#team'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#teamStartDate').val($('#team'+id+' .teamStartDate').text());
@@ -70,7 +72,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numImpacts').text())+1; i++) {
         $('#impact'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#impactTitle').val($('#impact'+id+' .impactTitle').text());
@@ -80,7 +82,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numInnovCom').text())+1; i++) {
         $('#innovCom'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#innovComYear').val($('#innovCom'+id+' .innovComYear').text());
@@ -90,7 +92,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numPub').text())+1; i++) {
         $('#pub'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#pubYear').val($('#pub'+id+' .pubYear').text());
@@ -103,7 +105,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numPres').text())+1; i++) {
         $('#pres'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#presYear').val($('#pres'+id+' .presYear').text());
@@ -115,7 +117,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numAc').text())+1; i++) {
         $('#acCol'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#acColStartDate').val($('#acCol'+id+' .acColStartDate').text());
@@ -129,7 +131,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numNonAc').text())+1; i++) {
         $('#nonAcCol'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#nonAcColStartDate').val($('#nonAcCol'+id+' .nonAcColStartDate').text());
@@ -143,7 +145,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numEvents').text())+1; i++) {
         $('#event'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#eventStartDate').val($('#event'+id+' .eventStartDate').text());
@@ -156,7 +158,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numComm').text())+1; i++) {
         $('#comm'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#commYear').val($('#comm'+id+' .commYear').text());
@@ -166,7 +168,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numSfi').text())+1; i++) {
         $('#sfi'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#sfiYear').val($('#sfi'+id+' .sfiYear').text());
@@ -174,7 +176,7 @@ $(document).ready(function() {
         });
     }
 
-    for (var i=1; i<2; i++) {
+    for (var i=1; i<parseInt($('#numPEng').text())+1; i++) {
         $('#pEng'+i+'-clone').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#pEngName').val($('#pEng'+id+' .pEngName').text());
@@ -188,4 +190,50 @@ $(document).ready(function() {
             $('#pEngAreaOther').val($('#pEng'+id+' .pEngAreaOther').text());
         });
     }
+
+
+    // Set up editing of data in edit_profile
+    for (var i=1; i<parseInt($('#numEdu').text())+1; i++) {
+        $('#edu'+i+'-edit').click(function() {
+            var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
+
+            $('#eduDegree').val($('#edu'+id+' .eduDegree').text());
+            $('#eduFieldOfStudy').val($('#edu'+id+' .eduFieldOfStudy').text());
+            $('#eduInstitution').val($('#edu'+id+' .eduInstitution').text());
+            $('#eduLoc').val($('#edu'+id+' .eduLoc').text());
+            $('#eduYearDegree').val($('#edu'+id+' .eduYearDegree').text());
+
+            $('#eduTitle').text('Edit Education Information');
+
+            $('#eduSubmit').addClass('d-none');
+            $('#eduEdit').removeClass('d-none');
+            $('#eduAddMode').removeClass('d-none');
+
+            for (var j=1; j<parseInt($('#numEdu').text())+1; j++) {
+                $('#edu'+j).removeClass('bg-dark text-white');
+            }
+
+            $('#edu'+id).addClass('bg-dark text-white');
+
+            $('#eduIndex').attr('name', id.toString());
+        });
+    }
+
+    // Switch a section to add new mode (not editing current)
+    function addMode(section, uSection, title) {
+        for (var j=1; j<parseInt($('#num'+uSection).text())+1; j++) {
+            $('#'+section+j).removeClass('bg-dark text-white');
+        }
+
+        $('#'+section+'Title').text(title);
+        $('#'+section+'Form').trigger('reset');
+
+        $('#'+section+'Submit').removeClass('d-none');
+        $('#'+section+'Edit').addClass('d-none');
+        $('#'+section+'AddMode').addClass('d-none');
+    }
+
+    $('#eduAddMode').click(function() {
+        addMode('edu', 'Edu', 'Add Education Information');
+    });
 });

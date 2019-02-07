@@ -10,67 +10,67 @@
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#education" aria-expanded="false" aria-controls="education">Education</button>
-                    <span class="badge badge-secondary badge-pill float-right float-right">{% if getEduInfo %}{{ getEduInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numEdu">{% if getEduInfo %}{{ getEduInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#employment" aria-expanded="false" aria-controls="employment">Employment</button>
-                    <span class="badge badge-secondary badge-pill float-right">{% if getEmployInfo %}{{ getEmployInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numEmploy">{% if getEmployInfo %}{{ getEmployInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#societies" aria-expanded="false" aria-controls="societies">Societies</button>
-                    <span class="badge badge-secondary badge-pill float-right">{% if getSocInfo %}{{ getSocInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numSoc">{% if getSocInfo %}{{ getSocInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#awards" aria-expanded="false" aria-controls="awards">Awards</button>
-                    <span class="badge badge-secondary badge-pill float-right">{% if getAwardInfo %}{{ getAwardInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numAwards">{% if getAwardInfo %}{{ getAwardInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#fundingDiv" aria-expanded="false" aria-controls="fundingDiv">Funding Diversification</button>
-                    <span class="badge badge-secondary badge-pill float-right">{% if getFundInfo %}{{ getFundInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numFund">{% if getFundInfo %}{{ getFundInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#teamMembers" aria-expanded="false" aria-controls="teamMembers">Team Members</button>
-                    <span class="badge badge-secondary badge-pill float-right"><!-- @TODO --></span>
+                    <span class="badge badge-dark badge-pill float-right" id="numTeam"><!-- @TODO --></span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#impacts" aria-expanded="false" aria-controls="impacts">Impacts</button>
-                    <span class="badge badge-secondary badge-pill float-right">{% if getImpInfo %}{{ getImpInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numImpacts">{% if getImpInfo %}{{ getImpInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#innovCom" aria-expanded="false" aria-controls="innovCom">Innovation and Commercialisation</button>
-                    <span class="badge badge-secondary badge-pill float-right">{% if getInnInfo %}{{ getInnInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numInnovCom">{% if getInnInfo %}{{ getInnInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#publications" aria-expanded="false" aria-controls="publications">Publications</button>
-                    <span class="badge badge-secondary badge-pill float-right">{% if getPubInfo %}{{ getPubInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numPub">{% if getPubInfo %}{{ getPubInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#presentations" aria-expanded="false" aria-controls="presentations">Presentations</button>
-                    <span class="badge badge-secondary badge-pill float-right">{% if getPresInfo %}{{ getPresInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numPres">{% if getPresInfo %}{{ getPresInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#academicCollabs" aria-expanded="false" aria-controls="academicCollabs">Academic Collaborations</button>
-                    <span class="badge badge-secondary badge-pill float-right">{% if getAcInfo %}{{ getAcInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numAc">{% if getAcInfo %}{{ getAcInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs" aria-expanded="false" aria-controls="nonAcademicCollabs">Non Academic Collaborations</button>
-                    <span class="badge badge-secondary badge-pill float-right">{% if getNonAcInfo %}{{ getNonAcInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numNonAc">{% if getNonAcInfo %}{{ getNonAcInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#events" aria-expanded="false" aria-controls="events">Events</button>
-                    <span class="badge badge-secondary badge-pill float-right">{% if getEvInfo %}{{ getEvInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numEvents">{% if getEvInfo %}{{ getEvInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#communications" aria-expanded="false" aria-controls="communications">Communications</button>
-                    <span class="badge badge-secondary badge-pill float-right">{% if getCommInfo %}{{ getCommInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numComm">{% if getCommInfo %}{{ getCommInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#sfiFundingRatio" aria-expanded="false" aria-controls="sfiFundingRatio">SFI Funding Ratio</button>
-                    <span class="badge badge-secondary badge-pill float-right">{% if getSfiInfo %}{{ getSfiInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numSfi">{% if getSfiInfo %}{{ getSfiInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#pubEngage" aria-expanded="false" aria-controls="pubEngage">Education and Public Engagement</button>
-                    <span class="badge badge-secondary badge-pill float-right">{% if getEdInfo %}{{ getEdInfo|length }}{% endif %}</span>
+                    <span class="badge badge-dark badge-pill float-right" id="numPEng">{% if getEdInfo %}{{ getEdInfo|length }}{% endif %}</span>
                 </li>
             </ul>
         </div>
@@ -154,8 +154,8 @@
             <div class="collapse" id="education">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Education Information</h1>
-                        <form action="" method="post">
+                        <h1 id="eduTitle">Add Education Information</h1>
+                        <form action="" method="post" id="eduForm">
                             {{ eduForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ eduForm.degree.label }}<br>
@@ -194,7 +194,12 @@
                             </div>
                             <div class="form-group">
                                 {{ eduForm.eduSubmit(class="btn btn-primary") }}
+                                {{ eduForm.eduEdit(class="btn btn-primary d-none") }}
 
+                                <input type="hidden" name="" id="eduIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="eduAddMode">Add new entry</button>
+                                
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#education-show" aria-expanded="false" aria-controls="education-show">Show / Hide current</button>
                             </div>
                         </form>
@@ -211,8 +216,12 @@
                                 <p>Location: <span class="eduLoc">{{ item["location"] }}</span></p>
                                 <p>Year of degree award: <span class="eduYearDegree">{{ item["yearOfDegreeAward"] }}</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="edu{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="edu{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="edu{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-danger" id="edu-delete" name="edu-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -267,8 +276,12 @@
                                 <p>Location: <span class="employLoc">{{ item["location"] }}</span></p>
                                 <p>Years: <span class="employYears">{{ item["years"] }}</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="employ{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="employ{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="employ{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="emloy-delete" name="employ-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -338,8 +351,12 @@
                                 <p>Type of membership: <span class="socMembership">{{ item["typeOfMembership"]}}</span></p>
                                 <p>Status (if active): <span class="socStatus">{{ item["status"] }}</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="soc{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="soc{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="soc{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="soc-delete" name="soc-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -401,8 +418,12 @@
                                 <p>Details of award: <span class="awardDetails">{{ item["details"] }}</span></p>
                                 <p>Team member name: <span class="awardTeam">Team 9</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="awards{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="awards{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="awards{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="awards-delete" name="awards-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -488,8 +509,12 @@
                                 <p>Status (if active or expired): <span class="fundStatus">{{ item["status"] }}</span></p>
                                 <p>Primary attribution: <span class="fundPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="fund{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="fund{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="fund{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="fund-delete" name="fund-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -560,8 +585,12 @@
                                 <p>Position: <span class="teamPos">Project Manager</span></p>
                                 <p>Primary attribution: <span class="teamPrimaryAttrib">TL431I</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="team{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="team{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="team{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="team-delete" name="team-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -623,8 +652,12 @@
                                 <p>Primary beneficiary: <span class="impactPrimaryBen">{{ item["primaryBeneficiary"] }}</span></p>
                                 <p>Primary attribution: <span class="impactPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="impact{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="impact{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="impact{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="impacts-delete" name="impacts-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -686,8 +719,12 @@
                                 <p>Title: <span class="innovComTitle">{{ item["title"] }}</span></p>
                                 <p>Primary attribution: <span class="innovComPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="innovCom{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="innovCom{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="innovCom{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="innovCom-delete" name="innovCom-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -773,8 +810,12 @@
                                 <p>DOI: <span class="pubDOI">{{ item["doi"] }}</span></p>
                                 <p>Primary attribution: <span class="pubPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="pub{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="pub{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="pub{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="publications-delete" name="publications-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -852,8 +893,12 @@
                                 <p>Location: <span class="presLoc">{{ item["location"] }}</span></p>
                                 <p>Primary attribution: <span class="presPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="pres{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="pres{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="pres{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="presentations-delete" name="presentations-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -947,8 +992,12 @@
                                 <p>Frequency of interaction: <span class="acColFreq">{{ item["frequency"] }}</span></p>
                                 <p>Primary attribution: <span class="acColPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="acCol{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="acCol{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="acCol{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="acCol-delete" name="acCol-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -1033,17 +1082,21 @@
 
                         <div class="card mb-3" id="nonAcCol{{ loop.index }}">
                             <div class="card-body">
-                                <p>Start date: <span class="acColStartDate">{{ item["startDate"] }}</span></p>
-                                <p>End date: <span class="acColEndDate">{{ item["endDate"] }}</span></p>
-                                <p>Name of institution: <span class="acColInstitution">{{ item["nameOfInstitution"] }}</span></p>
-                                <p>Department within institution: <span class="acColDepartment">{{ item["department"] }}</span></p>
-                                <p>Name of collaborator: <span class="acColName">{{ item["nameOfCollaborator"] }}</span></p>
-                                <p>Primary goal: <span class="acColGoal">{{ item["goal"] }}</span></p>
-                                <p>Frequency of interaction: <span class="acColFreq">{{ item["frequency"] }}</span></p>
-                                <p>Primary attribution: <span class="acColPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+                                <p>Start date: <span class="nonAcColStartDate">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="nonAcColEndDate">{{ item["endDate"] }}</span></p>
+                                <p>Name of institution: <span class="nonAcColInstitution">{{ item["nameOfInstitution"] }}</span></p>
+                                <p>Department within institution: <span class="nonAcColDepartment">{{ item["department"] }}</span></p>
+                                <p>Name of collaborator: <span class="nonAcColName">{{ item["nameOfCollaborator"] }}</span></p>
+                                <p>Primary goal: <span class="nonAcColGoal">{{ item["goal"] }}</span></p>
+                                <p>Frequency of interaction: <span class="nonAcColFreq">{{ item["frequency"] }}</span></p>
+                                <p>Primary attribution: <span class="nonAcColPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="nonAcCol{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="nonAcCol{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="nonAcCol{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="nonAcCol-delete" name="nonAcCol-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -1129,8 +1182,12 @@
                                 <p>Location of event: <span class="eventLoc">{{ item["location"] }}</span></p>
                                 <p>Primary attribution: <span class="eventPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="event{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="event{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="event{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="event-delete" name="event-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -1192,8 +1249,12 @@
                                 <p>Num. visits: <span class="commNumVisits">{{ item["numberOfVisits"] }}</span></p>
                                 <p>Num. media interactions: <span class="commNumMedia">{{ item["numberOfMediaInteractions"] }}</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="comm{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="comm{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="comm{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="comm-delete" name="comm-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -1239,8 +1300,12 @@
                                 <p>Year: <span class="sfiYear">{{ item["year"] }}</span></p>
                                 <p>Percentage: <span class="sfiPercentage">{{ item["percentage"] }}</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="sfi{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="sfi{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="sfi{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="sfi-delete" name="sfi-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}
@@ -1342,8 +1407,12 @@
                                 <p>Target geographical area: <span class="pEngArea">{{ item["target"] }}</span></p>
                                 <p>If local: <span class="pEngAreaOther">{{ item["localCountry"] }}</span></p>
 
-                                <button class="btn btn-secondary" type="button" id="pEng{{ loop.index }}-clone">Clone</button>
+                                <button class="btn btn-secondary" type="button" id="pEng{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="pEng{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="pEng-delete" name="pEng-delete" value="Delete">
+                                </form>
                             </div>
                         </div>
                         {% endfor %}

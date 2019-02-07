@@ -40,11 +40,9 @@
     
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-    <ul>
         {% for message in messages %}
-        <li>{{ messages }}</li>
+        <div class="alert alert-success w-25 m-3">{{ message }}</div>
         {% endfor %}
-    </ul>
     {% endif %}
     {% endwith %}
     {% block content %}{% endblock %}
