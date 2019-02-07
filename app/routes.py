@@ -93,9 +93,10 @@ def admin_register_user():
         return redirect(url_for("login"))
     return render_template("register.html", title="Register", form=form)
 
-@app.route("/admin_publish_call")
+@app.route("/admin_publish_call", methods=["GET", "POST"])
 def publish_call():
-    form = ""
+    form = ProposalForm()
+    return render_template("admin_publish_call.html", title="Publish Call", form=form)
 
 #not needed
 @app.route("/user/<username>")

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, \
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, FileField, \
 TextAreaField, IntegerField, SelectField, DateField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length, \
 Optional
@@ -236,8 +236,14 @@ class SfiFundingRatioForm(FlaskForm):
     validators=[DataRequired() ])
     sfiFundingRatioSubmit = SubmitField("Save")
 
-#class CallForProposalForm(FlaskForm):
-
+class ProposalForm(FlaskForm):
+    deadline = DateField("Deadline")
+    contact = StringField("Contact")
+    overview = TextAreaField("Overview", validators = [Length(min=0,max=1500)])
+    funding = TextAreaField("Funding", validators = [Length(min=0,max=1500)])
+    key_dates = TextAreaField("Key Dates", validators = [Length(min=0,max=1500)])
+    file_upload = FileField("Key Files")
+    submit = SubmitField("Submit")
 
 class EducationAndPublicEngagementForm(FlaskForm):
     nameOfProject = TextAreaField("Name of project", \
