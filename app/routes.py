@@ -93,6 +93,13 @@ def admin_register_user():
         return redirect(url_for("login"))
     return render_template("register.html", title="Register", form=form)
 
+
+@app.route("/admin_control")
+def admin_control():
+    print("testing testing 1 2 3 ")
+    return render_template("admin_control.html")
+
+
 #not needed
 @app.route("/user/<username>")
 @login_required
