@@ -557,91 +557,93 @@ def edit_profile():
             flash("Entry successfully removed.")
         elif "employ-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = EmploymentInformationForm.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = EmploymentInformation.query.filter_by(user_id=current_user.id).all()[num-1]
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
         elif "soc-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = SocietiesInformationForm.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = SocietiesInformation.query.filter_by(user_id=current_user.id).all()[num-1]
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
         elif "awards-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = AwardsInformationForm.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = AwardsInformation.query.filter_by(user_id=current_user.id).all()[num-1]
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
         elif "fund-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = FundingDiversificationForm.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = FundingDiversification.query.filter_by(user_id=current_user.id).all()[num-1]
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
-        elif "team-delete" in request.form:
-            num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = TeamMembersForm.query.filter_by(user_id=current_user.id).all()[num-1]
-            db.session.delete(userInfo)
-            db.session.commit()
-            flash("Entry successfully removed.")
+            """ Need to add a table to models.py
+            elif "team-delete" in request.form:
+                num = int([s for s in request.form.keys() if s.isdigit()][0])
+                userInfo = TeamMembersForm.query.filter_by(user_id=current_user.id).all()[num-1]
+                db.session.delete(userInfo)
+                db.session.commit()
+                flash("Entry successfully removed.")
+            """
         elif "impacts-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = ImpactsForm.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = Impacts.query.filter_by(user_id=current_user.id).all()[num-1]
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
         elif "innovCom-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = InnovationAndCommercialisationForm.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = InnovationAndCommercialisation.query.filter_by(user_id=current_user.id).all()[num-1]
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
         elif "publications-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = PublicationsForm.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = Publications.query.filter_by(user_id=current_user.id).all()[num-1]
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
         elif "presentations-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = PresentationsForm.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = Presentations.query.filter_by(user_id=current_user.id).all()[num-1]
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
         elif "acCol-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = AcademicCollaborationsForm.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = AcademicCollaborations.query.filter_by(user_id=current_user.id).all()[num-1]
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
         elif "nonAcCol-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = NonAcademicCollaborationsForm.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = NonAcademicCollaborations.query.filter_by(user_id=current_user.id).all()[num-1]
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
         elif "event-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = EventsForms.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = Events.query.filter_by(user_id=current_user.id).all()[num-1]
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
         elif "comm-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = CommunicationsOverviewForm.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = CommunicationsOverview.query.filter_by(user_id=current_user.id).all()[num-1]
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
         elif "sfi-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = SfiFundingRatioForm.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = SfiFundingRatio.query.filter_by(user_id=current_user.id).all()[num-1]
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
         elif "pEng-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = EducationAndPublicEngagementForm.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = EducationPublicEngagement.query.filter_by(user_id=current_user.id).all()[num-1]
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
