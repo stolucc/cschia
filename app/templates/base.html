@@ -22,32 +22,35 @@
 
 <body>
     <div class="wrapper"></div>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <img class="navbar-brand" src="../static/sfi_logo.png" height="100"/>
-            </div>
-            <ul class="nav navbar-nav">
-                {% if current_user.is_anonymous %}
-                <li><a href="{{ url_for("index") }}">Home</a></li>
-                <li><a href="{{ url_for("login") }}">Login</a></li>
-                {% else %}
-                <li><a href="{{ url_for("logout") }}">Logout</a></li>
-                <li><a href="{{url_for("edit_profile")}}">Edit Profile</a></li>
-                <li><a href="{{url_for("edit_account")}}">Edit Account</a></li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="navbar-header">
+                    <img class="navbar-brand" src="../static/sfi_logo.png" height="100"/>
+                </div>
+                <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    {% if current_user.is_anonymous %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for("index") }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for("login") }}">Login</a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for("logout") }}">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{url_for("edit_profile")}}">Edit Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{url_for("edit_account")}}">Edit Account</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{url_for("show_groups")}}">My Groups</a></li>
+                    {% endif %}
+                </ul>
+                </div>
+        </nav>
     
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-warning text-center" role="alert">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
-    {% endwith %}
-    {% block content %}{% endblock %}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning text-center" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
 </body>
 </html>
 
