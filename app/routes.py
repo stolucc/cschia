@@ -7,11 +7,11 @@ FundingDiversificationForm, TeamMembersForm, ImpactsForm, \
 InnovationAndCommercialisationForm, PublicationsForm, \
 PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
 EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
-ChangePassword, ChangeEmail
+ChangePassword, ChangeEmail, ProposalForm
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
 SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
 Publications, Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
-CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement
+CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
@@ -95,7 +95,7 @@ def admin_register_user():
 
 @app.route("/admin_publish_call", methods=["GET", "POST"])
 def publish_call():
-    form = ProposalForm()
+    form = ProposalForm()  
     return render_template("admin_publish_call.html", title="Publish Call", form=form)
 
 #not needed
