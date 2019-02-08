@@ -8,4 +8,4 @@ WORKDIR /chia
 RUN pipenv install --system --deploy
 
 EXPOSE 5000
-CMD ["pipenv", "run", "./docker-entrypoint.sh"]
+CMD ["sh", "./docker-entrypoint.sh"]
