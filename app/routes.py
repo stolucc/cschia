@@ -7,11 +7,12 @@ FundingDiversificationForm, TeamMembersForm, ImpactsForm, \
 InnovationAndCommercialisationForm, PublicationsForm, \
 PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
 EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
-ChangePassword, ChangeEmail
+ChangePassword, ChangeEmail, ProposalForm
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
 SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
 Publications, Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
-CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement
+CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls
+
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
@@ -61,9 +62,22 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash("Congratulation, you are now a registered user!")
+        flash("Congratulations, you are now a registered user!")
         return redirect(url_for("login"))
     return render_template("register.html", title="Register", form=form)
+
+
+@app.route("/calls")
+def view_calls():
+    calls = SfiProposalCalls.query.all()
+    return render_template("view_calls.html", title="Funding Calls", calls=calls)
+
+
+@app.route("/calls/<call_id>")
+def view_call(call_id):
+    call = SfiProposalCalls.query.filter_by(id=call_id).first_or_404()
+    return render_template("view_call.html", title="Funding Calls", call=call)
+
 
 @app.route("/admin_register_user", methods=["GET", "POST"])
 def admin_register_user():
@@ -73,16 +87,26 @@ def admin_register_user():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash("Congratulation, You Have Now Registered a User!")
+        flash("Congratulations, You Have Now Registered a User!")
         return redirect(url_for("login"))
     return render_template("register.html", title="Register", form=form)
-
 
 @app.route("/admin_control")
 def admin_control():
     print("testing testing 1 2 3 ")
     return render_template("admin_control.html")
 
+
+@app.route("/admin_publish_call", methods=["GET", "POST"])
+def publish_call():
+    form = ProposalForm()
+    if form.validate_on_submit():
+        call = SfiProposalCalls(title=form.title.data, deadline=form.deadline.data, contact=form.contact.data, overview=form.overview.data, funding=form.funding.data, key_dates=form.key_dates.data)
+        db.session.add(call)
+        db.session.commit()
+        flash("Your call for proposal has been published!")
+        return redirect(url_for("index"))
+    return render_template("admin_publish_call.html", title="Publish Call", form=form)
 
 #not needed
 @app.route("/user/<username>")

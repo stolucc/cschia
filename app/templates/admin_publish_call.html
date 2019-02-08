@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<h1>Publish Call for Proposal</h1>
+	<form action="" enctype="multipart/form-data" method="post" novalidate>
+		{{ form.hidden_tag() }}
+		<p>
+		{{ form.deadline.label }}<br>
+		{{ form.deadline() }}
+		{% for error in form.deadline.errors %}
+		<span style="color: red;">[{{ error }}]</span>
+		{% endfor %}
+		</p>
+		<p>
+		{{ form.title.label }}<br>
+		{{ form.title() }}
+		{% for error in form.title.errors %}
+		<span style="color: red;">[{{ error }}]</span>
+		{% endfor %}
+		</p>
+		<p>
+		{{ form.contact.label }}<br>
+		{{ form.contact() }}
+		{% for error in form.contact.errors %}
+		<span style="color: red;">[{{ error }}]</span>
+		{% endfor %}
+		</p>
+		<p>
+		{{ form.overview.label }}<br>
+		{{ form.overview() }}
+		{% for error in form.overview.errors %}
+		<span style="color: red;">[{{ error }}]</span>
+		{% endfor %}
+		</p>
+		<p>
+		{{ form.funding.label }}<br>
+		{{ form.funding() }}
+		{% for error in form.funding.errors %}
+		<span style="color: red;">[{{ error }}]</span>
+		{% endfor %}
+		</p>
+		<p>
+		{{ form.key_dates.label }}<br>
+		{{ form.key_dates() }}
+		{% for error in form.key_dates.errors %}
+		<span style="color: red;">[{{ error }}]</span>
+		{% endfor %}
+		</p>
+		<p>
+		{{ form.file_upload.label }}<br>
+		{{ form.file_upload() }}
+		{% for error in form.file_upload.errors %}
+		<span style="color: red;">[{{ error }}]</span>
+		{% endfor %}
+		</p>
+		<p>
+		{{ form.submit.label }}<br>
+		{{ form.submit() }}
+		</p>
+	</form>
+{% endblock %}

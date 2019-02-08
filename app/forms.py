@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, \
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, FileField, \
 TextAreaField, IntegerField, SelectField, DateField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length, \
 Optional
@@ -31,7 +31,7 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError("Please use a different email address.")
-        
+
 class EditProfileForm(FlaskForm):
     username = StringField("Username", validators = [DataRequired() ])
     about_me = TextAreaField("About me", validators = [Length(min=0, max=140) ])
@@ -61,7 +61,7 @@ class ChangeEmail(FlaskForm):
             raise ValidationError("Please use a different email address.")
     """
 
-# Edit profile forms 
+# Edit profile forms
 
 class GeneralInformationForm(FlaskForm):
     firstName = StringField("First name", validators=[DataRequired() ])
@@ -97,11 +97,11 @@ class SocietiesInformationForm(FlaskForm):
     endDate = DateField("End date", validators=[Optional() ])
     nameOfSociety = StringField("Name of society", validators=[DataRequired() ])
     typeOfMembership = StringField("Type of membership", validators=[DataRequired() ])
-    #This field will depend on the date - grey out it end date entered 
+    #This field will depend on the date - grey out it end date entered
     status = SelectField(u"Status(if active)", choices=\
     [("Yes", "Yes"), ("No", "No")], validators=[DataRequired() ])
     socSubmit = SubmitField("Save")
-    
+
 class AwardsInformationForm(FlaskForm):
     year = StringField("Year", validators=[DataRequired() ])
     awardingBody = StringField("Awarding body", validators=[DataRequired() ])
@@ -236,6 +236,16 @@ class SfiFundingRatioForm(FlaskForm):
     percentage = StringField("Indicates percentage of time spent on SFI-funded projects, in steps of 20%", \
     validators=[DataRequired() ])
     sfiFundingRatioSubmit = SubmitField("Save")
+
+class ProposalForm(FlaskForm):
+    deadline = DateField("Deadline")
+    contact = StringField("Contact")
+    title = TextAreaField("Title", validators = [Length(min=0,max=128)])
+    overview = TextAreaField("Overview", validators = [Length(min=0,max=1500)])
+    funding = TextAreaField("Funding", validators = [Length(min=0,max=1500)])
+    key_dates = TextAreaField("Key Dates", validators = [Length(min=0,max=1500)])
+    file_upload = FileField("Key Files")
+    submit = SubmitField("Submit")
 
 class EducationAndPublicEngagementForm(FlaskForm):
     nameOfProject = TextAreaField("Name of project", \
