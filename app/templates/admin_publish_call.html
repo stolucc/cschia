@@ -2,6 +2,21 @@
 
 {% block content %}
 
+<div class="row">
+		<div class="col-md-4">
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+						{#class="btn btn-primary"#}
+	
+					<a class="btn btn-primary" href="/admin_register_user"button">Register</a>
+				</li>
+				<li class="list-group-item">
+						<a class="btn btn-primary" href="/admin_publish_call"button">Publish call for proposals</a>    
+				</li>    
+			</ul>
+		</div>
+
+<div class="col-md-8">
 	<h1>Publish Call for Proposal</h1>
 	<form action="" enctype="multipart/form-data" method="post" novalidate>
 		{{ form.hidden_tag() }}
@@ -59,4 +74,6 @@
 		{{ form.submit() }}
 		</p>
 	</form>
+
+</div>
 {% endblock %}
