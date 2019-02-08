@@ -95,7 +95,13 @@ def admin_register_user():
 
 @app.route("/admin_publish_call", methods=["GET", "POST"])
 def publish_call():
-    form = ProposalForm()  
+    form = ProposalForm()
+    if form.validate_on_submit():
+        call = SfiProposalCalls(deadline=form.deadline.data, contact=form.contact.data, overview=form.overview.data, funding=form.funding.data, key_dates=form.key_dates.data)
+        db.session.add(call)
+        db.session.commit()
+        flash("Your call for proposal has been published!")
+        return redirect(url_for("index"))
     return render_template("admin_publish_call.html", title="Publish Call", form=form)
 
 #not needed

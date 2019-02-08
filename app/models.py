@@ -207,6 +207,8 @@ class SfiFundingRatio(db.Model):
 
 class SfiProposalCalls(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    #data = db.Column(db.Text)
     deadline = db.Column(db.Date)
     contact = db.Column(db.Text)
     overview = db.Column(db.Text)
