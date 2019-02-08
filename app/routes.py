@@ -89,12 +89,13 @@ def admin_register_user():
         db.session.commit()
         flash("Congratulations, You Have Now Registered a User!")
         return redirect(url_for("login"))
-    return render_template("register.html", title="Register", form=form)
+    return render_template("admin_register_user.html", title="Register", form=form)
 
 @app.route("/admin_control")
+@login_required
 def admin_control():
     print("testing testing 1 2 3 ")
-    return render_template("admin_control.html")
+    return render_template("admin_control.html", title="Admin Control")
 
 
 @app.route("/admin_publish_call", methods=["GET", "POST"])
