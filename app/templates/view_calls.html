@@ -7,7 +7,6 @@
     {% for call in calls %}
         <li class="list-group-item">
             <h3><a href="{{ url_for('view_call', call_id=call.id) }}">{{ call.title }}</a></h3>
-            <p>{{ call.blurb }}</p>
         </li>
     {% endfor %}
     </ul>

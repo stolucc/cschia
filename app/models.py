@@ -207,6 +207,20 @@ class SfiFundingRatio(db.Model):
     def __repr__(self):
         return "<SfiFundingRatio {}>".format(self.data, self.id)
 
+class SfiProposalCalls(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    #data = db.Column(db.Text)
+    title = db.Column(db.Text)
+    deadline = db.Column(db.Date)
+    contact = db.Column(db.Text)
+    overview = db.Column(db.Text)
+    funding = db.Column(db.Text)
+    key_dates = db.Column(db.Text)
+    upload_data = db.Column(db.Text)
+
+    def __repr__(self):
+        return "<SfiProposalCalls {}>".format(self.deadline, self.id)
 
 class EducationPublicEngagement(db.Model):
     id = db.Column(db.Integer, primary_key=True)

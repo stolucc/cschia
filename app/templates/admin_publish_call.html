@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<h1>Publish Call for Proposal</h1>
+	<form action="" enctype="multipart/form-data" method="post" novalidate>
+		{{ form.hidden_tag() }}
+		<p>
+		{{ form.deadline.label }}<br>
+		{{ form.deadline() }}
+		</p>
+		<p>
+		{{ form.contact.label }}<br>
+		{{ form.contact() }}
+		</p>
+		<p>
+		{{ form.overview.label }}<br>
+		{{ form.overview() }}
+		</p>
+		<p>
+		{{ form.funding.label }}<br>
+		{{ form.funding() }}
+		</p>
+		<p>
+		{{ form.key_dates.label }}<br>
+		{{ form.key_dates() }}
+		</p>
+		<p>
+		{{ form.file_upload.label }}<br>
+		{{ form.file_upload() }}
+		</p>
+		<p>
+		{{ form.submit.label }}<br>
+		{{ form.submit() }}
+		</p>
+	</form>
+{% endblock %}
