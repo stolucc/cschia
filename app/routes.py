@@ -11,7 +11,7 @@ ChangePassword, ChangeEmail
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
 SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
 Publications, Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
-CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement
+CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, FundingCall
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
@@ -64,6 +64,19 @@ def register():
         flash("Congratulation, you are now a registered user!")
         return redirect(url_for("login"))
     return render_template("register.html", title="Register", form=form)
+
+
+@app.route("/calls")
+def view_calls():
+    calls = FundingCall.query.all()
+    return render_template("view_calls.html", title="Funding Calls", calls=calls)
+
+
+@app.route("/calls/<call_id>")
+def view_call(call_id):
+    call = FundingCall.query.filter_by(id=call_id).first_or_404()
+    return render_template("view_call.html", title="Funding Calls", call=call)
+
 
 @app.route("/admin_register_user", methods=["GET", "POST"])
 def admin_register_user():
