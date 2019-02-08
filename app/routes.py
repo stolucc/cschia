@@ -11,7 +11,7 @@ ChangePassword, ChangeEmail, ProposalForm
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
 SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
 Publications, Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
-CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, FundingCall
+CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls
 
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse

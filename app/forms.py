@@ -240,7 +240,7 @@ class SfiFundingRatioForm(FlaskForm):
 class ProposalForm(FlaskForm):
     deadline = DateField("Deadline")
     contact = StringField("Contact")
-    title = TextAreaField("Overview", validators = [Length(min=0,max=128)])
+    title = TextAreaField("Title", validators = [Length(min=0,max=128)])
     overview = TextAreaField("Overview", validators = [Length(min=0,max=1500)])
     funding = TextAreaField("Funding", validators = [Length(min=0,max=1500)])
     key_dates = TextAreaField("Key Dates", validators = [Length(min=0,max=1500)])
