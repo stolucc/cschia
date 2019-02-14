@@ -8,7 +8,6 @@ from app.models import User
 #Account forms
 
 class LoginForm(FlaskForm):
-    # username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
     remember_me = BooleanField("Remember me")
@@ -17,7 +16,7 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
-    orcid = StringField("Orcid", validators=[DataRequired() ])
+    orcid = StringField("Orcid number", validators=[DataRequired() ])
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField("Repeat password", validators=[DataRequired(), \
     EqualTo("password")])
