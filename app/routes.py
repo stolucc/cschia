@@ -8,6 +8,7 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInfor
     PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
     EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
     ChangePassword, ChangeEmail, ProposalForm
+
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
     Publications, Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
@@ -55,6 +56,7 @@ def logout():
     logout_user()
     return redirect(url_for("index"))
 
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
@@ -86,12 +88,12 @@ def view_call(call_id):
 def admin_register_user():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
+        user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
         flash("Congratulations, You Have Now Registered a User!")
-        return redirect(url_for("login"))
+        return redirect(url_for("admin_control"))
     return render_template("admin_register_user.html", title="Register", form=form)
 
 
