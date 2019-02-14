@@ -1,8 +1,8 @@
-"""init db
+"""db init
 
-Revision ID: 342b6f9472df
+Revision ID: 03aaf781760c
 Revises: 
-Create Date: 2019-02-04 21:24:38.287396
+Create Date: 2019-02-14 12:44:27.878897
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '342b6f9472df'
+revision = '03aaf781760c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -33,6 +33,7 @@ def upgrade():
     op.create_index(op.f('ix_funding_call_timestamp'), 'funding_call', ['timestamp'], unique=False)
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('orcid', sa.String(length=64), nullable=True),
     sa.Column('username', sa.String(length=64), nullable=True),
     sa.Column('email', sa.String(length=120), nullable=True),
     sa.Column('password_hash', sa.String(length=128), nullable=True),
@@ -42,6 +43,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_user_email'), 'user', ['email'], unique=True)
+    op.create_index(op.f('ix_user_orcid'), 'user', ['orcid'], unique=True)
     op.create_index(op.f('ix_user_username'), 'user', ['username'], unique=True)
     op.create_table('academic_collaborations',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -197,6 +199,7 @@ def downgrade():
     op.drop_table('awards_information')
     op.drop_table('academic_collaborations')
     op.drop_index(op.f('ix_user_username'), table_name='user')
+    op.drop_index(op.f('ix_user_orcid'), table_name='user')
     op.drop_index(op.f('ix_user_email'), table_name='user')
     op.drop_table('user')
     op.drop_index(op.f('ix_funding_call_timestamp'), table_name='funding_call')
