@@ -64,6 +64,13 @@ h2 {
   border-radius: 0 0 10px 10px;
 }
 
+.wrapper2 {
+  background-image: url(https://www.google.com/imgres?imgurl=https%3A%2F%2Fi2.wp.com%2Fwww.oxygen.ie%2Fwp-content%2Fuploads%2F2018%2F03%2FSFI_Logo-620x350.jpg%3Ffit%3D620%252C350&imgrefurl=http%3A%2F%2Fwww.oxygen.ie%2Fsfi-were-the-proud-sponsors-of-the-science-writer-of-the-year-award-at-this-years-national-student-media-awards%2F&docid=BfV4BVOq9dTajM&tbnid=8S6mbYAXBJbSwM%3A&vet=10ahUKEwiluuHby6XgAhXJQxUIHfkTBSEQMwiKASgUMBQ..i&w=620&h=350&bih=969&biw=952&q=sfi&ved=0ahUKEwiluuHby6XgAhXJQxUIHfkTBSEQMwiKASgUMBQ&iact=mrc&uact=8);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 100%;
+  height: 250px;
+}
 
 
 /* TABS */
