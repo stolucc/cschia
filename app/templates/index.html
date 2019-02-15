@@ -8,8 +8,8 @@
                 <div class="col border bg-warning text-dark"
                 <div class="card mb-3">
                         <div class="card-body">
-                                <h3>Forms to be filled out:</h3>
-                                <ul>
+                                <h4>Forms to be filled out ({{ form|length }}):</h4>
+                                <ul class="list-unstyled">
                                 {% for f in form %}    
                                         <li> {{f}} </li>
                                 {% endfor %}
