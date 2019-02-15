@@ -30,7 +30,55 @@ def before_request():
 @app.route("/")
 @login_required
 def index():
-    return render_template("index.html", title="Home ")
+    formList = []
+    genForm = GeneralInformation.query.filter_by(user_id=current_user.id).first()
+    if genForm is None:
+        formList.append("General Info")
+    eduForm = EmploymentInformation.query.filter_by(user_id=current_user.id).first()
+    if eduForm is None:
+        formList.append("Education")
+    socForm = SocietiesInformation.query.filter_by(user_id=current_user.id).first()
+    if socForm is None:
+        formList.append("Societies")
+    awardForm = AwardsInformation.query.filter_by(user_id=current_user.id).first()
+    if awardForm is None:
+        formList.append("Awards")
+    fundForm = FundingDiversification.query.filter_by(user_id=current_user.id).first()
+    if fundForm is None:
+        formList.append("Funding Diversification")
+    impForm = Impacts.query.filter_by(user_id=current_user.id).first()
+    if impForm is None:
+        formList.append("Impacts")
+    inForm = InnovationAndCommercialisation.query.filter_by(user_id=current_user.id).first()
+    if inForm is None:
+        formList.append("Innovation and Commercialisation")
+    pubForm = Publications.query.filter_by(user_id=current_user.id).first()
+    if pubForm is None:
+        formList.append("Publication")
+    presForm = Presentations.query.filter_by(user_id=current_user.id).first()
+    if presForm is None:
+        formList.append("Presentations")
+    accForm = AcademicCollaborations.query.filter_by(user_id=current_user.id).first()
+    if accForm is None:
+        formList.append("Academic Collaborations")
+    nonForm = NonAcademicCollaborations.query.filter_by(user_id=current_user.id).first()
+    if nonForm is None:
+        formList.append("Non academic Collaborations")
+    evForm = Events.query.filter_by(user_id=current_user.id).first()
+    if evForm is None:
+        formList.append("Events")
+    comForm = CommunicationsOverview.query.filter_by(user_id=current_user.id).first()
+    if comForm is None:
+        formList.append("Communications Overview")
+    sfiForm = SfiFundingRatio.query.filter_by(user_id=current_user.id).first()
+    if sfiForm is None:
+        formList.append("SFI Funding Ratio")
+    edpubForm = EducationPublicEngagement.query.filter_by(user_id=current_user.id).all()
+    if edpubForm is None:    
+        formList.append("Education and Public engagement")
+
+
+    return render_template("index.html", title="Home ", form=formList)
 
 
 @app.route("/login", methods=["GET", "POST"])
