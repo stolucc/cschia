@@ -92,7 +92,7 @@ def admin_register_user():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash("Congratulations, You Have Now Registered a User!")
+        flash("New user registered")
         return redirect(url_for("admin_control"))
     return render_template("admin_register_user.html", title="Register", form=form)
 
