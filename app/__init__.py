@@ -3,6 +3,7 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_bootstrap import Bootstrap
 import logging
 from logging.handlers import SMTPHandler
 app = Flask(__name__)
@@ -10,6 +11,7 @@ app.config.from_object(Config)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+bootstrap = Bootstrap(app)
 
 login = LoginManager(app)
 login.login_view = "login"
@@ -31,4 +33,4 @@ if not app.debug:
         app.logger.addHandler(mail_handler)
 
 
-from app import routes, models, errors, groups
+from app import routes, models, errors, groups, publications

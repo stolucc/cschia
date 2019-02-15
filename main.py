@@ -1,7 +1,7 @@
 from app import app, db
 from app.models import User, Post, FundingCall, FundingCallAttachment, GeneralInformation, \
 EducationInformation, EmploymentInformation, SocietiesInformation, AwardsInformation, \
-FundingDiversification, Impacts, InnovationAndCommercialisation, Publications, Presentations, \
+FundingDiversification, Impacts, InnovationAndCommercialisation, Presentations, \
 AcademicCollaborations, NonAcademicCollaborations, Events, CommunicationsOverview, SfiFundingRatio, \
 EducationPublicEngagement
 
@@ -10,8 +10,8 @@ EducationPublicEngagement
 def make_shell_context():
 
     return {
-        "db" : db, 
-        "User" : User, 
+        "db" : db,
+        "User" : User,
         "Post" : Post,
         "FundingCall" : FundingCall,
         "FundingCallAttachment" : FundingCallAttachment,
@@ -19,11 +19,10 @@ def make_shell_context():
         "EducationInformation" : EducationInformation,
         "EmploymentInformation" : EmploymentInformation,
         "SocietiesInformation" : SocietiesInformation,
-        "AwardsInformation" : AwardsInformation, 
+        "AwardsInformation" : AwardsInformation,
         "FundingDiversification" : FundingDiversification,
         "Impacts" : Impacts,
-        "InnovationAndCommercialisation" : InnovationAndCommercialisation, 
-        "Publications" : Publications, 
+        "InnovationAndCommercialisation" : InnovationAndCommercialisation,
         "Presentations" : Presentations,
         "AcademicCollaborations" : AcademicCollaborations,
         "NonAcademicCollaborations" : NonAcademicCollaborations,

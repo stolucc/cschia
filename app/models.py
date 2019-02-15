@@ -26,7 +26,6 @@ class User(UserMixin, db.Model):
     funding_diversification = db.relationship("FundingDiversification")
     impacts = db.relationship("Impacts")
     innovation_and_commercialisation = db.relationship("InnovationAndCommercialisation")
-    publications = db.relationship("Publications")
     presentations = db.relationship("Presentations")
     academic_collaborations = db.relationship("AcademicCollaborations")
     non_academic_collaborations = db.relationship("NonAcademicCollaborations")
@@ -151,14 +150,6 @@ class InnovationAndCommercialisation(db.Model):
     def __repr__(self):
         return "<InnovationAndCommercialisation {}>".format(self.data, self.id)
 
-class Publications(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    data = db.Column(db.Text)
-
-    def __repr__(self):
-        return "<Publications {}>".format(self.data, self.id)
-
 class Presentations(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -244,3 +235,13 @@ class GroupMembership(db.Model):
 
     user = db.relationship("User", back_populates="groups")
     group = db.relationship("ResearchGroup", back_populates="users")
+
+class Publication(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    primary_user = db.Column(db.Integer, db.ForeignKey("user.id"))
+    year = db.Column(db.Integer)
+    type = db.Column(db.String(64))
+    status = db.Column(db.String(64))
+    doi = db.Column(db.String(64))
+    title = db.Column(db.Text)
+    journal = db.Column(db.Text)

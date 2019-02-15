@@ -4,14 +4,14 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInfor
     EducationInformationForm, EmploymentInformationForm, \
     SocietiesInformationForm, AwardsInformationForm, \
     FundingDiversificationForm, TeamMembersForm, ImpactsForm, \
-    InnovationAndCommercialisationForm, PublicationsForm, \
+    InnovationAndCommercialisationForm, \
     PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
     EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
     ChangePassword, ChangeEmail, ProposalForm
 
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
-    Publications, Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
+    Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
     CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls
 
 from flask_login import current_user, login_user, logout_user, login_required
@@ -200,7 +200,6 @@ def edit_profile():
     teamMemForm = TeamMembersForm()
     impactsForm = ImpactsForm()
     innovForm = InnovationAndCommercialisationForm()
-    pubForm = PublicationsForm()
     presForm = PresentationsForm()
     academicCollabsForm = AcademicCollaborationsForm()
     nonAcademicCollabsForm = NonAcademicCollaborationsForm()
@@ -235,9 +234,6 @@ def edit_profile():
 
     jsonInnInfo = InnovationAndCommercialisation.query.filter_by(user_id=current_user.id).all()
     getInnInfo = get_list(jsonInnInfo)
-
-    jsonPubInfo = Publications.query.filter_by(user_id=current_user.id).all()
-    getPubInfo = get_list(jsonPubInfo)
 
     jsonPresInfo = Presentations.query.filter_by(user_id=current_user.id).all()
     getPresInfo = get_list(jsonPresInfo)
@@ -409,26 +405,6 @@ def edit_profile():
                 "type": innovForm.type.data,
                 "title": innovForm.title.data,
                 "primaryAttribution": innovForm.primaryAttribution.data
-            }
-
-            infoJson = json.dumps(info)
-            userInfo.data = infoJson
-
-            db.session.commit()
-            flash("Changes saved.")
-
-        elif pubForm.validate_on_submit and "pubSubmit" in request.form:
-
-            userInfo = Publications(user_id=current_user.id)
-            db.session.add(userInfo)
-            info = {
-                "year": pubForm.year.data,
-                "type": pubForm.type.data,
-                "title": pubForm.title.data,
-                "name": pubForm.name.data,
-                "publicationStatus": pubForm.publicationStatus.data,
-                "doi": pubForm.doi.data,
-                "primaryAttribution": pubForm.primaryAttribution.data
             }
 
             infoJson = json.dumps(info)
@@ -624,12 +600,6 @@ def edit_profile():
             db.session.delete(userInfo)
             db.session.commit()
             flash("Entry successfully removed.")
-        elif "publications-delete" in request.form:
-            num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = Publications.query.filter_by(user_id=current_user.id).all()[num - 1]
-            db.session.delete(userInfo)
-            db.session.commit()
-            flash("Entry successfully removed.")
         elif "presentations-delete" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
             userInfo = Presentations.query.filter_by(user_id=current_user.id).all()[num - 1]
@@ -703,7 +673,6 @@ def edit_profile():
                            teamMemForm=teamMemForm,
                            impactsForm=impactsForm,
                            innovForm=innovForm,
-                           pubForm=pubForm,
                            presForm=presForm,
                            academicCollabsForm=academicCollabsForm,
                            nonAcademicCollabsForm=nonAcademicCollabsForm,
@@ -720,7 +689,6 @@ def edit_profile():
                            getFundInfo=getFundInfo,
                            getImpInfo=getImpInfo,
                            getInnInfo=getInnInfo,
-                           getPubInfo=getPubInfo,
                            getPresInfo=getPresInfo,
                            getAcInfo=getAcInfo,
                            getNonAcInfo=getNonAcInfo,
