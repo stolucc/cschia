@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for, request
-from app import app, db
+from app import app, db, admin_required
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInformationForm, \
     EducationInformationForm, EmploymentInformationForm, \
     SocietiesInformationForm, AwardsInformationForm, \
@@ -148,6 +148,7 @@ def admin_register_user():
 @app.route("/admin_control")
 @login_required
 def admin_control():
+    admin_required(current_user)
     print("testing testing 1 2 3 ")
     return render_template("admin_control.html", title="Admin Control")
 
@@ -183,6 +184,9 @@ def show_profile():
     check_if_exists = GeneralInformation.query.filter_by(user_id=current_user.id).first()
 
     return render_template("profile.html", title="View Profile", info=check_if_exists)
+
+
+
 
 
 @app.route("/edit_account", methods=["GET", "POST"])
