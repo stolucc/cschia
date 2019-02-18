@@ -12,7 +12,8 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInfor
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
     Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
-    CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls
+    CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls, \
+    Publication
 
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -52,9 +53,6 @@ def index():
     inForm = InnovationAndCommercialisation.query.filter_by(user_id=current_user.id).first()
     if inForm is None:
         formList.append("Innovation and Commercialisation")
-    pubForm = Publications.query.filter_by(user_id=current_user.id).first()
-    if pubForm is None:
-        formList.append("Publication")
     presForm = Presentations.query.filter_by(user_id=current_user.id).first()
     if presForm is None:
         formList.append("Presentations")
