@@ -1,19 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if user == current_user %}
-    <p><a href="{{ url_for("edit_profile") }}">Edit your profile</a></p>
-    {% endif %}
     <table>
         <tr valign="top">
             <td><img src="{{ user.avatar(128) }}"></td>
             <td>
-                <h1>User: {{ user.username }}</h1>
-                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+                <h1>Name: {{ user.prefix }}{{ user.username }}</h1>
+                <p>Orcid: {{ user.orcid }}</p>
+                {% if user.about_me %}<p>{{ user.about_me }}</p>{% else %}
+                <p>Nothing to show</p>
+                {% endif %}
                 {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
             </td>
         </tr>
     </table>
+    <hr>
+    <h4>Personal Information</h4>
+    {% if user.jobTitle %}<p>User Job Title: {{ user.jobTitle }}</p>{% endif %}
+    {% if user.email %}<p>User Email: {{ user.email }}</p>{% endif %}
+{#    # TODO: need more info?#}
     <hr>
     {% for post in posts %}
         {% include "_post.html" %}
