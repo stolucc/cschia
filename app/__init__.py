@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, abort
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -33,4 +33,13 @@ if not app.debug:
         app.logger.addHandler(mail_handler)
 
 
-from app import routes, models, errors, groups, publications
+def admin_required(current_user):
+    if not current_user.is_admin:
+        abort(403)
+
+
+
+
+
+
+from app import routes, models, errors, groups , publications

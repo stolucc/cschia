@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for, request
-from app import app, db
+from app import app, db, admin_required
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInformationForm, \
     EducationInformationForm, EmploymentInformationForm, \
     SocietiesInformationForm, AwardsInformationForm, \
@@ -132,6 +132,7 @@ def view_call(call_id):
 
 @app.route("/admin_register_user", methods=["GET", "POST"])
 def admin_register_user():
+    admin_required(current_user)
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data)
@@ -146,12 +147,14 @@ def admin_register_user():
 @app.route("/admin_control")
 @login_required
 def admin_control():
+    admin_required(current_user)
     print("testing testing 1 2 3 ")
     return render_template("admin_control.html", title="Admin Control")
 
 
 @app.route("/admin_publish_call", methods=["GET", "POST"])
 def publish_call():
+    admin_required(current_user)
     form = ProposalForm()
     if form.validate_on_submit():
         call = SfiProposalCalls(title=form.title.data, deadline=form.deadline.data, contact=form.contact.data,
@@ -181,6 +184,9 @@ def show_profile():
     check_if_exists = GeneralInformation.query.filter_by(user_id=current_user.id).first()
 
     return render_template("profile.html", title="View Profile", info=check_if_exists)
+
+
+
 
 
 @app.route("/edit_account", methods=["GET", "POST"])
