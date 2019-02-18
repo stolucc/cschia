@@ -96,7 +96,8 @@ class EmploymentInformationForm(FlaskForm):
     company = StringField("Institution/Company", validators=[DataRequired() ])
     location = StringField("Location", validators=[DataRequired() ])
     years = StringField("Years", validators=[DataRequired() ])
-    employSubmit = SubmitField("Save")
+    employSubmit = SubmitField("Add new")
+    employEdit = SubmitField("Update")
 
 class SocietiesInformationForm(FlaskForm):
     startDate = DateField("Start date", validators=[DataRequired() ])
@@ -106,7 +107,8 @@ class SocietiesInformationForm(FlaskForm):
     #This field will depend on the date - grey out it end date entered
     status = SelectField(u"Status(if active)", choices=\
     [("Yes", "Yes"), ("No", "No")], validators=[DataRequired() ])
-    socSubmit = SubmitField("Save")
+    socSubmit = SubmitField("Add new")
+    socEdit = SubmitField("Update")
 
 class AwardsInformationForm(FlaskForm):
     year = StringField("Year", validators=[DataRequired() ])
@@ -114,7 +116,8 @@ class AwardsInformationForm(FlaskForm):
     details = TextAreaField("Details of award", validators = [Length(min=0, max=140), \
     DataRequired() ])
     teamMemberName = StringField("Team member name", validators=[Optional() ])
-    awardsSubmit = SubmitField("Save")
+    awardsSubmit = SubmitField("Add new")
+    awardsEdit = SubmitField("Update")
 
 class FundingDiversificationForm(FlaskForm):
     startDate = DateField("Start date", validators=[DataRequired() ])
@@ -127,7 +130,8 @@ class FundingDiversificationForm(FlaskForm):
     [("Yes", "Yes"), ("No", "No")], validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution(grant number to which funding is linked)", \
     validators=[DataRequired() ])
-    fundingDivSubmit = SubmitField("Save")
+    fundingDivSubmit = SubmitField("Add new")
+    fundingDivEdit = SubmitField("Update")
 
 class TeamMembersForm(FlaskForm):
     startDate = DateField("Start date with team", validators=[DataRequired() ])
@@ -136,21 +140,24 @@ class TeamMembersForm(FlaskForm):
     position = StringField("Position within the team", validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution(grant number)", \
     validators=[DataRequired() ])
-    teamMemSubmit = SubmitField("Save")
+    teamMemSubmit = SubmitField("Add new")
+    teamMemEdit = SubmitField("Update")
 
 class ImpactsForm(FlaskForm):
     title = StringField("Impact title", validators=[DataRequired() ])
     category = StringField("Impact category", validators=[DataRequired() ])
     primaryBeneficiary = StringField("Primary beneficiary", validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution", validators=[DataRequired() ])
-    impactsSubmit = SubmitField("Save")
+    impactsSubmit = SubmitField("Add new")
+    impactsEdit = SubmitField("Update")
 
 class InnovationAndCommercialisationForm(FlaskForm):
     year = StringField("Year", validators=[DataRequired() ])
     type = StringField("Type", validators=[DataRequired() ])
     title = StringField("Title", validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution", validators=[DataRequired() ])
-    innovSubmit = SubmitField("Save")
+    innovSubmit = SubmitField("Add new")
+    innovEdit = SubmitField("Update")
 
 class PublicationsForm(FlaskForm):
     year = StringField("Year", validators=[DataRequired() ])
@@ -168,7 +175,8 @@ class PublicationsForm(FlaskForm):
     validators=[DataRequired() ])
     doi = StringField("DOI", validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution", validators=[DataRequired() ])
-    pubSubmit = SubmitField("Save")
+    pubSubmit = SubmitField("Add new")
+    pubEdit = SubmitField("Update")
 
 class PresentationsForm(FlaskForm):
     year = StringField("Year", validators=[DataRequired() ])
@@ -179,7 +187,8 @@ class PresentationsForm(FlaskForm):
     organisingBody = StringField("Organising Body", validators=[DataRequired() ])
     location = StringField("Location", validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution", validators=[DataRequired() ])
-    presSubmit = SubmitField("Save")
+    presSubmit = SubmitField("Add new")
+    presEdit = SubmitField("Update")
 
 class AcademicCollaborationsForm(FlaskForm):
     startDate = DateField("Start date", validators=[DataRequired() ])
@@ -196,7 +205,8 @@ class AcademicCollaborationsForm(FlaskForm):
     ("Building networks & relationships", "Building networks & relationships")], validators=[DataRequired() ])
     frequency = StringField("Frequency of interaction", validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution", validators=[DataRequired() ])
-    academicCollabsSubmit = SubmitField("Save")
+    academicCollabsSubmit = SubmitField("Add new")
+    academicCollabsEdit = SubmitField("Update")
 
 class NonAcademicCollaborationsForm(FlaskForm):
     startDate = DateField("Start date", validators=[DataRequired() ])
@@ -213,7 +223,8 @@ class NonAcademicCollaborationsForm(FlaskForm):
     ("Building networks & relationships", "Building networks & relationships")], validators=[DataRequired() ])
     frequency = StringField("Frequency of interaction", validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution", validators=[DataRequired() ])
-    nonAcademicCollabsSubmit = SubmitField("Save")
+    nonAcademicCollabsSubmit = SubmitField("Add new")
+    nonAcademicCollabsEdit = SubmitField("Update")
 
 class EventsForms(FlaskForm):
     startDate = DateField("Start date", validators=[DataRequired() ])
@@ -225,7 +236,8 @@ class EventsForms(FlaskForm):
     role = StringField("Role",validators=[DataRequired() ])
     location = StringField("Location of event", validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution", validators=[DataRequired() ])
-    eventsSubmit = SubmitField("Save")
+    eventsSubmit = SubmitField("Add new")
+    eventsEdit = SubmitField("Update")
 
 class CommunicationsOverviewForm(FlaskForm):
     #total interaction per year
@@ -233,7 +245,8 @@ class CommunicationsOverviewForm(FlaskForm):
     numberOfLectures = StringField("Number of public lectures/demonstrations", validators=[DataRequired() ])
     numberOfVisits = StringField("Number of visits", validators=[DataRequired() ])
     numberOfMediaInteracations = StringField("Number of media interactions", validators=[DataRequired() ])
-    commSubmit = SubmitField("Save")
+    commSubmit = SubmitField("Add new")
+    commEdit = SubmitField("Update")
 
 class SfiFundingRatioForm(FlaskForm):
     #once per year
@@ -241,7 +254,8 @@ class SfiFundingRatioForm(FlaskForm):
     # @TODO: should this be a dropdown of 0,20,40 etc.?
     percentage = StringField("Indicates percentage of time spent on SFI-funded projects, in steps of 20%", \
     validators=[DataRequired() ])
-    sfiFundingRatioSubmit = SubmitField("Save")
+    sfiFundingRatioSubmit = SubmitField("Add new")
+    sfiFundingRatioEdit = SubmitField("Update")
 
 class ProposalForm(FlaskForm):
     deadline = DateField("Deadline")
@@ -251,7 +265,7 @@ class ProposalForm(FlaskForm):
     funding = TextAreaField("Funding", validators = [Length(min=0,max=1500)])
     key_dates = TextAreaField("Key Dates", validators = [Length(min=0,max=1500)])
     file_upload = FileField("Key Files")
-    submit = SubmitField("Submit")
+    submit = SubmitField("Add")
 
 class EducationAndPublicEngagementForm(FlaskForm):
     nameOfProject = TextAreaField("Name of project", \
@@ -274,5 +288,6 @@ class EducationAndPublicEngagementForm(FlaskForm):
     ("International", "International")], \
     validators=[DataRequired() ])
     localCountry = StringField("If local (a specific county in Ireland)", validators=[Optional() ])
-    pubEngageSubmit = SubmitField("Save")
+    pubEngageSubmit = SubmitField("Add new")
+    pubEngageEdit = SubmitField("Update")
 

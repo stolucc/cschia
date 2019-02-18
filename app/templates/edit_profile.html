@@ -6,67 +6,71 @@
         <div class="col-md-4">
             <ul class="list-group list-group-flush" id="section-buttons">
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#general" aria-expanded="false" aria-controls="general">General Info</button>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#general" aria-expanded="false" aria-controls="general">General Info</button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#education" aria-expanded="false" aria-controls="education">Education</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numEdu">{% if getEduInfo %}{{ getEduInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#education" aria-expanded="false" aria-controls="education">Education
+                    <span class="badge badge-dark badge-pill float-right" id="numEdu">{% if getEduInfo %}{{ getEduInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#employment" aria-expanded="false" aria-controls="employment">Employment</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numEmploy">{% if getEmployInfo %}{{ getEmployInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#employment" aria-expanded="false" aria-controls="employment">Employment
+                    <span class="badge badge-dark badge-pill float-right" id="numEmploy">{% if getEmployInfo %}{{ getEmployInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#societies" aria-expanded="false" aria-controls="societies">Societies</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numSoc">{% if getSocInfo %}{{ getSocInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#societies" aria-expanded="false" aria-controls="societies">Societies
+                    <span class="badge badge-dark badge-pill float-right" id="numSoc">{% if getSocInfo %}{{ getSocInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#awards" aria-expanded="false" aria-controls="awards">Awards</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numAwards">{% if getAwardInfo %}{{ getAwardInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#awards" aria-expanded="false" aria-controls="awards">Awards
+                    <span class="badge badge-dark badge-pill float-right" id="numAwards">{% if getAwardInfo %}{{ getAwardInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#fundingDiv" aria-expanded="false" aria-controls="fundingDiv">Funding Diversification</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numFund">{% if getFundInfo %}{{ getFundInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#fundingDiv" aria-expanded="false" aria-controls="fundingDiv">Funding Diversification
+                    <span class="badge badge-dark badge-pill float-right" id="numFund">{% if getFundInfo %}{{ getFundInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#teamMembers" aria-expanded="false" aria-controls="teamMembers">Team Members</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numTeam"><!-- @TODO --></span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#teamMembers" aria-expanded="false" aria-controls="teamMembers">Team Members
+                    <span class="badge badge-dark badge-pill float-right" id="numTeam"><!-- @TODO --></span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#impacts" aria-expanded="false" aria-controls="impacts">Impacts</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numImpacts">{% if getImpInfo %}{{ getImpInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#impacts" aria-expanded="false" aria-controls="impacts">Impacts
+                    <span class="badge badge-dark badge-pill float-right" id="numImpacts">{% if getImpInfo %}{{ getImpInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#innovCom" aria-expanded="false" aria-controls="innovCom">Innovation and Commercialisation</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numInnovCom">{% if getInnInfo %}{{ getInnInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#innovCom" aria-expanded="false" aria-controls="innovCom">Innovation and Commercialisation
+                    <span class="badge badge-dark badge-pill float-right" id="numInnovCom">{% if getInnInfo %}{{ getInnInfo|length }}{% endif %}</span></button>
+                </li>
+                <!--<li class="list-group-item">
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#publications" aria-expanded="false" aria-controls="publications">Publications
+                    <span class="badge badge-dark badge-pill float-right" id="numPub">{% if getPubInfo %}{{ getPubInfo|length }}{% endif %}</span></button>
+                </li>--> <!-- publications moved -->
+                <li class="list-group-item">
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#presentations" aria-expanded="false" aria-controls="presentations">Presentations
+                    <span class="badge badge-dark badge-pill float-right" id="numPres">{% if getPresInfo %}{{ getPresInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#presentations" aria-expanded="false" aria-controls="presentations">Presentations</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numPres">{% if getPresInfo %}{{ getPresInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#academicCollabs" aria-expanded="false" aria-controls="academicCollabs">Academic Collaborations
+                    <span class="badge badge-dark badge-pill float-right" id="numAc">{% if getAcInfo %}{{ getAcInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#academicCollabs" aria-expanded="false" aria-controls="academicCollabs">Academic Collaborations</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numAc">{% if getAcInfo %}{{ getAcInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs" aria-expanded="false" aria-controls="nonAcademicCollabs">Non Academic Collaborations
+                    <span class="badge badge-dark badge-pill float-right" id="numNonAc">{% if getNonAcInfo %}{{ getNonAcInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs" aria-expanded="false" aria-controls="nonAcademicCollabs">Non Academic Collaborations</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numNonAc">{% if getNonAcInfo %}{{ getNonAcInfo|length }}{% endif %}</span>
-                </li>
-                <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#events" aria-expanded="false" aria-controls="events">Events</button>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#events" aria-expanded="false" aria-controls="events">Events</button>
                     <span class="badge badge-dark badge-pill float-right" id="numEvents">{% if getEvInfo %}{{ getEvInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#communications" aria-expanded="false" aria-controls="communications">Communications</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numComm">{% if getCommInfo %}{{ getCommInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#communications" aria-expanded="false" aria-controls="communications">Communications
+                    <span class="badge badge-dark badge-pill float-right" id="numComm">{% if getCommInfo %}{{ getCommInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#sfiFundingRatio" aria-expanded="false" aria-controls="sfiFundingRatio">SFI Funding Ratio</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numSfi">{% if getSfiInfo %}{{ getSfiInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#sfiFundingRatio" aria-expanded="false" aria-controls="sfiFundingRatio">SFI Funding Ratio
+                    <span class="badge badge-dark badge-pill float-right" id="numSfi">{% if getSfiInfo %}{{ getSfiInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#pubEngage" aria-expanded="false" aria-controls="pubEngage">Education and Public Engagement</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numPEng">{% if getEdInfo %}{{ getEdInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#pubEngage" aria-expanded="false" aria-controls="pubEngage">Education and Public Engagement
+                    <span class="badge badge-dark badge-pill float-right" id="numPEng">{% if getEdInfo %}{{ getEdInfo|length }}{% endif %}</span></button>
                 </li>
             </ul>
         </div>
@@ -231,8 +235,8 @@
             <div class="collapse" id="employment">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Employment Information</h1>
-                        <form action="" method="post">
+                        <h1 id="employTitle">Add Employment Information</h1>
+                        <form action="" method="post" id="employForm">
                             {{ employForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ employForm.company.label }}
@@ -257,6 +261,11 @@
                             </div>
                             <div class="form-group">
                                 {{ employForm.employSubmit(class="btn btn-primary") }}
+                                {{ employForm.employEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="employIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="employAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#employment-show" aria-expanded="false" aria-controls="employment-show">Show / Hide current</button>
                             </div>
@@ -276,7 +285,7 @@
                                 <button class="btn btn-secondary" type="button" id="employ{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="emloy-delete" name="employ-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="emloy-delete" name="employ-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -290,8 +299,8 @@
             <div class="collapse" id="societies">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Societies Information</h1>
-                        <form action="" method="post">
+                        <h1 id="socTitle">Add Societies Information</h1>
+                        <form action="" method="post" id="socForm">
                             {{ socForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ socForm.startDate.label }}
@@ -330,6 +339,11 @@
                             </div>
                             <div class="form-group">
                                 {{ socForm.socSubmit(class="btn btn-primary") }}
+                                {{ socForm.socEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="socIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="socAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#societies-show" aria-expanded="false" aria-controls="societies-show">Show / Hide current</button>
                             </div>
@@ -351,7 +365,7 @@
                                 <button class="btn btn-secondary" type="button" id="soc{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="soc-delete" name="soc-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="soc-delete" name="soc-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -365,8 +379,8 @@
             <div class="collapse" id="awards">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Awards Information</h1>
-                        <form action="" method="post">
+                        <h1 id="awardsTitle">Add Awards Information</h1>
+                        <form action="" method="post" id="awardsForm">
                             {{ awardsForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ awardsForm.year.label }}
@@ -398,6 +412,11 @@
                             </div>
                             <div class="form-group">
                                 {{ awardsForm.awardsSubmit(class="btn btn-primary") }}
+                                {{ awardsForm.awardsEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="awardsIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="awardsAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#awards-show" aria-expanded="false" aria-controls="awards-show">Show / Hide current</button>
                             </div>
@@ -418,7 +437,7 @@
                                 <button class="btn btn-secondary" type="button" id="awards{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="awards-delete" name="awards-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="awards-delete" name="awards-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -432,8 +451,8 @@
             <div class="collapse" id="fundingDiv">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Funding Diversification Information</h1>
-                        <form action="" method="post">
+                        <h1 id="fundTitle">Add Funding Diversification Information</h1>
+                        <form action="" method="post" id="fundForm">
                             {{ fundingDivForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ fundingDivForm.startDate.label }}
@@ -486,6 +505,11 @@
                             </div>
                             <div class="form-group">
                                 {{ fundingDivForm.fundingDivSubmit(class="btn btn-primary") }}
+                                {{ fundingDivForm.fundingDivEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="fundingDivIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="fundingDivAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#fundingDiv-show" aria-expanded="false" aria-controls="fundingDiv-show">Show / Hide current</button>
                             </div>
@@ -509,7 +533,7 @@
                                 <button class="btn btn-secondary" type="button" id="fund{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="fund-delete" name="fund-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="fund-delete" name="fund-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -523,8 +547,8 @@
             <div class="collapse" id="teamMembers">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add New Team Information</h1>
-                        <form action="" method="post">
+                        <h1 ic="teamTitle">Add New Team Information</h1>
+                        <form action="" method="post" id="teamForm">
                             {{ teamMemForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ teamMemForm.startDate.label }}
@@ -563,6 +587,11 @@
                             </div>
                             <div class="form-group">
                                 {{ teamMemForm.teamMemSubmit(class="btn btn-primary") }}
+                                {{ teamMemForm.teamMemEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="teamMemIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="teamMemAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#team-show" aria-expanded="false" aria-controls="team-show">Show / Hide current</button>
                             </div>
@@ -585,7 +614,7 @@
                                 <button class="btn btn-secondary" type="button" id="team{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="team-delete" name="team-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="team-delete" name="team-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -599,12 +628,12 @@
             <div class="collapse" id="impacts">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Impacts Information</h1>
-                        <form action="" method="post">
+                        <h1 id="impactTitle">Add Impacts Information</h1>
+                        <form action="" method="post" id="impactForm">
                             {{ impactsForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ impactsForm.title.label }}
-                                {{ impactsForm.title(class="form-control", id="impactTitle") }}
+                                {{ impactsForm.title(class="form-control", id="impactsTitle") }}
                                 {% for error in impactsForm.title.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
@@ -632,6 +661,11 @@
                             </div>
                             <div class="form-group">
                                 {{ impactsForm.impactsSubmit(class="btn btn-primary") }}
+                                {{ impactsForm.impactsEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="impactsIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="impactsAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#impacts-show" aria-expanded="false" aria-controls="impacts-show">Show / Hide current</button>
                             </div>
@@ -652,7 +686,7 @@
                                 <button class="btn btn-secondary" type="button" id="impact{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="impacts-delete" name="impacts-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="impacts-delete" name="impacts-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -666,8 +700,8 @@
             <div class="collapse" id="innovCom">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Innovation and Commercialisation Information</h1>
-                        <form action="" method="post">
+                        <h1 id="innovComTitle">Add Innovation and Commercialisation Information</h1>
+                        <form action="" method="post" id="innovComForm">
                             {{ innovForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ innovForm.year.label }}
@@ -685,7 +719,7 @@
                             </div>
                             <div class="form-group">
                                 {{ innovForm.title.label }}
-                                {{ innovForm.title(class="form-control", id="innovComTitle") }}
+                                {{ innovForm.title(class="form-control", id="innovComTitle2") }}
                                 {% for error in innovForm.title.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
@@ -699,6 +733,11 @@
                             </div>
                             <div class="form-group">
                                 {{ innovForm.innovSubmit(class="btn btn-primary") }}
+                                {{ innovForm.innovEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="innovIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="innovAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#innovCom-show" aria-expanded="false" aria-controls="innovCom-show">Show / Hide current</button>
                             </div>
@@ -719,7 +758,7 @@
                                 <button class="btn btn-secondary" type="button" id="innovCom{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="innovCom-delete" name="innovCom-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="innovCom-delete" name="innovCom-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -733,8 +772,8 @@
             <div class="collapse" id="presentations">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Presentations Information</h1>
-                        <form action="" method="post">
+                        <h1 id="presTitle">Add Presentations Information</h1>
+                        <form action="" method="post" id="presForm">
                             {{ presForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ presForm.year.label }}
@@ -745,7 +784,7 @@
                             </div>
                             <div class="form-group">
                                 {{ presForm.title.label }}
-                                {{ presForm.title(class="form-control", id="presTitle") }}
+                                {{ presForm.title(class="form-control", id="presTitle2") }}
                                 {% for error in presForm.title.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
@@ -780,6 +819,11 @@
                             </div>
                             <div class="form-group">
                                 {{ presForm.presSubmit(class="btn btn-primary") }}
+                                {{ presForm.presEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="presIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="presAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#presentations-show" aria-expanded="false" aria-controls="presentations-show">Show / Hide current</button>
                             </div>
@@ -802,7 +846,7 @@
                                 <button class="btn btn-secondary" type="button" id="pres{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="presentations-delete" name="presentations-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="presentations-delete" name="presentations-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -816,8 +860,8 @@
             <div class="collapse" id="academicCollabs">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Academic Collaborations</h1>
-                        <form action="" method="post">
+                        <h1 id="acColTitle">Add Academic Collaborations</h1>
+                        <form action="" method="post" id="acColForm">
                             {{ academicCollabsForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ academicCollabsForm.startDate.label }}
@@ -877,6 +921,11 @@
                             </div>
                             <div class="form-group">
                                 {{ academicCollabsForm.academicCollabsSubmit(class="btn btn-primary") }}
+                                {{ academicCollabsForm.academicCollabsEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="acIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="acAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#academicCollabs-show" aria-expanded="false" aria-controls="academicCollabs-show">Show / Hide current</button>
                             </div>
@@ -901,7 +950,7 @@
                                 <button class="btn btn-secondary" type="button" id="acCol{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="acCol-delete" name="acCol-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="acCol-delete" name="acCol-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -915,8 +964,8 @@
             <div class="collapse" id="nonAcademicCollabs">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Non Academic Collaborations</h1>
-                        <form action="" method="post">
+                        <h1 id="nonAcColTitle">Add Non Academic Collaborations</h1>
+                        <form action="" method="post" id="nonAcColForm">
                             {{ nonAcademicCollabsForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ nonAcademicCollabsForm.startDate.label }}
@@ -976,6 +1025,11 @@
                             </div>
                             <div class="form-group">
                                 {{ nonAcademicCollabsForm.nonAcademicCollabsSubmit(class="btn btn-primary") }}
+                                {{ nonAcademicCollabsForm.nonAcademicCollabsEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="nonAcIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="nonAcAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs-show" aria-expanded="false" aria-controls="nonAcademicCollabs-show">Show / Hide current</button>
                             </div>
@@ -1000,7 +1054,7 @@
                                 <button class="btn btn-secondary" type="button" id="nonAcCol{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="nonAcCol-delete" name="nonAcCol-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="nonAcCol-delete" name="nonAcCol-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -1014,8 +1068,8 @@
             <div class="collapse" id="events">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Events</h1>
-                        <form action="" method="post">
+                        <h1 id="eventTitle">Add Events</h1>
+                        <form action="" method="post" id="eventForm">
                             {{ eventsForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ eventsForm.startDate.label }}
@@ -1033,7 +1087,7 @@
                             </div>
                             <div class="form-group">
                                 {{ eventsForm.title.label }}
-                                {{ eventsForm.title(class="form-control", id="eventTitle") }}
+                                {{ eventsForm.title(class="form-control", id="eventTitle2") }}
                                 {% for error in eventsForm.title.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
@@ -1068,6 +1122,11 @@
                             </div>
                             <div class="form-group">
                                 {{ eventsForm.eventsSubmit(class="btn btn-primary") }}
+                                {{ eventsForm.eventsEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="eventsIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="eventsAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#events-show" aria-expanded="false" aria-controls="events-show">Show / Hide current</button>
                             </div>
@@ -1091,7 +1150,7 @@
                                 <button class="btn btn-secondary" type="button" id="event{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="event-delete" name="event-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="event-delete" name="event-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -1105,8 +1164,8 @@
             <div class="collapse" id="communications">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Communications Overview</h1>
-                        <form action="" method="post">
+                        <h1 id="commTitle">Communications Overview</h1>
+                        <form action="" method="post" id="commForm">
                             {{ commForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ commForm.year.label }}
@@ -1138,6 +1197,11 @@
                             </div>
                             <div class="form-group">
                                 {{ commForm.commSubmit(class="btn btn-primary") }}
+                                {{ commForm.commEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="commIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="commAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#communications-show" aria-expanded="false" aria-controls="communications-show">Show / Hide current</button>
                             </div>
@@ -1158,7 +1222,7 @@
                                 <button class="btn btn-secondary" type="button" id="comm{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="comm-delete" name="comm-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="comm-delete" name="comm-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -1172,8 +1236,8 @@
             <div class="collapse" id="sfiFundingRatio">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>SFI Funding Ratio</h1>
-                        <form action="" method="post">
+                        <h1 id="sfiTitle">SFI Funding Ratio</h1>
+                        <form action="" method="post" id="sfiForm">
                             {{ fundRatioForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ fundRatioForm.year.label }}
@@ -1191,6 +1255,11 @@
                             </div>
                             <div class="form-group">
                                 {{ fundRatioForm.sfiFundingRatioSubmit(class="btn btn-primary") }}
+                                {{ fundRatioForm.sfiFundingRatioEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="sfiIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="sfiAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#sfiFundingRatio-show" aria-expanded="false" aria-controls="sfiFundingRatio-show">Show / Hide current</button>
                             </div>
@@ -1209,7 +1278,7 @@
                                 <button class="btn btn-secondary" type="button" id="sfi{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="sfi-delete" name="sfi-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="sfi-delete" name="sfi-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -1223,8 +1292,8 @@
             <div class="collapse" id="pubEngage">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Education and Public Engagement</h1>
-                        <form action="" method="post">
+                        <h1 id="pEngTitle">Education and Public Engagement</h1>
+                        <form action="" method="post" id="pEngForm">
                             {{ pubEngageForm.hidden_tag() }}
                             <div class="form-group">
                                 {{ pubEngageForm.nameOfProject.label }}
@@ -1291,6 +1360,11 @@
                             </div>
                             <div class="form-group">
                                 {{ pubEngageForm.pubEngageSubmit(class="btn btn-primary") }}
+                                {{ pubEngageForm.pubEngageEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="pubEngageIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="pubEngageAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#pubEngage-show" aria-expanded="false" aria-controls="pubEngage-show">Show / Hide current</button>
                             </div>
@@ -1316,7 +1390,7 @@
                                 <button class="btn btn-secondary" type="button" id="pEng{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="pEng-delete" name="pEng-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="pEng-delete" name="pEng-delete" value="Delete">
                                 </form>
                             </div>
                         </div>

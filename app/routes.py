@@ -688,7 +688,244 @@ def edit_profile():
             userInfo.data = infoJson
             db.session.commit()
             flash("Entry successfully updated.")
+        elif employForm.validate_on_submit and "employEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = EmploymentInformation.query.filter_by(user_id=current_user.id).all()[num-1]
 
+            info = {
+                "company" : employForm.company.data,
+                "location" : employForm.location.data,
+                "years" : employForm.years.data
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
+        elif socForm.validate_on_submit and "socEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = SocietiesInformation.query.filter_by(user_id=current_user.id).all()[num-1]
+
+            info = {
+                "startDate" : socForm.startDate.data,
+                "endDate" : socForm.endDate.data,
+                "nameOfSociety" : socForm.nameOfSociety.data,
+                "typeOfMembership" : socForm.typeOfMembership.data,
+                "status" : socForm.status.data
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
+        elif awardsForm.validate_on_submit and "awardsEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = AwardsInformation.query.filter_by(user_id=current_user.id).all()[num-1]
+
+            info = {
+                "year" : awardsForm.year.data,
+                "awardingBody" : awardsForm.awardingBody.data,
+                "details" : awardsForm.details.data,
+                "teamMemberName" : awardsForm.teamMemberName.data
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
+        elif fundingDivForm.validate_on_submit and "fundingDivEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = FundingDiversification.query.filter_by(user_id=current_user.id).all()[num-1]
+
+            info = {
+                "startDate" : fundingDivForm.startDate.data,
+                "endDate" : fundingDivForm.endDate.data,
+                "amount" : fundingDivForm.amount.data,
+                "fundingBody" : fundingDivForm.fundingBody.data,
+                "fundingProgramme" : fundingDivForm.fundingProgramme.data,
+                "status" : fundingDivForm.status.data,
+                "primaryAttribution" : fundingDivForm.primaryAttribution.data
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
+        elif teamMemForm.validate_on_submit and "teamMemEdit" in request.form:
+            # @TODO
+            flash("testSuccessTea")
+        elif impactsForm.validate_on_submit and "impactsEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = InnovationAndCommercialisation.query.filter_by(user_id=current_user.id).all()[num-1]
+
+            info = {
+                "title" : impactsForm.title.data,
+                "category" : impactsForm.category.data,
+                "primaryBeneficiary" : impactsForm.primaryBeneficiary.data,
+                "primaryAttribution" : impactsForm.primaryAttribution.data
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
+        elif innovForm.validate_on_submit and "innovEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = Impacts.query.filter_by(user_id=current_user.id).all()[num-1]
+
+            info = {
+                "year" : innovForm.year.data,
+                "type" : innovForm.type.data,
+                "title" : innovForm.title.data,
+                "primaryAttribution" : innovForm.primaryAttribution.data
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
+        elif pubForm.validate_on_submit and "pubEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = Publications.query.filter_by(user_id=current_user.id).all()[num-1]
+
+            info = {
+                "year" : pubForm.year.data,
+                "type" : pubForm.type.data,
+                "title" : pubForm.title.data,
+                "name" : pubForm.name.data,
+                "publicationStatus" : pubForm.publicationStatus.data,
+                "doi" : pubForm.doi.data,
+                "primaryAttribution" : pubForm.primaryAttribution.data
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
+        elif presForm.validate_on_submit and "presEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = Presentations.query.filter_by(user_id=current_user.id).all()[num-1]
+
+            info = {
+                "year" : presForm.year.data,
+                "title" : presForm.title.data,
+                "eventType" : presForm.eventType.data,
+                "organisingBody" : presForm.organisingBody.data,
+                "location" : presForm.location.data,
+                "primaryAttribution" : presForm.primaryAttribution.data
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
+        elif academicCollabsForm.validate_on_submit and "academicCollabsEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = AcademicCollaborations.query.filter_by(user_id=current_user.id).all()[num-1]
+
+            info = {
+                "startDate" : academicCollabsForm.startDate.data,
+                "endDate" : academicCollabsForm.endDate.data,
+                "nameOfInstitution" : academicCollabsForm.nameOfInstitution.data,
+                "department" : academicCollabsForm.department.data,
+                "location" : academicCollabsForm.location.data,
+                "nameOfCollaborator" : academicCollabsForm.nameOfCollaborator.data,
+                "goal" : academicCollabsForm.goal.data,
+                "frequency" : academicCollabsForm.frequency.data,
+                "primaryAttribution" : academicCollabsForm.primaryAttribution.data
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
+        elif nonAcademicCollabsForm.validate_on_submit and "nonAcademicCollabsEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = NonAcademicCollaborations.query.filter_by(user_id=current_user.id).all()[num-1]
+
+            info = {
+                "startDate" : nonAcademicCollabsForm.startDate.data,
+                "endDate" : nonAcademicCollabsForm.endDate.data,
+                "nameOfInstitution" : nonAcademicCollabsForm.nameOfInstitution.data,
+                "department" : nonAcademicCollabsForm.department.data,
+                "location" : nonAcademicCollabsForm.location.data,
+                "nameOfCollaborator" : nonAcademicCollabsForm.nameOfCollaborator.data,
+                "goal" : nonAcademicCollabsForm.goal.data,
+                "frequency" : nonAcademicCollabsForm.frequency.data,
+                "primaryAttribution" : nonAcademicCollabsForm.primaryAttribution.data
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
+        elif eventsForm.validate_on_submit and "eventsEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = Events.query.filter_by(user_id=current_user.id).all()[num-1]
+
+            info = {
+                "startDate" : eventsForm.startDate.data,
+                "endDate" : eventsForm.endDate.data,
+                "title" : eventsForm.title.data,
+                "eventType" : eventsForm.eventType.data,
+                "role" : eventsForm.role.data,
+                "location" : eventsForm.location.data,
+                "primaryAttribution" : eventsForm.primaryAttribution.data
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
+        elif commForm.validate_on_submit and "commEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = CommunicationsOverview.query.filter_by(user_id=current_user.id).all()[num-1]
+
+            info = {
+                "year" : commForm.year.data,
+                "numberOfLectures" : commForm.numberOfLectures.data,
+                "numberOfVisits" : commForm.numberOfVisits.data,
+                "numberOfMediaInteracations" : commForm.numberOfMediaInteracations.data
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
+        elif fundRatioForm.validate_on_submit and "sfiFundingRatioEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = SfiFundingRatio.query.filter_by(user_id=current_user.id).all()[num-1]
+
+            info = {
+                "year" : fundRatioForm.year.data,
+                "percentage" : fundRatioForm.percentage.data
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
+        elif pubEngageForm.validate_on_submit and "pubEngageEdit" in request.form:
+            num = int([s for s in request.form.keys() if s.isdigit()][0])
+            userInfo = EducationPublicEngagement.query.filter_by(user_id=current_user.id).all()[num-1]
+
+            info = {
+                "nameOfProject" : pubEngageForm.nameOfProject.data,
+                "startDate" : pubEngageForm.startDate.data,
+                "endDate" : pubEngageForm.endDate.data,
+                "activityType" : pubEngageForm.activityType.data,
+                "otherType" : pubEngageForm.otherType.data,
+                "projectTopic" : pubEngageForm.projectTopic.data,
+                "otherTopic" : pubEngageForm.otherTopic.data,
+                "target" : pubEngageForm.target.data,
+                "localCountry" : pubEngageForm.localCountry.data,
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+            flash("Entry successfully updated.")
+        
         return redirect(url_for("edit_profile"))
 
     return render_template("edit_profile.html",
