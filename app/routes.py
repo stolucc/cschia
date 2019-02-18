@@ -134,6 +134,7 @@ def view_call(call_id):
 
 @app.route("/admin_register_user", methods=["GET", "POST"])
 def admin_register_user():
+    admin_required(current_user)
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data)
@@ -155,6 +156,7 @@ def admin_control():
 
 @app.route("/admin_publish_call", methods=["GET", "POST"])
 def publish_call():
+    admin_required(current_user)
     form = ProposalForm()
     if form.validate_on_submit():
         call = SfiProposalCalls(title=form.title.data, deadline=form.deadline.data, contact=form.contact.data,
