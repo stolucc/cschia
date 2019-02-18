@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <h1> {{current_user.username}}'s profile information </h1><br>
     <div class="row">
         <div class="col-md-4">
             <ul class="list-group list-group-flush" id="section-buttons">
@@ -766,102 +767,6 @@
                 </div>
                 <hr>
             </div>
-
-            <!-- PUBLICATIONS -->
-            <!--<div class="collapse" id="publications">
-                <div class="row">
-                    <div class="col-md-7">
-                        <h1 id="pubTitle">Add Publications Information</h1>
-                        <form action="" method="post" id="pubForm">
-                            {{ pubForm.hidden_tag() }}
-                            <div class="form-group">
-                                {{ pubForm.year.label }}
-                                {{ pubForm.year(class="form-control", id="pubYear") }}
-                                {% for error in pubForm.year.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </div>
-                            <div class="form-group">
-                                {{ pubForm.type.label }}
-                                {{ pubForm.type(class="form-control", id="pubType") }}
-                                {% for error in pubForm.type.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </div>
-                            <div class="form-group">
-                                {{ pubForm.title.label }}
-                                {{ pubForm.title(class="form-control", id="pubTitle2") }}
-                                {% for error in pubForm.title.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </div>
-                            <div class="form-group">
-                                {{ pubForm.name.label }}
-                                {{ pubForm.name(class="form-control", id="pubName") }}
-                                {% for error in pubForm.name.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </div>
-                            <div class="form-group">
-                                {{ pubForm.publicationStatus.label }}
-                                {{ pubForm.publicationStatus(class="form-control", id="pubStatus") }}
-                                {% for error in pubForm.publicationStatus.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </div>
-                            <div class="form-group">
-                                {{ pubForm.doi.label }}
-                                {{ pubForm.doi(class="form-control", id="pubDOI") }}
-                                {% for error in pubForm.doi.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </div>
-                            <div class="form-group">
-                                {{ pubForm.primaryAttribution.label }}
-                                {{ pubForm.primaryAttribution(class="form-control", id="pubPrimaryAttrib") }}
-                                {% for error in pubForm.primaryAttribution.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </div>
-                            <div class="form-group">
-                                {{ pubForm.pubSubmit(class="btn btn-primary") }}
-                                {{ pubForm.pubEdit(class="btn btn-primary d-none") }}
-
-                                <input type="hidden" name="" id="pubIndex" />
-
-                                <button class="btn btn-info d-none" type="button" id="pubAddMode">Add new entry</button>
-
-                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#publications-show" aria-expanded="false" aria-controls="publications-show">Show / Hide current</button>
-                            </div>
-                        </form>
-                    </div>
-                
-                    <div class="collapse col-md-5 show" id="publications-show">
-                        {% for item in getPubInfo %}
-
-                        <div class="card mb-3" id="pub{{ loop.index }}">
-                            <div class="card-body">
-                                <p>Year: <span class="pubYear">{{ item["year"] }}</span></p>
-                                <p>Type: <span class="pubType">{{ item["type"] }}</span></p>
-                                <p>Title: <span class="pubTitle">{{ item["title"] }}</span></p>
-                                <p>Journal / Conference name: <span class="pubName">{{ item["name"] }}</span></p>
-                                <p>Status: <span class="pubStatus">{{ item["publicationStatus"] }}</span></p>
-                                <p>DOI: <span class="pubDOI">{{ item["doi"] }}</span></p>
-                                <p>Primary attribution: <span class="pubPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
-
-                                <button class="btn btn-secondary" type="button" id="pub{{ loop.index }}-clone">Copy</button>
-                                <button class="btn btn-secondary" type="button" id="pub{{ loop.index }}-edit">Edit</button>
-                                <form class="deleteForms" action="" method="post">
-                                    <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-danger" id="publications-delete" name="publications-delete" value="Delete">
-                                </form>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <hr>
-            </div>-->
 
             <!-- PRESENTATIONS -->
             <div class="collapse" id="presentations">

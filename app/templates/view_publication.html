@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ publication.title }}{% if publication.doi %} ({{ publication.doi }}) {% endif %}</h1>
+
+<h2>Author: <a href="{{ url_for('list_publications', id=author.id) }}">{{ author.email }}</a></h2>
+<ul class="list-group">
+    <li class="list-group-item">
+        Year: {{ publication.year }}
+    </li>
+    <li class="list-group-item">
+        Journal / Conference: {{ publication.journal }}
+    </li>
+    <li class="list-group-item">
+        Type: {{ publication.type }}
+    </li>
+    <li class="list-group-item">
+        Status: {{ publication.status }}
+    </li>
+</ul>
+    
+<p>
+    <a class="btn btn-primary" href="{{ url_for('edit_publication', id=publication.id) }}">Edit</a>
+</p>
+{% endblock %}
