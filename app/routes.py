@@ -32,49 +32,26 @@ def before_request():
 @login_required
 def index():
     formList = []
-    genForm = GeneralInformation.query.filter_by(user_id=current_user.id).first()
-    if genForm is None:
-        formList.append("General Info")
-    eduForm = EmploymentInformation.query.filter_by(user_id=current_user.id).first()
-    if eduForm is None:
-        formList.append("Education")
-    socForm = SocietiesInformation.query.filter_by(user_id=current_user.id).first()
-    if socForm is None:
-        formList.append("Societies")
-    awardForm = AwardsInformation.query.filter_by(user_id=current_user.id).first()
-    if awardForm is None:
-        formList.append("Awards")
-    fundForm = FundingDiversification.query.filter_by(user_id=current_user.id).first()
-    if fundForm is None:
-        formList.append("Funding Diversification")
-    impForm = Impacts.query.filter_by(user_id=current_user.id).first()
-    if impForm is None:
-        formList.append("Impacts")
-    inForm = InnovationAndCommercialisation.query.filter_by(user_id=current_user.id).first()
-    if inForm is None:
-        formList.append("Innovation and Commercialisation")
-    presForm = Presentations.query.filter_by(user_id=current_user.id).first()
-    if presForm is None:
-        formList.append("Presentations")
-    accForm = AcademicCollaborations.query.filter_by(user_id=current_user.id).first()
-    if accForm is None:
-        formList.append("Academic Collaborations")
-    nonForm = NonAcademicCollaborations.query.filter_by(user_id=current_user.id).first()
-    if nonForm is None:
-        formList.append("Non academic Collaborations")
-    evForm = Events.query.filter_by(user_id=current_user.id).first()
-    if evForm is None:
-        formList.append("Events")
-    comForm = CommunicationsOverview.query.filter_by(user_id=current_user.id).first()
-    if comForm is None:
-        formList.append("Communications Overview")
-    sfiForm = SfiFundingRatio.query.filter_by(user_id=current_user.id).first()
-    if sfiForm is None:
-        formList.append("SFI Funding Ratio")
-    edpubForm = EducationPublicEngagement.query.filter_by(user_id=current_user.id).all()
-    if edpubForm is None:    
-        formList.append("Education and Public engagement")
 
+    def check_if_filled(tableName, string):
+        result = tableName.query.filter_by(user_id=current_user.id).first()
+        if result is None:
+            formList.append(string)
+
+    check_if_filled(GeneralInformation, "General Information")
+    check_if_filled(EmploymentInformation, "Education")
+    check_if_filled(SocietiesInformation, "Societies")
+    check_if_filled(AwardsInformation, "Awards")
+    check_if_filled(FundingDiversification, "Funding Diversification")
+    check_if_filled(Impacts, "Impacts")
+    check_if_filled(InnovationAndCommercialisation, "Innovation and Commercialisation")
+    check_if_filled(AcademicCollaborations, "Academic Collaborations")
+    check_if_filled(NonAcademicCollaborations, "Non academic Collaborations")
+    check_if_filled(Events, "Events")
+    check_if_filled(CommunicationsOverview, "Communications Overview")
+    check_if_filled(SfiFundingRatio, "SFI Funding Ratio")
+    check_if_filled(EducationPublicEngagement, "Education and Public engagement")
+   
 
     return render_template("index.html", title="Home ", form=formList)
 
