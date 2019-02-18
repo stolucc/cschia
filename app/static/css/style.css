@@ -6,6 +6,9 @@
 	display: inline;
 }
 
-footer {
+.footer {
 	width: 100%;
+	position: relative;
+	left: 0;
+	bottom: 0;
 }
