@@ -784,24 +784,6 @@ def edit_profile():
             userInfo.data = infoJson
             db.session.commit()
             flash("Entry successfully updated.")
-        elif pubForm.validate_on_submit and "pubEdit" in request.form:
-            num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = Publications.query.filter_by(user_id=current_user.id).all()[num-1]
-
-            info = {
-                "year" : pubForm.year.data,
-                "type" : pubForm.type.data,
-                "title" : pubForm.title.data,
-                "name" : pubForm.name.data,
-                "publicationStatus" : pubForm.publicationStatus.data,
-                "doi" : pubForm.doi.data,
-                "primaryAttribution" : pubForm.primaryAttribution.data
-            }
-
-            infoJson = json.dumps(info)
-            userInfo.data = infoJson
-            db.session.commit()
-            flash("Entry successfully updated.")
         elif presForm.validate_on_submit and "presEdit" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
             userInfo = Presentations.query.filter_by(user_id=current_user.id).all()[num-1]
