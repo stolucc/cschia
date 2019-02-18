@@ -5,71 +5,71 @@
         <div class="col-md-4">
             <ul class="list-group list-group-flush" id="section-buttons">
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#general" aria-expanded="false" aria-controls="general">General Info</button>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#general" aria-expanded="false" aria-controls="general">General Info</button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#education" aria-expanded="false" aria-controls="education">Education</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numEdu">{% if getEduInfo %}{{ getEduInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#education" aria-expanded="false" aria-controls="education">Education
+                    <span class="badge badge-dark badge-pill float-right" id="numEdu">{% if getEduInfo %}{{ getEduInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#employment" aria-expanded="false" aria-controls="employment">Employment</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numEmploy">{% if getEmployInfo %}{{ getEmployInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#employment" aria-expanded="false" aria-controls="employment">Employment
+                    <span class="badge badge-dark badge-pill float-right" id="numEmploy">{% if getEmployInfo %}{{ getEmployInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#societies" aria-expanded="false" aria-controls="societies">Societies</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numSoc">{% if getSocInfo %}{{ getSocInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#societies" aria-expanded="false" aria-controls="societies">Societies
+                    <span class="badge badge-dark badge-pill float-right" id="numSoc">{% if getSocInfo %}{{ getSocInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#awards" aria-expanded="false" aria-controls="awards">Awards</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numAwards">{% if getAwardInfo %}{{ getAwardInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#awards" aria-expanded="false" aria-controls="awards">Awards
+                    <span class="badge badge-dark badge-pill float-right" id="numAwards">{% if getAwardInfo %}{{ getAwardInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#fundingDiv" aria-expanded="false" aria-controls="fundingDiv">Funding Diversification</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numFund">{% if getFundInfo %}{{ getFundInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#fundingDiv" aria-expanded="false" aria-controls="fundingDiv">Funding Diversification
+                    <span class="badge badge-dark badge-pill float-right" id="numFund">{% if getFundInfo %}{{ getFundInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#teamMembers" aria-expanded="false" aria-controls="teamMembers">Team Members</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numTeam"><!-- @TODO --></span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#teamMembers" aria-expanded="false" aria-controls="teamMembers">Team Members
+                    <span class="badge badge-dark badge-pill float-right" id="numTeam"><!-- @TODO --></span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#impacts" aria-expanded="false" aria-controls="impacts">Impacts</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numImpacts">{% if getImpInfo %}{{ getImpInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#impacts" aria-expanded="false" aria-controls="impacts">Impacts
+                    <span class="badge badge-dark badge-pill float-right" id="numImpacts">{% if getImpInfo %}{{ getImpInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#innovCom" aria-expanded="false" aria-controls="innovCom">Innovation and Commercialisation</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numInnovCom">{% if getInnInfo %}{{ getInnInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#innovCom" aria-expanded="false" aria-controls="innovCom">Innovation and Commercialisation
+                    <span class="badge badge-dark badge-pill float-right" id="numInnovCom">{% if getInnInfo %}{{ getInnInfo|length }}{% endif %}</span></button>
+                </li>
+                <!--<li class="list-group-item">
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#publications" aria-expanded="false" aria-controls="publications">Publications
+                    <span class="badge badge-dark badge-pill float-right" id="numPub">{% if getPubInfo %}{{ getPubInfo|length }}{% endif %}</span></button>
+                </li>--> <!-- publications moved -->
+                <li class="list-group-item">
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#presentations" aria-expanded="false" aria-controls="presentations">Presentations
+                    <span class="badge badge-dark badge-pill float-right" id="numPres">{% if getPresInfo %}{{ getPresInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#publications" aria-expanded="false" aria-controls="publications">Publications</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numPub">{% if getPubInfo %}{{ getPubInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#academicCollabs" aria-expanded="false" aria-controls="academicCollabs">Academic Collaborations
+                    <span class="badge badge-dark badge-pill float-right" id="numAc">{% if getAcInfo %}{{ getAcInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#presentations" aria-expanded="false" aria-controls="presentations">Presentations</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numPres">{% if getPresInfo %}{{ getPresInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs" aria-expanded="false" aria-controls="nonAcademicCollabs">Non Academic Collaborations
+                    <span class="badge badge-dark badge-pill float-right" id="numNonAc">{% if getNonAcInfo %}{{ getNonAcInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#academicCollabs" aria-expanded="false" aria-controls="academicCollabs">Academic Collaborations</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numAc">{% if getAcInfo %}{{ getAcInfo|length }}{% endif %}</span>
-                </li>
-                <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs" aria-expanded="false" aria-controls="nonAcademicCollabs">Non Academic Collaborations</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numNonAc">{% if getNonAcInfo %}{{ getNonAcInfo|length }}{% endif %}</span>
-                </li>
-                <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#events" aria-expanded="false" aria-controls="events">Events</button>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#events" aria-expanded="false" aria-controls="events">Events</button>
                     <span class="badge badge-dark badge-pill float-right" id="numEvents">{% if getEvInfo %}{{ getEvInfo|length }}{% endif %}</span>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#communications" aria-expanded="false" aria-controls="communications">Communications</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numComm">{% if getCommInfo %}{{ getCommInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#communications" aria-expanded="false" aria-controls="communications">Communications
+                    <span class="badge badge-dark badge-pill float-right" id="numComm">{% if getCommInfo %}{{ getCommInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#sfiFundingRatio" aria-expanded="false" aria-controls="sfiFundingRatio">SFI Funding Ratio</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numSfi">{% if getSfiInfo %}{{ getSfiInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#sfiFundingRatio" aria-expanded="false" aria-controls="sfiFundingRatio">SFI Funding Ratio
+                    <span class="badge badge-dark badge-pill float-right" id="numSfi">{% if getSfiInfo %}{{ getSfiInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#pubEngage" aria-expanded="false" aria-controls="pubEngage">Education and Public Engagement</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numPEng">{% if getEdInfo %}{{ getEdInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#pubEngage" aria-expanded="false" aria-controls="pubEngage">Education and Public Engagement
+                    <span class="badge badge-dark badge-pill float-right" id="numPEng">{% if getEdInfo %}{{ getEdInfo|length }}{% endif %}</span></button>
                 </li>
             </ul>
         </div>
@@ -81,64 +81,64 @@
                 <form action="" method="post">
                     {{ genInfoForm.hidden_tag() }}
                     <div class="form-group">
-                        {{ genInfoForm.firstName.label }}<br>
-                        {{ genInfoForm.firstName(class="form-control", value=getGenInfo["firstName"]) }}<br>
+                        {{ genInfoForm.firstName.label }}
+                        {{ genInfoForm.firstName(class="form-control", value=getGenInfo["firstName"]) }}
                         {% for error in genInfoForm.firstName.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{ genInfoForm.lastName.label }}<br>
-                        {{ genInfoForm.lastName(class="form-control", value=getGenInfo["lastName"]) }}<br>
+                        {{ genInfoForm.lastName.label }}
+                        {{ genInfoForm.lastName(class="form-control", value=getGenInfo["lastName"]) }}
                         {% for error in genInfoForm.lastName.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{ genInfoForm.jobTitle.label }}<br>
-                        {{ genInfoForm.jobTitle(class="form-control", value=getGenInfo["jobTitle"]) }}<br>
+                        {{ genInfoForm.jobTitle.label }}
+                        {{ genInfoForm.jobTitle(class="form-control", value=getGenInfo["jobTitle"]) }}
                         {% for error in genInfoForm.jobTitle.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{ genInfoForm.prefix.label }}<br>
-                        {{ genInfoForm.prefix(class="form-control", value=getGenInfo["prefix"]) }}<br>
+                        {{ genInfoForm.prefix.label }}
+                        {{ genInfoForm.prefix(class="form-control", value=getGenInfo["prefix"]) }}
                         {% for error in genInfoForm.lastName.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{ genInfoForm.suffix.label }}<br>
-                        {{ genInfoForm.suffix(class="form-control", value=getGenInfo["suffix"]) }}<br>
+                        {{ genInfoForm.suffix.label }}
+                        {{ genInfoForm.suffix(class="form-control", value=getGenInfo["suffix"]) }}
                         {% for error in genInfoForm.suffix.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{ genInfoForm.phoneNumPrefix.label }}<br>
-                        {{ genInfoForm.phoneNumPrefix(class="form-control", value=getGenInfo["phoneNumPrefix"]) }}<br>
+                        {{ genInfoForm.phoneNumPrefix.label }}
+                        {{ genInfoForm.phoneNumPrefix(class="form-control", value=getGenInfo["phoneNumPrefix"]) }}
                         {% for error in genInfoForm.phoneNumPrefix.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{ genInfoForm.phoneNum.label }}<br>
-                        {{ genInfoForm.phoneNum(class="form-control", value=getGenInfo["phoneNum"]) }}<br>
+                        {{ genInfoForm.phoneNum.label }}
+                        {{ genInfoForm.phoneNum(class="form-control", value=getGenInfo["phoneNum"]) }}
                         {% for error in genInfoForm.phoneNum.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{ genInfoForm.email.label }}<br>
-                        {{ genInfoForm.email(class="form-control", value=getGenInfo["email"]) }}<br>
+                        {{ genInfoForm.email.label }}
+                        {{ genInfoForm.email(class="form-control", value=getGenInfo["email"]) }}
                         {% for error in genInfoForm.email.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{ genInfoForm.orcid.label }}<br>
-                        {{ genInfoForm.orcid(class="form-control", value=getGenInfo["orcid"]) }}<br>
+                        {{ genInfoForm.orcid.label }}
+                        {{ genInfoForm.orcid(class="form-control", value=getGenInfo["orcid"]) }}
                         {% for error in genInfoForm.orcid.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
@@ -157,36 +157,36 @@
                         <form action="" method="post" id="eduForm">
                             {{ eduForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ eduForm.degree.label }}<br>
-                                {{ eduForm.degree(class="form-control", id="eduDegree") }}<br>
+                                {{ eduForm.degree.label }}
+                                {{ eduForm.degree(class="form-control", id="eduDegree") }}
                                 {% for error in eduForm.degree.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ eduForm.fieldOfStudy.label }}<br>
-                                {{ eduForm.fieldOfStudy(class="form-control", id="eduFieldOfStudy") }}<br>
+                                {{ eduForm.fieldOfStudy.label }}
+                                {{ eduForm.fieldOfStudy(class="form-control", id="eduFieldOfStudy") }}
                                 {% for error in eduForm.fieldOfStudy.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ eduForm.institution.label }}<br>
-                                {{ eduForm.institution(class="form-control", id="eduInstitution") }}<br>
+                                {{ eduForm.institution.label }}
+                                {{ eduForm.institution(class="form-control", id="eduInstitution") }}
                                 {% for error in eduForm.institution.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ eduForm.location.label }}<br>
-                                {{ eduForm.location(class="form-control", id="eduLoc") }}<br>
+                                {{ eduForm.location.label }}
+                                {{ eduForm.location(class="form-control", id="eduLoc") }}
                                 {% for error in eduForm.location.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ eduForm.yearOfDegreeAward.label }}<br>
-                                {{ eduForm.yearOfDegreeAward(class="form-control", id="eduYearDegree") }}<br>
+                                {{ eduForm.yearOfDegreeAward.label }}
+                                {{ eduForm.yearOfDegreeAward(class="form-control", id="eduYearDegree") }}
                                 {% for error in eduForm.yearOfDegreeAward.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
@@ -234,32 +234,37 @@
             <div class="collapse" id="employment">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Employment Information</h1>
-                        <form action="" method="post">
+                        <h1 id="employTitle">Add Employment Information</h1>
+                        <form action="" method="post" id="employForm">
                             {{ employForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ employForm.company.label }}<br>
-                                {{ employForm.company(class="form-control", id="employCompany") }}<br>
+                                {{ employForm.company.label }}
+                                {{ employForm.company(class="form-control", id="employCompany") }}
                                 {% for error in employForm.company.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ employForm.location.label }}<br>
-                                {{ employForm.location(class="form-control", id="employLoc") }}<br>
+                                {{ employForm.location.label }}
+                                {{ employForm.location(class="form-control", id="employLoc") }}
                                 {% for error in employForm.location.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ employForm.years.label }}<br>
-                                {{ employForm.years(class="form-control", id="employYears") }}<br>
+                                {{ employForm.years.label }}
+                                {{ employForm.years(class="form-control", id="employYears") }}
                                 {% for error in employForm.years.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ employForm.employSubmit(class="btn btn-primary") }}
+                                {{ employForm.employEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="employIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="employAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#employment-show" aria-expanded="false" aria-controls="employment-show">Show / Hide current</button>
                             </div>
@@ -279,7 +284,7 @@
                                 <button class="btn btn-secondary" type="button" id="employ{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="emloy-delete" name="employ-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="emloy-delete" name="employ-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -293,46 +298,51 @@
             <div class="collapse" id="societies">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Societies Information</h1>
-                        <form action="" method="post">
+                        <h1 id="socTitle">Add Societies Information</h1>
+                        <form action="" method="post" id="socForm">
                             {{ socForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ socForm.startDate.label }}<br>
-                                {{ socForm.startDate(class="form-control", id="socStart") }}<br>
+                                {{ socForm.startDate.label }}
+                                {{ socForm.startDate(class="form-control", id="socStart") }}
                                 {% for error in socForm.startDate.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ socForm.endDate.label }}<br>
-                                {{ socForm.endDate(class="form-control", id="socEnd") }}<br>
+                                {{ socForm.endDate.label }}
+                                {{ socForm.endDate(class="form-control", id="socEnd") }}
                                 {% for error in socForm.endDate.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ socForm.nameOfSociety.label }}<br>
-                                {{ socForm.nameOfSociety(class="form-control", id="socName") }}<br>
+                                {{ socForm.nameOfSociety.label }}
+                                {{ socForm.nameOfSociety(class="form-control", id="socName") }}
                                 {% for error in socForm.nameOfSociety.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ socForm.typeOfMembership.label }}<br>
-                                {{ socForm.typeOfMembership(class="form-control", id="socMembership") }}<br>
+                                {{ socForm.typeOfMembership.label }}
+                                {{ socForm.typeOfMembership(class="form-control", id="socMembership") }}
                                 {% for error in socForm.typeOfMembership.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ socForm.status.label }}<br>
-                                {{ socForm.status(class="form-control", id="socStatus") }}<br>
+                                {{ socForm.status.label }}
+                                {{ socForm.status(class="form-control", id="socStatus") }}
                                 {% for error in socForm.status.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ socForm.socSubmit(class="btn btn-primary") }}
+                                {{ socForm.socEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="socIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="socAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#societies-show" aria-expanded="false" aria-controls="societies-show">Show / Hide current</button>
                             </div>
@@ -354,7 +364,7 @@
                                 <button class="btn btn-secondary" type="button" id="soc{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="soc-delete" name="soc-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="soc-delete" name="soc-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -368,39 +378,44 @@
             <div class="collapse" id="awards">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Awards Information</h1>
-                        <form action="" method="post">
+                        <h1 id="awardsTitle">Add Awards Information</h1>
+                        <form action="" method="post" id="awardsForm">
                             {{ awardsForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ awardsForm.year.label }}<br>
-                                {{ awardsForm.year(class="form-control", id="awardYear") }}<br>
+                                {{ awardsForm.year.label }}
+                                {{ awardsForm.year(class="form-control", id="awardYear") }}
                                 {% for error in awardsForm.year.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ awardsForm.awardingBody.label }}<br>
-                                {{ awardsForm.awardingBody(class="form-control", id="awardingBody") }}<br>
+                                {{ awardsForm.awardingBody.label }}
+                                {{ awardsForm.awardingBody(class="form-control", id="awardingBody") }}
                                 {% for error in awardsForm.awardingBody.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ awardsForm.details.label }}<br>
-                                {{ awardsForm.details(class="form-control", id="awardDetails") }}<br>
+                                {{ awardsForm.details.label }}
+                                {{ awardsForm.details(class="form-control", id="awardDetails") }}
                                 {% for error in awardsForm.details.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ awardsForm.teamMemberName.label }}<br>
-                                {{ awardsForm.teamMemberName(class="form-control", id="awardTeam") }}<br>
+                                {{ awardsForm.teamMemberName.label }}
+                                {{ awardsForm.teamMemberName(class="form-control", id="awardTeam") }}
                                 {% for error in awardsForm.teamMemberName.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ awardsForm.awardsSubmit(class="btn btn-primary") }}
+                                {{ awardsForm.awardsEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="awardsIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="awardsAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#awards-show" aria-expanded="false" aria-controls="awards-show">Show / Hide current</button>
                             </div>
@@ -421,7 +436,7 @@
                                 <button class="btn btn-secondary" type="button" id="awards{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="awards-delete" name="awards-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="awards-delete" name="awards-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -435,60 +450,65 @@
             <div class="collapse" id="fundingDiv">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Funding Diversification Information</h1>
-                        <form action="" method="post">
+                        <h1 id="fundTitle">Add Funding Diversification Information</h1>
+                        <form action="" method="post" id="fundForm">
                             {{ fundingDivForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ fundingDivForm.startDate.label }}<br>
-                                {{ fundingDivForm.startDate(class="form-control", id="fundStartDate") }}<br>
+                                {{ fundingDivForm.startDate.label }}
+                                {{ fundingDivForm.startDate(class="form-control", id="fundStartDate") }}
                                 {% for error in fundingDivForm.startDate.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ fundingDivForm.endDate.label }}<br>
-                                {{ fundingDivForm.endDate(class="form-control", id="fundEndDate") }}<br>
+                                {{ fundingDivForm.endDate.label }}
+                                {{ fundingDivForm.endDate(class="form-control", id="fundEndDate") }}
                                 {% for error in fundingDivForm.endDate.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ fundingDivForm.amount.label }}<br>
-                                {{ fundingDivForm.amount(class="form-control", id="fundAmount") }}<br>
+                                {{ fundingDivForm.amount.label }}
+                                {{ fundingDivForm.amount(class="form-control", id="fundAmount") }}
                                 {% for error in fundingDivForm.amount.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ fundingDivForm.fundingBody.label }}<br>
-                                {{ fundingDivForm.fundingBody(class="form-control", id="fundBody") }}<br>
+                                {{ fundingDivForm.fundingBody.label }}
+                                {{ fundingDivForm.fundingBody(class="form-control", id="fundBody") }}
                                 {% for error in fundingDivForm.fundingBody.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ fundingDivForm.fundingProgramme.label }}<br>
-                                {{ fundingDivForm.fundingProgramme(class="form-control", id="fundProgramme") }}<br>
+                                {{ fundingDivForm.fundingProgramme.label }}
+                                {{ fundingDivForm.fundingProgramme(class="form-control", id="fundProgramme") }}
                                 {% for error in fundingDivForm.fundingProgramme.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ fundingDivForm.status.label }}<br>
-                                {{ fundingDivForm.status(class="form-control", id="fundStatus") }}<br>
+                                {{ fundingDivForm.status.label }}
+                                {{ fundingDivForm.status(class="form-control", id="fundStatus") }}
                                 {% for error in fundingDivForm.status.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ fundingDivForm.primaryAttribution.label }}<br>
-                                {{ fundingDivForm.primaryAttribution(class="form-control", id="fundPrimaryAttrib") }}<br>
+                                {{ fundingDivForm.primaryAttribution.label }}
+                                {{ fundingDivForm.primaryAttribution(class="form-control", id="fundPrimaryAttrib") }}
                                 {% for error in fundingDivForm.primaryAttribution.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ fundingDivForm.fundingDivSubmit(class="btn btn-primary") }}
+                                {{ fundingDivForm.fundingDivEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="fundingDivIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="fundingDivAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#fundingDiv-show" aria-expanded="false" aria-controls="fundingDiv-show">Show / Hide current</button>
                             </div>
@@ -512,7 +532,7 @@
                                 <button class="btn btn-secondary" type="button" id="fund{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="fund-delete" name="fund-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="fund-delete" name="fund-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -526,46 +546,51 @@
             <div class="collapse" id="teamMembers">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add New Team Information</h1>
-                        <form action="" method="post">
+                        <h1 ic="teamTitle">Add New Team Information</h1>
+                        <form action="" method="post" id="teamForm">
                             {{ teamMemForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ teamMemForm.startDate.label }}<br>
-                                {{ teamMemForm.startDate(class="form-control", id="teamStartDate") }}<br>
+                                {{ teamMemForm.startDate.label }}
+                                {{ teamMemForm.startDate(class="form-control", id="teamStartDate") }}
                                 {% for error in teamMemForm.startDate.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ teamMemForm.departureDate.label }}<br>
-                                {{ teamMemForm.departureDate(class="form-control", id="teamDepartDate") }}<br>
+                                {{ teamMemForm.departureDate.label }}
+                                {{ teamMemForm.departureDate(class="form-control", id="teamDepartDate") }}
                                 {% for error in teamMemForm.departureDate.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ teamMemForm.name.label }}<br>
-                                {{ teamMemForm.name(class="form-control", id="teamName") }}<br>
+                                {{ teamMemForm.name.label }}
+                                {{ teamMemForm.name(class="form-control", id="teamName") }}
                                 {% for error in teamMemForm.name.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ teamMemForm.position.label }}<br>
-                                {{ teamMemForm.position(class="form-control", id="teamPos") }}<br>
+                                {{ teamMemForm.position.label }}
+                                {{ teamMemForm.position(class="form-control", id="teamPos") }}
                                 {% for error in teamMemForm.position.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ teamMemForm.primaryAttribution.label }}<br>
-                                {{ teamMemForm.primaryAttribution(class="form-control", id="teamPrimaryAttrib") }}<br>
+                                {{ teamMemForm.primaryAttribution.label }}
+                                {{ teamMemForm.primaryAttribution(class="form-control", id="teamPrimaryAttrib") }}
                                 {% for error in teamMemForm.primaryAttribution.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ teamMemForm.teamMemSubmit(class="btn btn-primary") }}
+                                {{ teamMemForm.teamMemEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="teamMemIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="teamMemAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#team-show" aria-expanded="false" aria-controls="team-show">Show / Hide current</button>
                             </div>
@@ -588,7 +613,7 @@
                                 <button class="btn btn-secondary" type="button" id="team{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="team-delete" name="team-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="team-delete" name="team-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -602,39 +627,44 @@
             <div class="collapse" id="impacts">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Impacts Information</h1>
-                        <form action="" method="post">
+                        <h1 id="impactTitle">Add Impacts Information</h1>
+                        <form action="" method="post" id="impactForm">
                             {{ impactsForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ impactsForm.title.label }}<br>
-                                {{ impactsForm.title(class="form-control", id="impactTitle") }}<br>
+                                {{ impactsForm.title.label }}
+                                {{ impactsForm.title(class="form-control", id="impactsTitle") }}
                                 {% for error in impactsForm.title.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ impactsForm.category.label }}<br>
-                                {{ impactsForm.category(class="form-control", id="impactCategory") }}<br>
+                                {{ impactsForm.category.label }}
+                                {{ impactsForm.category(class="form-control", id="impactCategory") }}
                                 {% for error in impactsForm.category.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ impactsForm.primaryBeneficiary.label }}<br>
-                                {{ impactsForm.primaryBeneficiary(class="form-control", id="impactPrimaryBen") }}<br>
+                                {{ impactsForm.primaryBeneficiary.label }}
+                                {{ impactsForm.primaryBeneficiary(class="form-control", id="impactPrimaryBen") }}
                                 {% for error in impactsForm.primaryBeneficiary.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ impactsForm.primaryAttribution.label }}<br>
-                                {{ impactsForm.primaryAttribution(class="form-control", id="impactPrimaryAttrib") }}<br>
+                                {{ impactsForm.primaryAttribution.label }}
+                                {{ impactsForm.primaryAttribution(class="form-control", id="impactPrimaryAttrib") }}
                                 {% for error in impactsForm.primaryAttribution.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ impactsForm.impactsSubmit(class="btn btn-primary") }}
+                                {{ impactsForm.impactsEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="impactsIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="impactsAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#impacts-show" aria-expanded="false" aria-controls="impacts-show">Show / Hide current</button>
                             </div>
@@ -655,7 +685,7 @@
                                 <button class="btn btn-secondary" type="button" id="impact{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="impacts-delete" name="impacts-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="impacts-delete" name="impacts-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -669,39 +699,44 @@
             <div class="collapse" id="innovCom">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Innovation and Commercialisation Information</h1>
-                        <form action="" method="post">
+                        <h1 id="innovComTitle">Add Innovation and Commercialisation Information</h1>
+                        <form action="" method="post" id="innovComForm">
                             {{ innovForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ innovForm.year.label }}<br>
-                                {{ innovForm.year(class="form-control", id="innovComYear") }}<br>
+                                {{ innovForm.year.label }}
+                                {{ innovForm.year(class="form-control", id="innovComYear") }}
                                 {% for error in innovForm.year.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ innovForm.type.label }}<br>
-                                {{ innovForm.type(class="form-control", id="innovComType") }}<br>
+                                {{ innovForm.type.label }}
+                                {{ innovForm.type(class="form-control", id="innovComType") }}
                                 {% for error in innovForm.type.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ innovForm.title.label }}<br>
-                                {{ innovForm.title(class="form-control", id="innovComTitle") }}<br>
+                                {{ innovForm.title.label }}
+                                {{ innovForm.title(class="form-control", id="innovComTitle2") }}
                                 {% for error in innovForm.title.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ innovForm.primaryAttribution.label }}<br>
-                                {{ innovForm.primaryAttribution(class="form-control", id="innovComPrimaryAttrib") }}<br>
+                                {{ innovForm.primaryAttribution.label }}
+                                {{ innovForm.primaryAttribution(class="form-control", id="innovComPrimaryAttrib") }}
                                 {% for error in innovForm.primaryAttribution.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ innovForm.innovSubmit(class="btn btn-primary") }}
+                                {{ innovForm.innovEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="innovIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="innovAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#innovCom-show" aria-expanded="false" aria-controls="innovCom-show">Show / Hide current</button>
                             </div>
@@ -722,7 +757,7 @@
                                 <button class="btn btn-secondary" type="button" id="innovCom{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="innovCom-delete" name="innovCom-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="innovCom-delete" name="innovCom-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -733,63 +768,68 @@
             </div>
 
             <!-- PUBLICATIONS -->
-            <div class="collapse" id="publications">
+            <!--<div class="collapse" id="publications">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Publications Information</h1>
-                        <form action="" method="post">
+                        <h1 id="pubTitle">Add Publications Information</h1>
+                        <form action="" method="post" id="pubForm">
                             {{ pubForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ pubForm.year.label }}<br>
-                                {{ pubForm.year(class="form-control", id="pubYear") }}<br>
+                                {{ pubForm.year.label }}
+                                {{ pubForm.year(class="form-control", id="pubYear") }}
                                 {% for error in pubForm.year.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ pubForm.type.label }}<br>
-                                {{ pubForm.type(class="form-control", id="pubType") }}<br>
+                                {{ pubForm.type.label }}
+                                {{ pubForm.type(class="form-control", id="pubType") }}
                                 {% for error in pubForm.type.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ pubForm.title.label }}<br>
-                                {{ pubForm.title(class="form-control", id="pubTitle") }}<br>
+                                {{ pubForm.title.label }}
+                                {{ pubForm.title(class="form-control", id="pubTitle2") }}
                                 {% for error in pubForm.title.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ pubForm.name.label }}<br>
-                                {{ pubForm.name(class="form-control", id="pubName") }}<br>
+                                {{ pubForm.name.label }}
+                                {{ pubForm.name(class="form-control", id="pubName") }}
                                 {% for error in pubForm.name.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ pubForm.publicationStatus.label }}<br>
-                                {{ pubForm.publicationStatus(class="form-control", id="pubStatus") }}<br>
+                                {{ pubForm.publicationStatus.label }}
+                                {{ pubForm.publicationStatus(class="form-control", id="pubStatus") }}
                                 {% for error in pubForm.publicationStatus.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ pubForm.doi.label }}<br>
-                                {{ pubForm.doi(class="form-control", id="pubDOI") }}<br>
+                                {{ pubForm.doi.label }}
+                                {{ pubForm.doi(class="form-control", id="pubDOI") }}
                                 {% for error in pubForm.doi.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ pubForm.primaryAttribution.label }}<br>
-                                {{ pubForm.primaryAttribution(class="form-control", id="pubPrimaryAttrib") }}<br>
+                                {{ pubForm.primaryAttribution.label }}
+                                {{ pubForm.primaryAttribution(class="form-control", id="pubPrimaryAttrib") }}
                                 {% for error in pubForm.primaryAttribution.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ pubForm.pubSubmit(class="btn btn-primary") }}
+                                {{ pubForm.pubEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="pubIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="pubAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#publications-show" aria-expanded="false" aria-controls="publications-show">Show / Hide current</button>
                             </div>
@@ -813,7 +853,7 @@
                                 <button class="btn btn-secondary" type="button" id="pub{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="publications-delete" name="publications-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="publications-delete" name="publications-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -821,59 +861,64 @@
                     </div>
                 </div>
                 <hr>
-            </div>
+            </div>-->
 
             <!-- PRESENTATIONS -->
             <div class="collapse" id="presentations">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Presentations Information</h1>
-                        <form action="" method="post">
+                        <h1 id="presTitle">Add Presentations Information</h1>
+                        <form action="" method="post" id="presForm">
                             {{ presForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ presForm.year.label }}<br>
-                                {{ presForm.year(class="form-control", id="presYear") }}<br>
+                                {{ presForm.year.label }}
+                                {{ presForm.year(class="form-control", id="presYear") }}
                                 {% for error in presForm.year.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ presForm.title.label }}<br>
-                                {{ presForm.title(class="form-control", id="presTitle") }}<br>
+                                {{ presForm.title.label }}
+                                {{ presForm.title(class="form-control", id="presTitle2") }}
                                 {% for error in presForm.title.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ presForm.eventType.label }}<br>
-                                {{ presForm.eventType(class="form-control", id="presEventType") }}<br>
+                                {{ presForm.eventType.label }}
+                                {{ presForm.eventType(class="form-control", id="presEventType") }}
                                 {% for error in presForm.eventType.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ presForm.organisingBody.label }}<br>
-                                {{ presForm.organisingBody(class="form-control", id="presOrganBody") }}<br>
+                                {{ presForm.organisingBody.label }}
+                                {{ presForm.organisingBody(class="form-control", id="presOrganBody") }}
                                 {% for error in presForm.organisingBody.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ presForm.location.label }}<br>
-                                {{ presForm.location(class="form-control", id="presLoc") }}<br>
+                                {{ presForm.location.label }}
+                                {{ presForm.location(class="form-control", id="presLoc") }}
                                 {% for error in presForm.location.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ presForm.primaryAttribution.label }}<br>
-                                {{ presForm.primaryAttribution(class="form-control", id="presPrimaryAttrib") }}<br>
+                                {{ presForm.primaryAttribution.label }}
+                                {{ presForm.primaryAttribution(class="form-control", id="presPrimaryAttrib") }}
                                 {% for error in presForm.primaryAttribution.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ presForm.presSubmit(class="btn btn-primary") }}
+                                {{ presForm.presEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="presIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="presAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#presentations-show" aria-expanded="false" aria-controls="presentations-show">Show / Hide current</button>
                             </div>
@@ -896,7 +941,7 @@
                                 <button class="btn btn-secondary" type="button" id="pres{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="presentations-delete" name="presentations-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="presentations-delete" name="presentations-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -910,67 +955,72 @@
             <div class="collapse" id="academicCollabs">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Academic Collaborations</h1>
-                        <form action="" method="post">
+                        <h1 id="acColTitle">Add Academic Collaborations</h1>
+                        <form action="" method="post" id="acColForm">
                             {{ academicCollabsForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ academicCollabsForm.startDate.label }}<br>
-                                {{ academicCollabsForm.startDate(class="form-control", id="acColStartDate") }}<br>
+                                {{ academicCollabsForm.startDate.label }}
+                                {{ academicCollabsForm.startDate(class="form-control", id="acColStartDate") }}
                                 {% for error in academicCollabsForm.startDate.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ academicCollabsForm.endDate.label }}<br>
-                                {{ academicCollabsForm.endDate(class="form-control", id="acColEndDate") }}<br>
+                                {{ academicCollabsForm.endDate.label }}
+                                {{ academicCollabsForm.endDate(class="form-control", id="acColEndDate") }}
                                 {% for error in academicCollabsForm.endDate.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ academicCollabsForm.nameOfInstitution.label }}<br>
-                                {{ academicCollabsForm.nameOfInstitution(class="form-control", id="acColInstitution") }}<br>
+                                {{ academicCollabsForm.nameOfInstitution.label }}
+                                {{ academicCollabsForm.nameOfInstitution(class="form-control", id="acColInstitution") }}
                                 {% for error in academicCollabsForm.nameOfInstitution.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ academicCollabsForm.department.label }}<br>
-                                {{ academicCollabsForm.department(class="form-control", id="acColDepartment") }}<br>
+                                {{ academicCollabsForm.department.label }}
+                                {{ academicCollabsForm.department(class="form-control", id="acColDepartment") }}
                                 {% for error in academicCollabsForm.department.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ academicCollabsForm.nameOfCollaborator.label }}<br>
-                                {{ academicCollabsForm.nameOfCollaborator(class="form-control", id="acColName") }}<br>
+                                {{ academicCollabsForm.nameOfCollaborator.label }}
+                                {{ academicCollabsForm.nameOfCollaborator(class="form-control", id="acColName") }}
                                 {% for error in academicCollabsForm.nameOfCollaborator.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ academicCollabsForm.goal.label }}<br>
-                                {{ academicCollabsForm.goal(class="form-control", id="acColGoal") }}<br>
+                                {{ academicCollabsForm.goal.label }}
+                                {{ academicCollabsForm.goal(class="form-control", id="acColGoal") }}
                                 {% for error in academicCollabsForm.goal.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ academicCollabsForm.frequency.label }}<br>
-                                {{ academicCollabsForm.frequency(class="form-control", id="acColFreq") }}<br>
+                                {{ academicCollabsForm.frequency.label }}
+                                {{ academicCollabsForm.frequency(class="form-control", id="acColFreq") }}
                                 {% for error in academicCollabsForm.frequency.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ academicCollabsForm.primaryAttribution.label }}<br>
-                                {{ academicCollabsForm.primaryAttribution(class="form-control", id="acColPrimaryAttrib") }}<br>
+                                {{ academicCollabsForm.primaryAttribution.label }}
+                                {{ academicCollabsForm.primaryAttribution(class="form-control", id="acColPrimaryAttrib") }}
                                 {% for error in academicCollabsForm.primaryAttribution.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ academicCollabsForm.academicCollabsSubmit(class="btn btn-primary") }}
+                                {{ academicCollabsForm.academicCollabsEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="acIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="acAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#academicCollabs-show" aria-expanded="false" aria-controls="academicCollabs-show">Show / Hide current</button>
                             </div>
@@ -995,7 +1045,7 @@
                                 <button class="btn btn-secondary" type="button" id="acCol{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="acCol-delete" name="acCol-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="acCol-delete" name="acCol-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -1009,67 +1059,72 @@
             <div class="collapse" id="nonAcademicCollabs">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Non Academic Collaborations</h1>
-                        <form action="" method="post">
+                        <h1 id="nonAcColTitle">Add Non Academic Collaborations</h1>
+                        <form action="" method="post" id="nonAcColForm">
                             {{ nonAcademicCollabsForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ nonAcademicCollabsForm.startDate.label }}<br>
-                                {{ nonAcademicCollabsForm.startDate(class="form-control", id="nonAcColStartDate") }}<br>
+                                {{ nonAcademicCollabsForm.startDate.label }}
+                                {{ nonAcademicCollabsForm.startDate(class="form-control", id="nonAcColStartDate") }}
                                 {% for error in nonAcademicCollabsForm.startDate.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ nonAcademicCollabsForm.endDate.label }}<br>
-                                {{ nonAcademicCollabsForm.endDate(class="form-control", id="nonAcColEndDate") }}<br>
+                                {{ nonAcademicCollabsForm.endDate.label }}
+                                {{ nonAcademicCollabsForm.endDate(class="form-control", id="nonAcColEndDate") }}
                                 {% for error in nonAcademicCollabsForm.endDate.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ nonAcademicCollabsForm.nameOfInstitution.label }}<br>
-                                {{ nonAcademicCollabsForm.nameOfInstitution(class="form-control", id="nonAcColInstitution") }}<br>
+                                {{ nonAcademicCollabsForm.nameOfInstitution.label }}
+                                {{ nonAcademicCollabsForm.nameOfInstitution(class="form-control", id="nonAcColInstitution") }}
                                 {% for error in nonAcademicCollabsForm.nameOfInstitution.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ nonAcademicCollabsForm.department.label }}<br>
-                                {{ nonAcademicCollabsForm.department(class="form-control", id="nonAcColDepartment") }}<br>
+                                {{ nonAcademicCollabsForm.department.label }}
+                                {{ nonAcademicCollabsForm.department(class="form-control", id="nonAcColDepartment") }}
                                 {% for error in nonAcademicCollabsForm.department.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ nonAcademicCollabsForm.nameOfCollaborator.label }}<br>
-                                {{ nonAcademicCollabsForm.nameOfCollaborator(class="form-control", id="nonAcColName") }}<br>
+                                {{ nonAcademicCollabsForm.nameOfCollaborator.label }}
+                                {{ nonAcademicCollabsForm.nameOfCollaborator(class="form-control", id="nonAcColName") }}
                                 {% for error in nonAcademicCollabsForm.nameOfCollaborator.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ nonAcademicCollabsForm.goal.label }}<br>
-                                {{ nonAcademicCollabsForm.goal(class="form-control", id="nonAcColGoal") }}<br>
+                                {{ nonAcademicCollabsForm.goal.label }}
+                                {{ nonAcademicCollabsForm.goal(class="form-control", id="nonAcColGoal") }}
                                 {% for error in nonAcademicCollabsForm.goal.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ nonAcademicCollabsForm.frequency.label }}<br>
-                                {{ nonAcademicCollabsForm.frequency(class="form-control", id="nonAcColFreq") }}<br>
+                                {{ nonAcademicCollabsForm.frequency.label }}
+                                {{ nonAcademicCollabsForm.frequency(class="form-control", id="nonAcColFreq") }}
                                 {% for error in nonAcademicCollabsForm.frequency.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ nonAcademicCollabsForm.primaryAttribution.label }}<br>
-                                {{ nonAcademicCollabsForm.primaryAttribution(class="form-control", id="nonAcColPrimaryAttrib") }}<br>
+                                {{ nonAcademicCollabsForm.primaryAttribution.label }}
+                                {{ nonAcademicCollabsForm.primaryAttribution(class="form-control", id="nonAcColPrimaryAttrib") }}
                                 {% for error in nonAcademicCollabsForm.primaryAttribution.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ nonAcademicCollabsForm.nonAcademicCollabsSubmit(class="btn btn-primary") }}
+                                {{ nonAcademicCollabsForm.nonAcademicCollabsEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="nonAcIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="nonAcAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs-show" aria-expanded="false" aria-controls="nonAcademicCollabs-show">Show / Hide current</button>
                             </div>
@@ -1094,7 +1149,7 @@
                                 <button class="btn btn-secondary" type="button" id="nonAcCol{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="nonAcCol-delete" name="nonAcCol-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="nonAcCol-delete" name="nonAcCol-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -1108,60 +1163,65 @@
             <div class="collapse" id="events">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Add Events</h1>
-                        <form action="" method="post">
+                        <h1 id="eventTitle">Add Events</h1>
+                        <form action="" method="post" id="eventForm">
                             {{ eventsForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ eventsForm.startDate.label }}<br>
-                                {{ eventsForm.startDate(class="form-control", id="eventStartDate") }}<br>
+                                {{ eventsForm.startDate.label }}
+                                {{ eventsForm.startDate(class="form-control", id="eventStartDate") }}
                                 {% for error in eventsForm.startDate.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ eventsForm.endDate.label }}<br>
-                                {{ eventsForm.endDate(class="form-control", id="eventEndDate") }}<br>
+                                {{ eventsForm.endDate.label }}
+                                {{ eventsForm.endDate(class="form-control", id="eventEndDate") }}
                                 {% for error in eventsForm.endDate.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ eventsForm.title.label }}<br>
-                                {{ eventsForm.title(class="form-control", id="eventTitle") }}<br>
+                                {{ eventsForm.title.label }}
+                                {{ eventsForm.title(class="form-control", id="eventTitle2") }}
                                 {% for error in eventsForm.title.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ eventsForm.eventType.label }}<br>
-                                {{ eventsForm.eventType(class="form-control", id="eventEventType") }}<br>
+                                {{ eventsForm.eventType.label }}
+                                {{ eventsForm.eventType(class="form-control", id="eventEventType") }}
                                 {% for error in eventsForm.eventType.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ eventsForm.role.label }}<br>
-                                {{ eventsForm.role(class="form-control", id="eventRole") }}<br>
+                                {{ eventsForm.role.label }}
+                                {{ eventsForm.role(class="form-control", id="eventRole") }}
                                 {% for error in eventsForm.role.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ eventsForm.location.label }}<br>
-                                {{ eventsForm.location(class="form-control", id="eventLoc") }}<br>
+                                {{ eventsForm.location.label }}
+                                {{ eventsForm.location(class="form-control", id="eventLoc") }}
                                 {% for error in eventsForm.location.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ eventsForm.primaryAttribution.label }}<br>
-                                {{ eventsForm.primaryAttribution(class="form-control", id="eventPrimaryAttrib") }}<br>
+                                {{ eventsForm.primaryAttribution.label }}
+                                {{ eventsForm.primaryAttribution(class="form-control", id="eventPrimaryAttrib") }}
                                 {% for error in eventsForm.primaryAttribution.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ eventsForm.eventsSubmit(class="btn btn-primary") }}
+                                {{ eventsForm.eventsEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="eventsIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="eventsAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#events-show" aria-expanded="false" aria-controls="events-show">Show / Hide current</button>
                             </div>
@@ -1185,7 +1245,7 @@
                                 <button class="btn btn-secondary" type="button" id="event{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="event-delete" name="event-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="event-delete" name="event-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -1199,39 +1259,44 @@
             <div class="collapse" id="communications">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Communications Overview</h1>
-                        <form action="" method="post">
+                        <h1 id="commTitle">Communications Overview</h1>
+                        <form action="" method="post" id="commForm">
                             {{ commForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ commForm.year.label }}<br>
-                                {{ commForm.year(class="form-control", id="commYear") }}<br>
+                                {{ commForm.year.label }}
+                                {{ commForm.year(class="form-control", id="commYear") }}
                                 {% for error in commForm.year.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ commForm.numberOfLectures.label }}<br>
-                                {{ commForm.numberOfLectures(class="form-control", id="commNumPublic") }}<br>
+                                {{ commForm.numberOfLectures.label }}
+                                {{ commForm.numberOfLectures(class="form-control", id="commNumPublic") }}
                                 {% for error in commForm.numberOfLectures.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ commForm.numberOfVisits.label }}<br>
-                                {{ commForm.numberOfVisits(class="form-control", id="commNumVisits") }}<br>
+                                {{ commForm.numberOfVisits.label }}
+                                {{ commForm.numberOfVisits(class="form-control", id="commNumVisits") }}
                                 {% for error in commForm.numberOfVisits.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ commForm.numberOfMediaInteracations.label }}<br>
-                                {{ commForm.numberOfMediaInteracations(class="form-control", id="commNumMedia") }}<br>
+                                {{ commForm.numberOfMediaInteracations.label }}
+                                {{ commForm.numberOfMediaInteracations(class="form-control", id="commNumMedia") }}
                                 {% for error in commForm.numberOfMediaInteracations.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ commForm.commSubmit(class="btn btn-primary") }}
+                                {{ commForm.commEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="commIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="commAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#communications-show" aria-expanded="false" aria-controls="communications-show">Show / Hide current</button>
                             </div>
@@ -1252,7 +1317,7 @@
                                 <button class="btn btn-secondary" type="button" id="comm{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="comm-delete" name="comm-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="comm-delete" name="comm-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -1266,25 +1331,30 @@
             <div class="collapse" id="sfiFundingRatio">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>SFI Funding Ratio</h1>
-                        <form action="" method="post">
+                        <h1 id="sfiTitle">SFI Funding Ratio</h1>
+                        <form action="" method="post" id="sfiForm">
                             {{ fundRatioForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ fundRatioForm.year.label }}<br>
-                                {{ fundRatioForm.year(class="form-control", id="sfiYear") }}<br>
+                                {{ fundRatioForm.year.label }}
+                                {{ fundRatioForm.year(class="form-control", id="sfiYear") }}
                                 {% for error in fundRatioForm.year.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ fundRatioForm.percentage.label }}<br>
-                                {{ fundRatioForm.percentage(class="form-control", id="sfiPercentage") }}<br>
+                                {{ fundRatioForm.percentage.label }}
+                                {{ fundRatioForm.percentage(class="form-control", id="sfiPercentage") }}
                                 {% for error in fundRatioForm.percentage.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ fundRatioForm.sfiFundingRatioSubmit(class="btn btn-primary") }}
+                                {{ fundRatioForm.sfiFundingRatioEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="sfiIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="sfiAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#sfiFundingRatio-show" aria-expanded="false" aria-controls="sfiFundingRatio-show">Show / Hide current</button>
                             </div>
@@ -1303,7 +1373,7 @@
                                 <button class="btn btn-secondary" type="button" id="sfi{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="sfi-delete" name="sfi-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="sfi-delete" name="sfi-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
@@ -1317,74 +1387,79 @@
             <div class="collapse" id="pubEngage">
                 <div class="row">
                     <div class="col-md-7">
-                        <h1>Education and Public Engagement</h1>
-                        <form action="" method="post">
+                        <h1 id="pEngTitle">Education and Public Engagement</h1>
+                        <form action="" method="post" id="pEngForm">
                             {{ pubEngageForm.hidden_tag() }}
                             <div class="form-group">
-                                {{ pubEngageForm.nameOfProject.label }}<br>
-                                {{ pubEngageForm.nameOfProject(class="form-control", id="pEngName") }}<br>
+                                {{ pubEngageForm.nameOfProject.label }}
+                                {{ pubEngageForm.nameOfProject(class="form-control", id="pEngName") }}
                                 {% for error in pubEngageForm.nameOfProject.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ pubEngageForm.startDate.label }}<br>
-                                {{ pubEngageForm.startDate(class="form-control", id="pEngStartDate") }}<br>
+                                {{ pubEngageForm.startDate.label }}
+                                {{ pubEngageForm.startDate(class="form-control", id="pEngStartDate") }}
                                 {% for error in pubEngageForm.startDate.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ pubEngageForm.endDate.label }}<br>
-                                {{ pubEngageForm.endDate(class="form-control", id="pEngEndDate") }}<br>
+                                {{ pubEngageForm.endDate.label }}
+                                {{ pubEngageForm.endDate(class="form-control", id="pEngEndDate") }}
                                 {% for error in pubEngageForm.endDate.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ pubEngageForm.activityType.label }}<br>
-                                {{ pubEngageForm.activityType(class="form-control", id="pEngActivityType") }}<br>
+                                {{ pubEngageForm.activityType.label }}
+                                {{ pubEngageForm.activityType(class="form-control", id="pEngActivityType") }}
                                 {% for error in pubEngageForm.activityType.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ pubEngageForm.otherType.label }}<br>
-                                {{ pubEngageForm.otherType(class="form-control", id="pEngActivityOther") }}<br>
+                                {{ pubEngageForm.otherType.label }}
+                                {{ pubEngageForm.otherType(class="form-control", id="pEngActivityOther") }}
                                 {% for error in pubEngageForm.otherType.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ pubEngageForm.projectTopic.label }}<br>
-                                {{ pubEngageForm.projectTopic(class="form-control", id="pEngTopic") }}<br>
+                                {{ pubEngageForm.projectTopic.label }}
+                                {{ pubEngageForm.projectTopic(class="form-control", id="pEngTopic") }}
                                 {% for error in pubEngageForm.projectTopic.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ pubEngageForm.otherType.label }}<br>
-                                {{ pubEngageForm.otherType(class="form-control", id="pEngTopicOther") }}<br>
+                                {{ pubEngageForm.otherType.label }}
+                                {{ pubEngageForm.otherType(class="form-control", id="pEngTopicOther") }}
                                 {% for error in pubEngageForm.otherType.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ pubEngageForm.target.label }}<br>
-                                {{ pubEngageForm.target(class="form-control", id="pEngArea") }}<br>
+                                {{ pubEngageForm.target.label }}
+                                {{ pubEngageForm.target(class="form-control", id="pEngArea") }}
                                 {% for error in pubEngageForm.target.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                {{ pubEngageForm.localCountry.label }}<br>
-                                {{ pubEngageForm.localCountry(class="form-control", id="pEngAreaOther") }}<br>
+                                {{ pubEngageForm.localCountry.label }}
+                                {{ pubEngageForm.localCountry(class="form-control", id="pEngAreaOther") }}
                                 {% for error in pubEngageForm.localCountry.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ pubEngageForm.pubEngageSubmit(class="btn btn-primary") }}
+                                {{ pubEngageForm.pubEngageEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="pubEngageIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="pubEngageAddMode">Add new entry</button>
 
                                 <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#pubEngage-show" aria-expanded="false" aria-controls="pubEngage-show">Show / Hide current</button>
                             </div>
@@ -1410,7 +1485,7 @@
                                 <button class="btn btn-secondary" type="button" id="pEng{{ loop.index }}-edit">Edit</button>
                                 <form class="deleteForms" action="" method="post">
                                     <input type="hidden" name="{{ loop.index }}" />
-                                    <input type="submit" class="btn btn-dark" id="pEng-delete" name="pEng-delete" value="Delete">
+                                    <input type="submit" class="btn btn-danger" id="pEng-delete" name="pEng-delete" value="Delete">
                                 </form>
                             </div>
                         </div>
