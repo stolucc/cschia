@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>View Profile of {{user.username}}({{user.orcid}}) </h1>
-    <h3>General Information</h3>
     {% if info != None %}
+    <h1>Viewing Profile of {{user.username}}({{user.orcid}}) </h1>
+    <h3>General Information</h3>
     <ul>
         <li>
             {{ info["firstName"] }}
@@ -28,7 +28,7 @@
         </li>
     </ul>
     {% else %}
-    <p> This profile doesnt exist </p>
+    <h1> This profile doesnt exist </h1>
     {% endif %}
 
     

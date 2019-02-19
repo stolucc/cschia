@@ -159,8 +159,10 @@ def user(username):
 @login_required
 def show_profile(username):
     user = User.query.filter_by(username=username).first_or_404()
-    check_if_exists = GeneralInformation.query.filter_by(user_id=user.id).first_or_404()
-    info = json.loads(check_if_exists.data)
+    check_if_exists = GeneralInformation.query.filter_by(user_id=user.id).first()
+    info = None
+    if check_if_exists is not None:
+        info = json.loads(check_if_exists.data)
 
     return render_template("profile.html", title="View Profile", user=user, info=info)
 
