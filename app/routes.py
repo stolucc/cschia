@@ -155,16 +155,14 @@ def user(username):
     return render_template("user.html", user=user, posts=posts)
 
 
-@app.route("/profile", methods=["GET"])
+@app.route("/profile/<username>", methods=["GET"])
 @login_required
-def show_profile():
-    check_if_exists = GeneralInformation.query.filter_by(user_id=current_user.id).first()
+def show_profile(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    check_if_exists = GeneralInformation.query.filter_by(user_id=user.id).first_or_404()
+    info = json.loads(check_if_exists.data)
 
-    return render_template("profile.html", title="View Profile", info=check_if_exists)
-
-
-
-
+    return render_template("profile.html", title="View Profile", user=user, info=info)
 
 @app.route("/edit_account", methods=["GET", "POST"])
 @login_required
@@ -950,9 +948,24 @@ def edit_profile():
 @login_required
 def search():
     keyword = request.args.get('keyword')
+
+    """
     result = User.query.filter(User.username.contains(keyword)).order_by(
         User.username.contains(keyword)).all()
-    if result:
-        return render_template('user_result.html', user=result)
+
+    result_orcid = User.query.filter(User.orcid.contains(keyword)).order_by(
+        User.orcid.contains(keyword)).all()
+    """
+   
+
+    result = User.query.filter_by(username=keyword).first()
+    result_orcid = User.query.filter_by(orcid=keyword).first()
+
+    
+    if result is not None:
+        return redirect(url_for("show_profile", username=result.username))
+    elif result_orcid is not None:
+        orcid_username = result_orcid.username
+        return redirect(url_for("show_profile", username=orcid_username))
     else:
         return render_template('search_not_found.html')
