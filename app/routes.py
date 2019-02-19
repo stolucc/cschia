@@ -7,7 +7,7 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInfor
     InnovationAndCommercialisationForm, \
     PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
     EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
-    ChangePassword, ChangeEmail, ProposalForm
+    ChangePassword, ChangeEmail, ProposalForm, FullSearchForm
 
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
@@ -946,9 +946,11 @@ def edit_profile():
                            getEdInfo=getEdInfo)
 
 
-@app.route('/search')
+
+@app.route('/search',methods=['GET','POST'])
 @login_required
 def search():
+<<<<<<< Updated upstream
     keyword = request.args.get('keyword')
 
     """
@@ -969,5 +971,25 @@ def search():
     elif result_orcid is not None:
         orcid_username = result_orcid.username
         return redirect(url_for("show_profile", username=orcid_username))
+=======
+    search=FullSearchForm(request.form)
+    if request.method=='POST':
+        return search_results(search)
+    return render_template('search_page.html',form=search)
+
+@app.route('/result')
+@login_required
+def search_results(search):
+    result= []
+    search_string=search.data['search']
+    if search.data['search']=='':
+        qry=user.query(User)
+        result=qry.all()
+
+    if not result:
+        flash('No result found!')
+        return redirect('/search')
+>>>>>>> Stashed changes
     else:
-        return render_template('search_not_found.html')
+        return render_template('search_result.html')
+# @TODO TypeError: 'NoneType' object is not iterable

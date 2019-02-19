@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content%}
+
+<h2>Search Page</h2>
+<hr>
+    {% with messages= get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% from "_formhelper.html" import render_field %}
+    <form method="post">
+    <d1>
+        {{ render_field (form.select) }}
+        <p>
+        {{ render_field(form.search) }}
+    </d1>
+    <p><input type="submit" value="Search"></p>
+    </form>
+
+{% endblock %}

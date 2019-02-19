@@ -291,3 +291,9 @@ class EducationAndPublicEngagementForm(FlaskForm):
     pubEngageSubmit = SubmitField("Add new")
     pubEngageEdit = SubmitField("Update")
 
+class FullSearchForm(FlaskForm):
+    choices=[('Proposal','Proposal'),
+             ('User','User'),
+             ('Orcid','Orcid')]
+    select=SelectField('What you want search?', choices=choices)
+    search=SelectField('')
