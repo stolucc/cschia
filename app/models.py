@@ -11,6 +11,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean, default=False)
+    is_reviewer = db.Column(db.Boolean, default=False)
     posts = db.relationship("Post", backref="author", lazy="dynamic")
 
     about_me = db.Column(db.String(140))
@@ -35,7 +36,7 @@ class User(UserMixin, db.Model):
     education_public_engagement = db.relationship("EducationPublicEngagement")
 
     def __repr__(self):
-        return "<User {} {}>".format(self.username, self.orcid)
+        return "<User {} {} {} {}>".format(self.username, self.orcid, self.is_admin, self.is_reviewer)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
