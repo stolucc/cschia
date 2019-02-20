@@ -1,1227 +1,1424 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
     <div class="row">
         <div class="col-md-4">
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush" id="section-buttons">
                 <li class="list-group-item">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#general" aria-expanded="false" aria-controls="general">General Info</button>
-                    <span class="badge badge-primary badge-pill">14</span>
                 </li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#education" aria-expanded="false" aria-controls="education">Education</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#employment" aria-expanded="false" aria-controls="employment">Employment</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#societies" aria-expanded="false" aria-controls="societies">Societies</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#awards" aria-expanded="false" aria-controls="awards">Awards</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#fundingDiv" aria-expanded="false" aria-controls="fundingDiv">Funding Diversification</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#teamMembers" aria-expanded="false" aria-controls="teamMembers">Team Members</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#impacts" aria-expanded="false" aria-controls="impacts">Impacts</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#innovCom" aria-expanded="false" aria-controls="innovCom">Innovation and Commercialisation</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#publications" aria-expanded="false" aria-controls="publications">Publications</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#presentations" aria-expanded="false" aria-controls="presentations">Presentations</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#academicCollabs" aria-expanded="false" aria-controls="academicCollabs">Academic Collaborations</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs" aria-expanded="false" aria-controls="nonAcademicCollabs">Non Academic Collaborations</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#events" aria-expanded="false" aria-controls="events">Events</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#communications" aria-expanded="false" aria-controls="communications">Communications</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#sfiFundingRatio" aria-expanded="false" aria-controls="sfiFundingRatio">SFI Funding Ratio</button></li>
-                <li class="list-group-item"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#pubEngage" aria-expanded="false" aria-controls="pubEngage">Education and Public Engagement</button></li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#education" aria-expanded="false" aria-controls="education">Education</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numEdu">{% if getEduInfo %}{{ getEduInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#employment" aria-expanded="false" aria-controls="employment">Employment</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numEmploy">{% if getEmployInfo %}{{ getEmployInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#societies" aria-expanded="false" aria-controls="societies">Societies</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numSoc">{% if getSocInfo %}{{ getSocInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#awards" aria-expanded="false" aria-controls="awards">Awards</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numAwards">{% if getAwardInfo %}{{ getAwardInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#fundingDiv" aria-expanded="false" aria-controls="fundingDiv">Funding Diversification</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numFund">{% if getFundInfo %}{{ getFundInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#teamMembers" aria-expanded="false" aria-controls="teamMembers">Team Members</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numTeam"><!-- @TODO --></span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#impacts" aria-expanded="false" aria-controls="impacts">Impacts</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numImpacts">{% if getImpInfo %}{{ getImpInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#innovCom" aria-expanded="false" aria-controls="innovCom">Innovation and Commercialisation</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numInnovCom">{% if getInnInfo %}{{ getInnInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#publications" aria-expanded="false" aria-controls="publications">Publications</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numPub">{% if getPubInfo %}{{ getPubInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#presentations" aria-expanded="false" aria-controls="presentations">Presentations</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numPres">{% if getPresInfo %}{{ getPresInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#academicCollabs" aria-expanded="false" aria-controls="academicCollabs">Academic Collaborations</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numAc">{% if getAcInfo %}{{ getAcInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs" aria-expanded="false" aria-controls="nonAcademicCollabs">Non Academic Collaborations</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numNonAc">{% if getNonAcInfo %}{{ getNonAcInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#events" aria-expanded="false" aria-controls="events">Events</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numEvents">{% if getEvInfo %}{{ getEvInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#communications" aria-expanded="false" aria-controls="communications">Communications</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numComm">{% if getCommInfo %}{{ getCommInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#sfiFundingRatio" aria-expanded="false" aria-controls="sfiFundingRatio">SFI Funding Ratio</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numSfi">{% if getSfiInfo %}{{ getSfiInfo|length }}{% endif %}</span>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#pubEngage" aria-expanded="false" aria-controls="pubEngage">Education and Public Engagement</button>
+                    <span class="badge badge-dark badge-pill float-right" id="numPEng">{% if getEdInfo %}{{ getEdInfo|length }}{% endif %}</span>
+                </li>
             </ul>
         </div>
 
         <div class="col-md-8">
-        <!-- GENERAL INFORMATION -->
-        <div class="collapse" id="general">
-            <h1>Edit General Information</h1>
-            <form action="" method="post">
-                {{ genInfoForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ genInfoForm.firstName.label }}<br>
-                    {{ genInfoForm.firstName(class="form-control", size=32) }}<br>
-                    {% for error in genInfoForm.firstName.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ genInfoForm.lastName.label }}<br>
-                    {{ genInfoForm.lastName(class="form-control", size=32) }}<br>
-                    {% for error in genInfoForm.lastName.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ genInfoForm.jobTitle.label }}<br>
-                    {{ genInfoForm.jobTitle(class="form-control", size=32) }}<br>
-                    {% for error in genInfoForm.jobTitle.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ genInfoForm.prefix.label }}<br>
-                    {{ genInfoForm.prefix(class="form-control") }}<br>
-                    {% for error in genInfoForm.lastName.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ genInfoForm.suffix.label }}<br>
-                    {{ genInfoForm.suffix(class="form-control", size=5) }}<br>
-                    {% for error in genInfoForm.suffix.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ genInfoForm.phoneNumPrefix.label }}<br>
-                    {{ genInfoForm.phoneNumPrefix(class="form-control", size=5) }}<br>
-                    {% for error in genInfoForm.phoneNumPrefix.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ genInfoForm.phoneNum.label }}<br>
-                    {{ genInfoForm.phoneNum(class="form-control", size=15) }}<br>
-                    {% for error in genInfoForm.phoneNum.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ genInfoForm.email.label }}<br>
-                    {{ genInfoForm.email(class="form-control", size=32) }}<br>
-                    {% for error in genInfoForm.email.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ genInfoForm.orcid.label }}<br>
-                    {{ genInfoForm.orcid(class="form-control", rows=4) }}<br>
-                    {% for error in genInfoForm.orcid.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ genInfoForm.genSubmit(class="btn btn-primary", action="genSubmit") }}
-
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#general-show" aria-expanded="false" aria-controls="general-show">Show current</button>
-                </div>
-            </form>
-            <div class="collapse" id="general-show">
-                <p>
-                    {% if getGenInfo != "" %}
-                    <h2>  Current General Information </h2>
-                    <ul>
-                        <li> {{ getGenInfo["firstName"] }} </li>
-                        <li> {{ getGenInfo["lastName"] }} </li>
-                        <li> {{ getGenInfo["jobTitle"] }} </li>
-                        <li> {{ getGenInfo["prefix"] }} </li>
-                        <li> {{ getGenInfo["suffix"] }} </li>
-                        <li> {{ getGenInfo["phoneNumPrefix"] }} </li>
-                        <li> {{ getGenInfo["phoneNum"] }} </li>
-                        <li> {{ getGenInfo["email"] }} </li>
-                        <li> {{ getGenInfo["orcid"] }} </li>
-                    </il>
-                    {% endif %}
-                </p>
+            <!-- GENERAL INFORMATION -->
+            <div class="collapse" id="general">
+                <h1>Edit General Information</h1>
+                <form action="" method="post">
+                    {{ genInfoForm.hidden_tag() }}
+                    <div class="form-group">
+                        {{ genInfoForm.firstName.label }}<br>
+                        {{ genInfoForm.firstName(class="form-control", value=getGenInfo["firstName"]) }}<br>
+                        {% for error in genInfoForm.firstName.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ genInfoForm.lastName.label }}<br>
+                        {{ genInfoForm.lastName(class="form-control", value=getGenInfo["lastName"]) }}<br>
+                        {% for error in genInfoForm.lastName.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ genInfoForm.jobTitle.label }}<br>
+                        {{ genInfoForm.jobTitle(class="form-control", value=getGenInfo["jobTitle"]) }}<br>
+                        {% for error in genInfoForm.jobTitle.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ genInfoForm.prefix.label }}<br>
+                        {{ genInfoForm.prefix(class="form-control", value=getGenInfo["prefix"]) }}<br>
+                        {% for error in genInfoForm.lastName.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ genInfoForm.suffix.label }}<br>
+                        {{ genInfoForm.suffix(class="form-control", value=getGenInfo["suffix"]) }}<br>
+                        {% for error in genInfoForm.suffix.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ genInfoForm.phoneNumPrefix.label }}<br>
+                        {{ genInfoForm.phoneNumPrefix(class="form-control", value=getGenInfo["phoneNumPrefix"]) }}<br>
+                        {% for error in genInfoForm.phoneNumPrefix.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ genInfoForm.phoneNum.label }}<br>
+                        {{ genInfoForm.phoneNum(class="form-control", value=getGenInfo["phoneNum"]) }}<br>
+                        {% for error in genInfoForm.phoneNum.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ genInfoForm.email.label }}<br>
+                        {{ genInfoForm.email(class="form-control", value=getGenInfo["email"]) }}<br>
+                        {% for error in genInfoForm.email.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ genInfoForm.orcid.label }}<br>
+                        {{ genInfoForm.orcid(class="form-control", value=getGenInfo["orcid"]) }}<br>
+                        {% for error in genInfoForm.orcid.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ genInfoForm.genSubmit(class="btn btn-primary") }}
+                    </div>
+                </form><hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- EDUCATION -->
-        <div class="collapse" id="education">
-            <h1>Edit Education Information</h1>
-            <form action="" method="post">
-                {{ eduForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ eduForm.degree.label }}<br>
-                    {{ eduForm.degree(class="form-control", size=64) }}<br>
-                    {% for error in eduForm.degree.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ eduForm.fieldOfStudy.label }}<br>
-                    {{ eduForm.fieldOfStudy(class="form-control", size=64) }}<br>
-                    {% for error in eduForm.fieldOfStudy.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ eduForm.institution.label }}<br>
-                    {{ eduForm.institution(class="form-control", size=64) }}<br>
-                    {% for error in eduForm.institution.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ eduForm.location.label }}<br>
-                    {{ eduForm.location(class="form-control", size=64) }}<br>
-                    {% for error in eduForm.location.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ eduForm.yearOfDegreeAward.label }}<br>
-                    {{ eduForm.yearOfDegreeAward(class="form-control", size=4) }}<br>
-                    {% for error in eduForm.yearOfDegreeAward.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ eduForm.eduSubmit(class="btn btn-primary", action="eduSubmit") }}
+            <!-- EDUCATION -->
+            <div class="collapse" id="education">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1 id="eduTitle">Add Education Information</h1>
+                        <form action="" method="post" id="eduForm">
+                            {{ eduForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ eduForm.degree.label }}<br>
+                                {{ eduForm.degree(class="form-control", id="eduDegree") }}<br>
+                                {% for error in eduForm.degree.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ eduForm.fieldOfStudy.label }}<br>
+                                {{ eduForm.fieldOfStudy(class="form-control", id="eduFieldOfStudy") }}<br>
+                                {% for error in eduForm.fieldOfStudy.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ eduForm.institution.label }}<br>
+                                {{ eduForm.institution(class="form-control", id="eduInstitution") }}<br>
+                                {% for error in eduForm.institution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ eduForm.location.label }}<br>
+                                {{ eduForm.location(class="form-control", id="eduLoc") }}<br>
+                                {% for error in eduForm.location.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ eduForm.yearOfDegreeAward.label }}<br>
+                                {{ eduForm.yearOfDegreeAward(class="form-control", id="eduYearDegree") }}<br>
+                                {% for error in eduForm.yearOfDegreeAward.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ eduForm.eduSubmit(class="btn btn-primary") }}
+                                {{ eduForm.eduEdit(class="btn btn-primary d-none") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#education-show" aria-expanded="false" aria-controls="education-show">Show current</button>
+                                <input type="hidden" name="" id="eduIndex" />
+
+                                <button class="btn btn-info d-none" type="button" id="eduAddMode">Add new entry</button>
+                                
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#education-show" aria-expanded="false" aria-controls="education-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="collapse col-md-5 show" id="education-show">
+                        {% for item in getEduInfo %}
+
+                        <div class="card mb-3" id="edu{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Degree: <span class="eduDegree">{{ item["degree"] }}</span></p>
+                                <p>Field of study: <span class="eduFieldOfStudy">{{ item["fieldOfStudy"] }}</span></p>
+                                <p>Institution: <span class="eduInstitution">{{ item["institution"] }}</span></p>
+                                <p>Location: <span class="eduLoc">{{ item["location"] }}</span></p>
+                                <p>Year of degree award: <span class="eduYearDegree">{{ item["yearOfDegreeAward"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="edu{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="edu{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-danger" id="edu-delete" name="edu-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="education-show">
-                <p>
-                    <h2> Current education information </h2>
-                    {% for item in getEduInfo %}
-                    <h3> Education Form </h3>
-                    <ul>
-                        <li> {{ item["degree"] }} </li>
-                        <li> {{ item["fieldOfStudy"] }} </li>
-                        <li> {{ item["institution"] }} </li>
-                        <li> {{ item["location"] }} </li>
-                        <li> {{ item["yearOfDegreeAward"] }} </li>
-                    </ul>  
-                    {% endfor %}                           
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
+        
 
-        <!-- EMPLOYMENT -->
-        <div class="collapse" id="employment">
-            <h1>Edit Employment Information</h1>
-            <form action="" method="post">
-                {{ employForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ employForm.company.label }}<br>
-                    {{ employForm.company(class="form-control", size=64) }}<br>
-                    {% for error in employForm.company.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ employForm.location.label }}<br>
-                    {{ employForm.location(class="form-control", size=64) }}<br>
-                    {% for error in employForm.location.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ employForm.years.label }}<br>
-                    {{ employForm.years(class="form-control", size=4) }}<br>
-                    {% for error in employForm.years.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ employForm.employSubmit(class="btn btn-primary", action="employSubmit") }}
+            <!-- EMPLOYMENT -->
+            <div class="collapse" id="employment">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Add Employment Information</h1>
+                        <form action="" method="post">
+                            {{ employForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ employForm.company.label }}<br>
+                                {{ employForm.company(class="form-control", id="employCompany") }}<br>
+                                {% for error in employForm.company.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ employForm.location.label }}<br>
+                                {{ employForm.location(class="form-control", id="employLoc") }}<br>
+                                {% for error in employForm.location.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ employForm.years.label }}<br>
+                                {{ employForm.years(class="form-control", id="employYears") }}<br>
+                                {% for error in employForm.years.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ employForm.employSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#employment-show" aria-expanded="false" aria-controls="employment-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#employment-show" aria-expanded="false" aria-controls="employment-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="employment-show">
+                        {% for item in getEmployInfo %}
+
+                        <div class="card mb-3" id="employ{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Institution/company: <span class="employCompany">{{ item["company"] }}</span></p>
+                                <p>Location: <span class="employLoc">{{ item["location"] }}</span></p>
+                                <p>Years: <span class="employYears">{{ item["years"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="employ{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="employ{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="emloy-delete" name="employ-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="employment-show">
-                <p>
-                    <h2> Current employment information </h2>
-                    {% for item in getEmployInfo %}
-                    <h3> Employment Form </h3>
-                    <ul>
-                        <li> {{ item["company"] }} </li>
-                        <li> {{ item["location"] }} </li>
-                        <li> {{ item["years"] }} </li>
-                    </ul>  
-                    {% endfor %}
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- SOCIETIES -->
-        <div class="collapse" id="societies">
-            <h1>Edit Societies Information</h1>
-            <form action="" method="post">
-                {{ socForm.hidden_tag() }}
-                <!-- @TODO: change these to dates -->
-                <div class="form-group">
-                    {{ socForm.startDate.label }}<br>
-                    {{ socForm.startDate(class="form-control", size=64) }}<br>
-                    {% for error in socForm.startDate.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ socForm.endDate.label }}<br>
-                    {{ socForm.endDate(class="form-control", size=64) }}<br>
-                    {% for error in socForm.endDate.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ socForm.nameOfSociety.label }}<br>
-                    {{ socForm.nameOfSociety(class="form-control", size=32) }}<br>
-                    {% for error in socForm.nameOfSociety.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ socForm.typeOfMembership.label }}<br>
-                    {{ socForm.typeOfMembership(class="form-control", size=32) }}<br>
-                    {% for error in socForm.typeOfMembership.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ socForm.status.label }}<br>
-                    {{ socForm.status(class="form-control") }}<br>
-                    {% for error in socForm.status.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ socForm.socSubmit(class="btn btn-primary", action="socSubmit") }}
+            <!-- SOCIETIES -->
+            <div class="collapse" id="societies">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Add Societies Information</h1>
+                        <form action="" method="post">
+                            {{ socForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ socForm.startDate.label }}<br>
+                                {{ socForm.startDate(class="form-control", id="socStart") }}<br>
+                                {% for error in socForm.startDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ socForm.endDate.label }}<br>
+                                {{ socForm.endDate(class="form-control", id="socEnd") }}<br>
+                                {% for error in socForm.endDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ socForm.nameOfSociety.label }}<br>
+                                {{ socForm.nameOfSociety(class="form-control", id="socName") }}<br>
+                                {% for error in socForm.nameOfSociety.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ socForm.typeOfMembership.label }}<br>
+                                {{ socForm.typeOfMembership(class="form-control", id="socMembership") }}<br>
+                                {% for error in socForm.typeOfMembership.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ socForm.status.label }}<br>
+                                {{ socForm.status(class="form-control", id="socStatus") }}<br>
+                                {% for error in socForm.status.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ socForm.socSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#societies-show" aria-expanded="false" aria-controls="societies-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#societies-show" aria-expanded="false" aria-controls="societies-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="societies-show">
+                        {% for item in getSocInfo %}
+
+                        <div class="card mb-3" id="soc{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Start date: <span class="socStart">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="socEnd">{{ item["endDate"] }}</span></p>
+                                <p>Name of society: <span class="socName">{{ item["nameOfSociety"] }}</span></p>
+                                <p>Type of membership: <span class="socMembership">{{ item["typeOfMembership"]}}</span></p>
+                                <p>Status (if active): <span class="socStatus">{{ item["status"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="soc{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="soc{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="soc-delete" name="soc-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="societies-show">
-                <p>
-                    <h2> Current societies information </h2>
-                    {% for item in getSocInfo %}
-                    <h3> Societies Form </h3>
-                    <ul>
-                        <li> {{ item["startDate"] }} </li>
-                        <li> {{ item["endDate"] }} </li>
-                        <li> {{ item["nameOfSociety"] }} </li>
-                        <li> {{ item["typeOfMembership"] }} </li>
-                        <li> {{ item["status"] }} </li>
-                    </ul>  
-                    {% endfor %}
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- AWARDS -->
-        <div class="collapse" id="awards">
-            <h1>Edit Awards Information</h1>
-            <form action="" method="post">
-                {{ awardsForm.hidden_tag() }}
-                <!-- @TODO: change these to dates -->
-                <div class="form-group">
-                    {{ awardsForm.year.label }}<br>
-                    {{ awardsForm.year(class="form-control", size=4) }}<br>
-                    {% for error in awardsForm.year.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ awardsForm.awardingBody.label }}<br>
-                    {{ awardsForm.awardingBody(class="form-control", size=64) }}<br>
-                    {% for error in awardsForm.awardingBody.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ awardsForm.details.label }}<br>
-                    {{ awardsForm.details(class="form-control", col=50, rows=4) }}<br>
-                    {% for error in awardsForm.details.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ awardsForm.teamMemberName.label }}<br>
-                    {{ awardsForm.teamMemberName(class="form-control", size=32) }}<br>
-                    {% for error in awardsForm.teamMemberName.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ awardsForm.awardsSubmit(class="btn btn-primary", action="awardsSubmit") }}
+            <!-- AWARDS -->
+            <div class="collapse" id="awards">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Add Awards Information</h1>
+                        <form action="" method="post">
+                            {{ awardsForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ awardsForm.year.label }}<br>
+                                {{ awardsForm.year(class="form-control", id="awardYear") }}<br>
+                                {% for error in awardsForm.year.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ awardsForm.awardingBody.label }}<br>
+                                {{ awardsForm.awardingBody(class="form-control", id="awardingBody") }}<br>
+                                {% for error in awardsForm.awardingBody.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ awardsForm.details.label }}<br>
+                                {{ awardsForm.details(class="form-control", id="awardDetails") }}<br>
+                                {% for error in awardsForm.details.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ awardsForm.teamMemberName.label }}<br>
+                                {{ awardsForm.teamMemberName(class="form-control", id="awardTeam") }}<br>
+                                {% for error in awardsForm.teamMemberName.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ awardsForm.awardsSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#awards-show" aria-expanded="false" aria-controls="awards-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#awards-show" aria-expanded="false" aria-controls="awards-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="awards-show">
+                        {% for item in getAwardInfo %}
+
+                        <div class="card mb-3" id="awards{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Year: <span class="awardYear">{{ item["year"] }}</span></p>
+                                <p>Awarding body: <span class="awardingBody">{{ item["awardingBody"] }}</span></p>
+                                <p>Details of award: <span class="awardDetails">{{ item["details"] }}</span></p>
+                                <p>Team member name: <span class="awardTeam">Team 9</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="awards{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="awards{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="awards-delete" name="awards-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="awards-show">
-                <p>
-                    <h2> Current awards information </h2>
-                    {% for item in getAwardInfo %}
-                    <h3> Awards Form </h3>
-                    <ul>
-                        <li> {{ item["year"] }} </li>
-                        <li> {{ item["awardingBody"] }} </li>
-                        <li> {{ item["details"] }} </li>
-                        <li> {{ item["teamMemberName"] }} </li>
-                    </ul>  
-                    {% endfor %}
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- FUNDING DIVERSIFICATION -->
-        <div class="collapse" id="fundingDiv">
-            <h1>Edit Funding Diversification Information</h1>
-            <form action="" method="post">
-                {{ fundingDivForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ fundingDivForm.startDate.label }}<br>
-                    {{ fundingDivForm.startDate(class="form-control") }}<br>
-                    {% for error in fundingDivForm.startDate.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ fundingDivForm.endDate.label }}<br>
-                    {{ fundingDivForm.endDate(class="form-control") }}<br>
-                    {% for error in fundingDivForm.endDate.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ fundingDivForm.amount.label }}<br>
-                    {{ fundingDivForm.amount(class="form-control", size=32) }}<br>
-                    {% for error in fundingDivForm.amount.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ fundingDivForm.fundingBody.label }}<br>
-                    {{ fundingDivForm.fundingBody(class="form-control", size=32) }}<br>
-                    {% for error in fundingDivForm.fundingBody.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ fundingDivForm.fundingProgramme.label }}<br>
-                    {{ fundingDivForm.fundingProgramme(class="form-control", size=32) }}<br>
-                    {% for error in fundingDivForm.fundingProgramme.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ fundingDivForm.status.label }}<br>
-                    {{ fundingDivForm.status(class="form-control") }}<br>
-                    {% for error in fundingDivForm.status.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ fundingDivForm.primaryAttribution.label }}<br>
-                    {{ fundingDivForm.primaryAttribution(class="form-control", size=32) }}<br>
-                    {% for error in fundingDivForm.primaryAttribution.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ fundingDivForm.fundingDivSubmit(class="btn btn-primary", action="fundingDivSubmit") }}
+            <!-- FUNDING DIVERSIFICATION -->
+            <div class="collapse" id="fundingDiv">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Add Funding Diversification Information</h1>
+                        <form action="" method="post">
+                            {{ fundingDivForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ fundingDivForm.startDate.label }}<br>
+                                {{ fundingDivForm.startDate(class="form-control", id="fundStartDate") }}<br>
+                                {% for error in fundingDivForm.startDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ fundingDivForm.endDate.label }}<br>
+                                {{ fundingDivForm.endDate(class="form-control", id="fundEndDate") }}<br>
+                                {% for error in fundingDivForm.endDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ fundingDivForm.amount.label }}<br>
+                                {{ fundingDivForm.amount(class="form-control", id="fundAmount") }}<br>
+                                {% for error in fundingDivForm.amount.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ fundingDivForm.fundingBody.label }}<br>
+                                {{ fundingDivForm.fundingBody(class="form-control", id="fundBody") }}<br>
+                                {% for error in fundingDivForm.fundingBody.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ fundingDivForm.fundingProgramme.label }}<br>
+                                {{ fundingDivForm.fundingProgramme(class="form-control", id="fundProgramme") }}<br>
+                                {% for error in fundingDivForm.fundingProgramme.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ fundingDivForm.status.label }}<br>
+                                {{ fundingDivForm.status(class="form-control", id="fundStatus") }}<br>
+                                {% for error in fundingDivForm.status.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ fundingDivForm.primaryAttribution.label }}<br>
+                                {{ fundingDivForm.primaryAttribution(class="form-control", id="fundPrimaryAttrib") }}<br>
+                                {% for error in fundingDivForm.primaryAttribution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ fundingDivForm.fundingDivSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#fundingDiv-show" aria-expanded="false" aria-controls="fundingDiv-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#fundingDiv-show" aria-expanded="false" aria-controls="fundingDiv-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="funding-show">
+                        {% for item in getFundInfo %}
+
+                        <div class="card mb-3" id="fund{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Start date: <span class="fundStartDate">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="fundEndDate">{{ item["endDate"] }}</span></p>
+                                <p>Amount: <span class="fundAmount">{{ item["amount"] }}</span></p>
+                                <p>Funding body: <span class="fundBody">{{ item["fundingBody"] }}</span></p>
+                                <p>Funding programme: <span class="fundProgramme">{{ item["fundingProgramme"] }}</span></p>
+                                <p>Status (if active or expired): <span class="fundStatus">{{ item["status"] }}</span></p>
+                                <p>Primary attribution: <span class="fundPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="fund{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="fund{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="fund-delete" name="fund-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="fundingDiv-show">
-                <p>
-                    <h2> Current funding diversification information </h2>
-                    {% for item in getFundInfo %}
-                    <h3> Funding diversification Form </h3>
-                    <ul>
-                        <li> {{ item["startDate"] }} </li>
-                        <li> {{ item["endDate"] }} </li>
-                        <li> {{ item["amount"] }} </li>
-                        <li> {{ item["fundingBody"] }} </li>
-                        <li> {{ item["fundingProgramme"] }} </li>
-                        <li> {{ item["status"] }} </li>
-                        <li> {{ item["primaryAttribution"] }} </li>
-                    </ul>  
-                    {% endfor %}
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- TEAM MEMBERS -->
-        <div class="collapse" id="teamMembers">
-            <h1>Edit Team Members Information</h1>
-            <form action="" method="post">
-                {{ teamMemForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ teamMemForm.startDate.label }}<br>
-                    {{ teamMemForm.startDate(class="form-control") }}<br>
-                    {% for error in teamMemForm.startDate.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ teamMemForm.departureDate.label }}<br>
-                    {{ teamMemForm.departureDate(class="form-control") }}<br>
-                    {% for error in teamMemForm.departureDate.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ teamMemForm.name.label }}<br>
-                    {{ teamMemForm.name(class="form-control", size=32) }}<br>
-                    {% for error in teamMemForm.name.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ teamMemForm.position.label }}<br>
-                    {{ teamMemForm.position(class="form-control", size=32) }}<br>
-                    {% for error in teamMemForm.position.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ teamMemForm.primaryAttribution.label }}<br>
-                    {{ teamMemForm.primaryAttribution(class="form-control", size=32) }}<br>
-                    {% for error in teamMemForm.primaryAttribution.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ teamMemForm.teamMemSubmit(class="btn btn-primary", action="teamMemSubmit") }}
+            <!-- TEAM MEMBERS -->
+            <div class="collapse" id="teamMembers">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Add New Team Information</h1>
+                        <form action="" method="post">
+                            {{ teamMemForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ teamMemForm.startDate.label }}<br>
+                                {{ teamMemForm.startDate(class="form-control", id="teamStartDate") }}<br>
+                                {% for error in teamMemForm.startDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ teamMemForm.departureDate.label }}<br>
+                                {{ teamMemForm.departureDate(class="form-control", id="teamDepartDate") }}<br>
+                                {% for error in teamMemForm.departureDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ teamMemForm.name.label }}<br>
+                                {{ teamMemForm.name(class="form-control", id="teamName") }}<br>
+                                {% for error in teamMemForm.name.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ teamMemForm.position.label }}<br>
+                                {{ teamMemForm.position(class="form-control", id="teamPos") }}<br>
+                                {% for error in teamMemForm.position.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ teamMemForm.primaryAttribution.label }}<br>
+                                {{ teamMemForm.primaryAttribution(class="form-control", id="teamPrimaryAttrib") }}<br>
+                                {% for error in teamMemForm.primaryAttribution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ teamMemForm.teamMemSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#teamMembers-show" aria-expanded="false" aria-controls="teamMembers-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#team-show" aria-expanded="false" aria-controls="team-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- @TODO: update this -->
+                    <div class="collapse col-md-5 show" id="team-show">
+                        {% for item in getNonAcInfo %}
+
+                        <div class="card mb-3" id="team{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Start date: <span class="teamStartDate">10-01-2018</span></p>
+                                <p>Departure date: <span class="teamDepartDate">10-01-2019</span></p>
+                                <p>Name: <span class="teamName">CHRX</span></p>
+                                <p>Position: <span class="teamPos">Project Manager</span></p>
+                                <p>Primary attribution: <span class="teamPrimaryAttrib">TL431I</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="team{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="team{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="team-delete" name="team-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="teamMembers-show">
-                <p>
-                    content - here
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- IMPACTS -->
-        <div class="collapse" id="impacts">
-            <h1>Edit Impacts Information</h1>
-            <form action="" method="post">
-                {{ impactsForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ impactsForm.title.label }}<br>
-                    {{ impactsForm.title(class="form-control", size=32) }}<br>
-                    {% for error in impactsForm.title.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ impactsForm.category.label }}<br>
-                    {{ impactsForm.category(class="form-control", size=32) }}<br>
-                    {% for error in impactsForm.category.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ impactsForm.primaryBeneficiary.label }}<br>
-                    {{ impactsForm.primaryBeneficiary(class="form-control", size=64) }}<br>
-                    {% for error in impactsForm.primaryBeneficiary.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ impactsForm.primaryAttribution.label }}<br>
-                    {{ impactsForm.primaryAttribution(class="form-control", size=64) }}<br>
-                    {% for error in impactsForm.primaryAttribution.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ impactsForm.impactsSubmit(class="btn btn-primary", action="impactsSubmit") }}
+            <!-- IMPACTS -->
+            <div class="collapse" id="impacts">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Add Impacts Information</h1>
+                        <form action="" method="post">
+                            {{ impactsForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ impactsForm.title.label }}<br>
+                                {{ impactsForm.title(class="form-control", id="impactTitle") }}<br>
+                                {% for error in impactsForm.title.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ impactsForm.category.label }}<br>
+                                {{ impactsForm.category(class="form-control", id="impactCategory") }}<br>
+                                {% for error in impactsForm.category.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ impactsForm.primaryBeneficiary.label }}<br>
+                                {{ impactsForm.primaryBeneficiary(class="form-control", id="impactPrimaryBen") }}<br>
+                                {% for error in impactsForm.primaryBeneficiary.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ impactsForm.primaryAttribution.label }}<br>
+                                {{ impactsForm.primaryAttribution(class="form-control", id="impactPrimaryAttrib") }}<br>
+                                {% for error in impactsForm.primaryAttribution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ impactsForm.impactsSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#impacts-show" aria-expanded="false" aria-controls="impacts-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#impacts-show" aria-expanded="false" aria-controls="impacts-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="impacts-show">
+                        {% for item in getImpInfo %}
+
+                        <div class="card mb-3" id="impact{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Title: <span class="impactTitle">{{ item["title"] }}</span></p>
+                                <p>Category: <span class="impactCategory">{{ item["category"] }}</span></p>
+                                <p>Primary beneficiary: <span class="impactPrimaryBen">{{ item["primaryBeneficiary"] }}</span></p>
+                                <p>Primary attribution: <span class="impactPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="impact{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="impact{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="impacts-delete" name="impacts-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="impacts-show">
-                <p>
-                    <h2> Current impacts information </h2>
-                    {% for item in getImpInfo %}
-                    <h3> Impacts Form </h3>
-                    <ul>
-                        <li> {{ item["title"] }} </li>
-                        <li> {{ item["category"] }} </li>
-                        <li> {{ item["primaryBeneficiary"] }} </li>
-                        <li> {{ item["primaryAttribution"] }} </li>
-                    </ul>  
-                    {% endfor %}
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- INNOVATION AND COMMERCIALISATION -->
-        <div class="collapse" id="innovCom">
-            <h1>Edit Innovation and Commercialisation Information</h1>
-            <form action="" method="post">
-                {{ innovForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ innovForm.year.label }}<br>
-                    {{ innovForm.year(class="form-control", size=4) }}<br>
-                    {% for error in innovForm.year.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ innovForm.type.label }}<br>
-                    {{ innovForm.type(class="form-control", size=32) }}<br>
-                    {% for error in innovForm.type.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ innovForm.title.label }}<br>
-                    {{ innovForm.title(class="form-control", size=64) }}<br>
-                    {% for error in innovForm.title.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ innovForm.primaryAttribution.label }}<br>
-                    {{ innovForm.primaryAttribution(class="form-control", size=64) }}<br>
-                    {% for error in innovForm.primaryAttribution.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ innovForm.innovSubmit(class="btn btn-primary", action="innovSubmit") }}
+            <!-- INNOVATION AND COMMERCIALISATION -->
+            <div class="collapse" id="innovCom">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Add Innovation and Commercialisation Information</h1>
+                        <form action="" method="post">
+                            {{ innovForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ innovForm.year.label }}<br>
+                                {{ innovForm.year(class="form-control", id="innovComYear") }}<br>
+                                {% for error in innovForm.year.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ innovForm.type.label }}<br>
+                                {{ innovForm.type(class="form-control", id="innovComType") }}<br>
+                                {% for error in innovForm.type.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ innovForm.title.label }}<br>
+                                {{ innovForm.title(class="form-control", id="innovComTitle") }}<br>
+                                {% for error in innovForm.title.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ innovForm.primaryAttribution.label }}<br>
+                                {{ innovForm.primaryAttribution(class="form-control", id="innovComPrimaryAttrib") }}<br>
+                                {% for error in innovForm.primaryAttribution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ innovForm.innovSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#innovCom-show" aria-expanded="false" aria-controls="innovCom-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#innovCom-show" aria-expanded="false" aria-controls="innovCom-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="innovCom-show">
+                        {% for item in getInnInfo %}
+
+                        <div class="card mb-3" id="innovCom{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Year: <span class="innovComYear">{{ item["year"] }}</span></p>
+                                <p>Type: <span class="innovComType">.{{ item["type"] }}</span></p>
+                                <p>Title: <span class="innovComTitle">{{ item["title"] }}</span></p>
+                                <p>Primary attribution: <span class="innovComPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="innovCom{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="innovCom{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="innovCom-delete" name="innovCom-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="innovCom-show">
-                <p>
-                    <h2> Current innovation and commercialisation information </h2>
-                    {% for item in getInnInfo %}
-                    <h3> Innovation and commercialisation Form </h3>
-                    <ul>
-                        <li> {{ item["year"] }} </li>
-                        <li> {{ item["type"] }} </li>
-                        <li> {{ item["title"] }} </li>
-                        <li> {{ item["primaryAttribution"] }} </li>
-                    </ul>  
-                    {% endfor %}
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- PUBLICATIONS -->
-        <div class="collapse" id="publications">
-            <h1>Edit Publications Information</h1>
-            <form action="" method="post">
-                {{ pubForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ pubForm.year.label }}<br>
-                    {{ pubForm.year(class="form-control", size=4) }}<br>
-                    {% for error in pubForm.year.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubForm.type.label }}<br>
-                    {{ pubForm.type(class="form-control") }}<br>
-                    {% for error in pubForm.type.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubForm.title.label }}<br>
-                    {{ pubForm.title(class="form-control", size=32) }}<br>
-                    {% for error in pubForm.title.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubForm.name.label }}<br>
-                    {{ pubForm.name(class="form-control") }}<br>
-                    {% for error in pubForm.name.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubForm.publicationStatus.label }}<br>
-                    {{ pubForm.publicationStatus(class="form-control") }}<br>
-                    {% for error in pubForm.publicationStatus.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubForm.doi.label }}<br>
-                    {{ pubForm.doi(class="form-control") }}<br>
-                    {% for error in pubForm.doi.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubForm.primaryAttribution.label }}<br>
-                    {{ pubForm.primaryAttribution(class="form-control", size=32) }}<br>
-                    {% for error in pubForm.primaryAttribution.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubForm.pubSubmit(class="btn btn-primary", action="pubSubmit") }}
+            <!-- PUBLICATIONS -->
+            <div class="collapse" id="publications">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Add Publications Information</h1>
+                        <form action="" method="post">
+                            {{ pubForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ pubForm.year.label }}<br>
+                                {{ pubForm.year(class="form-control", id="pubYear") }}<br>
+                                {% for error in pubForm.year.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubForm.type.label }}<br>
+                                {{ pubForm.type(class="form-control", id="pubType") }}<br>
+                                {% for error in pubForm.type.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubForm.title.label }}<br>
+                                {{ pubForm.title(class="form-control", id="pubTitle") }}<br>
+                                {% for error in pubForm.title.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubForm.name.label }}<br>
+                                {{ pubForm.name(class="form-control", id="pubName") }}<br>
+                                {% for error in pubForm.name.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubForm.publicationStatus.label }}<br>
+                                {{ pubForm.publicationStatus(class="form-control", id="pubStatus") }}<br>
+                                {% for error in pubForm.publicationStatus.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubForm.doi.label }}<br>
+                                {{ pubForm.doi(class="form-control", id="pubDOI") }}<br>
+                                {% for error in pubForm.doi.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubForm.primaryAttribution.label }}<br>
+                                {{ pubForm.primaryAttribution(class="form-control", id="pubPrimaryAttrib") }}<br>
+                                {% for error in pubForm.primaryAttribution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubForm.pubSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#publications-show" aria-expanded="false" aria-controls="publications-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#publications-show" aria-expanded="false" aria-controls="publications-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="publications-show">
+                        {% for item in getPubInfo %}
+
+                        <div class="card mb-3" id="pub{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Year: <span class="pubYear">{{ item["year"] }}</span></p>
+                                <p>Type: <span class="pubType">{{ item["type"] }}</span></p>
+                                <p>Title: <span class="pubTitle">{{ item["title"] }}</span></p>
+                                <p>Journal / Conference name: <span class="pubName">{{ item["name"] }}</span></p>
+                                <p>Status: <span class="pubStatus">{{ item["publicationStatus"] }}</span></p>
+                                <p>DOI: <span class="pubDOI">{{ item["doi"] }}</span></p>
+                                <p>Primary attribution: <span class="pubPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="pub{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="pub{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="publications-delete" name="publications-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="publications-show">
-                <p>
-                    <h2> Current publications information </h2>
-                    {% for item in getPubInfo %}
-                    <h3> Publications Form </h3>
-                    <ul>
-                        <li> {{ item["year"] }} </li>
-                        <li> {{ item["type"] }} </li>
-                        <li> {{ item["title"] }} </li>
-                        <li> {{ item["name"] }} </li>
-                        <li> {{ item["publicationStatus"] }} </li>
-                        <li> {{ item["doi"] }} </li>
-                        <li> {{ item["primaryAttribution"] }} </li>
-                    </ul>  
-                    {% endfor %}
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- PRESENTATIONS -->
-        <div class="collapse" id="presentations">
-            <h1>Edit Presentations Information</h1>
-            <form action="" method="post">
-                {{ presForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ presForm.year.label }}<br>
-                    {{ presForm.year(class="form-control", size=4) }}<br>
-                    {% for error in presForm.year.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ presForm.title.label }}<br>
-                    {{ presForm.title(class="form-control", size=32) }}<br>
-                    {% for error in presForm.title.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ presForm.eventType.label }}<br>
-                    {{ presForm.eventType(class="form-control") }}<br>
-                    {% for error in presForm.eventType.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ presForm.organisingBody.label }}<br>
-                    {{ presForm.organisingBody(class="form-control", size=32) }}<br>
-                    {% for error in presForm.organisingBody.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ presForm.location.label }}<br>
-                    {{ presForm.location(class="form-control", size=64) }}<br>
-                    {% for error in presForm.location.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ presForm.primaryAttribution.label }}<br>
-                    {{ presForm.primaryAttribution(class="form-control", size=32) }}<br>
-                    {% for error in presForm.primaryAttribution.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ presForm.presSubmit(class="btn btn-primary", action="presSubmit") }}
+            <!-- PRESENTATIONS -->
+            <div class="collapse" id="presentations">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Add Presentations Information</h1>
+                        <form action="" method="post">
+                            {{ presForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ presForm.year.label }}<br>
+                                {{ presForm.year(class="form-control", id="presYear") }}<br>
+                                {% for error in presForm.year.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ presForm.title.label }}<br>
+                                {{ presForm.title(class="form-control", id="presTitle") }}<br>
+                                {% for error in presForm.title.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ presForm.eventType.label }}<br>
+                                {{ presForm.eventType(class="form-control", id="presEventType") }}<br>
+                                {% for error in presForm.eventType.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ presForm.organisingBody.label }}<br>
+                                {{ presForm.organisingBody(class="form-control", id="presOrganBody") }}<br>
+                                {% for error in presForm.organisingBody.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ presForm.location.label }}<br>
+                                {{ presForm.location(class="form-control", id="presLoc") }}<br>
+                                {% for error in presForm.location.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ presForm.primaryAttribution.label }}<br>
+                                {{ presForm.primaryAttribution(class="form-control", id="presPrimaryAttrib") }}<br>
+                                {% for error in presForm.primaryAttribution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ presForm.presSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#presentations-show" aria-expanded="false" aria-controls="presentations-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#presentations-show" aria-expanded="false" aria-controls="presentations-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="presentations-show">
+                        {% for item in getPresInfo %}
+
+                        <div class="card mb-3" id="pres{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Year: <span class="presYear">{{ item["year"] }}</span></p>
+                                <p>Title: <span class="presTitle">{{ item["title"] }}</span></p>
+                                <p>Event type: <span class="presEventType">{{ item["eventType"] }}</span></p>
+                                <p>Organising body: <span class="presOrganBody">{{ item["organisingBody"] }}</span></p>
+                                <p>Location: <span class="presLoc">{{ item["location"] }}</span></p>
+                                <p>Primary attribution: <span class="presPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="pres{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="pres{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="presentations-delete" name="presentations-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="presentations-show">
-                <p>
-                    <h2> Current presentations information </h2>
-                    {% for item in getPresInfo %}
-                    <h3> Presentations Form </h3>
-                    <ul>
-                        <li> {{ item["year"] }} </li>
-                        <li> {{ item["title"] }} </li>
-                        <li> {{ item["eventType"] }} </li>
-                        <li> {{ item["organisingBody"] }} </li>
-                        <li> {{ item["location"] }} </li>
-                        <li> {{ item["primaryAttribution"] }} </li>
-                    </ul>  
-                    {% endfor %}
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- ACADEMIC COLLABORATIONS -->
-        <div class="collapse" id="academicCollabs">
-            <h1>Edit Academic Collaborations</h1>
-            <form action="" method="post">
-                {{ academicCollabsForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ academicCollabsForm.startDate.label }}<br>
-                    {{ academicCollabsForm.startDate(class="form-control", size=32) }}<br>
-                    {% for error in academicCollabsForm.startDate.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ academicCollabsForm.endDate.label }}<br>
-                    {{ academicCollabsForm.endDate(class="form-control", size=32) }}<br>
-                    {% for error in academicCollabsForm.endDate.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ academicCollabsForm.nameOfInstitution.label }}<br>
-                    {{ academicCollabsForm.nameOfInstitution(class="form-control", size=64) }}<br>
-                    {% for error in academicCollabsForm.nameOfInstitution.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ academicCollabsForm.department.label }}<br>
-                    {{ academicCollabsForm.department(class="form-control", size=32) }}<br>
-                    {% for error in academicCollabsForm.department.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ academicCollabsForm.nameOfCollaborator.label }}<br>
-                    {{ academicCollabsForm.nameOfCollaborator(class="form-control", size=64) }}<br>
-                    {% for error in academicCollabsForm.nameOfCollaborator.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ academicCollabsForm.goal.label }}<br>
-                    {{ academicCollabsForm.goal(class="form-control") }}<br>
-                    {% for error in academicCollabsForm.goal.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ academicCollabsForm.frequency.label }}<br>
-                    {{ academicCollabsForm.frequency(class="form-control", size=32) }}<br>
-                    {% for error in academicCollabsForm.frequency.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ academicCollabsForm.primaryAttribution.label }}<br>
-                    {{ academicCollabsForm.primaryAttribution(class="form-control", size=32) }}<br>
-                    {% for error in academicCollabsForm.primaryAttribution.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ academicCollabsForm.academicCollabsSubmit(class="btn btn-primary", action="academicCollabsSubmit") }}
+            <!-- ACADEMIC COLLABORATIONS -->
+            <div class="collapse" id="academicCollabs">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Add Academic Collaborations</h1>
+                        <form action="" method="post">
+                            {{ academicCollabsForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ academicCollabsForm.startDate.label }}<br>
+                                {{ academicCollabsForm.startDate(class="form-control", id="acColStartDate") }}<br>
+                                {% for error in academicCollabsForm.startDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.endDate.label }}<br>
+                                {{ academicCollabsForm.endDate(class="form-control", id="acColEndDate") }}<br>
+                                {% for error in academicCollabsForm.endDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.nameOfInstitution.label }}<br>
+                                {{ academicCollabsForm.nameOfInstitution(class="form-control", id="acColInstitution") }}<br>
+                                {% for error in academicCollabsForm.nameOfInstitution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.department.label }}<br>
+                                {{ academicCollabsForm.department(class="form-control", id="acColDepartment") }}<br>
+                                {% for error in academicCollabsForm.department.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.nameOfCollaborator.label }}<br>
+                                {{ academicCollabsForm.nameOfCollaborator(class="form-control", id="acColName") }}<br>
+                                {% for error in academicCollabsForm.nameOfCollaborator.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.goal.label }}<br>
+                                {{ academicCollabsForm.goal(class="form-control", id="acColGoal") }}<br>
+                                {% for error in academicCollabsForm.goal.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.frequency.label }}<br>
+                                {{ academicCollabsForm.frequency(class="form-control", id="acColFreq") }}<br>
+                                {% for error in academicCollabsForm.frequency.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.primaryAttribution.label }}<br>
+                                {{ academicCollabsForm.primaryAttribution(class="form-control", id="acColPrimaryAttrib") }}<br>
+                                {% for error in academicCollabsForm.primaryAttribution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.academicCollabsSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#academicCollabs-show" aria-expanded="false" aria-controls="academicCollabs-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#academicCollabs-show" aria-expanded="false" aria-controls="academicCollabs-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="academicCollabs-show">
+                        {% for item in getAcInfo %}
+
+                        <div class="card mb-3" id="acCol{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Start date: <span class="acColStartDate">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="acColEndDate">{{ item["endDate"] }}</span></p>
+                                <p>Name of institution: <span class="acColInstitution">{{ item["nameOfInstitution"] }}</span></p>
+                                <p>Department within institution: <span class="acColDepartment">{{ item["department"] }}</span></p>
+                                <p>Name of collaborator: <span class="acColName">{{ item["nameOfCollaborator"] }}</span></p>
+                                <p>Primary goal: <span class="acColGoal">{{ item["goal"] }}</span></p>
+                                <p>Frequency of interaction: <span class="acColFreq">{{ item["frequency"] }}</span></p>
+                                <p>Primary attribution: <span class="acColPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="acCol{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="acCol{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="acCol-delete" name="acCol-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="academicCollabs-show">
-                <p>
-                    <h2> Current academic collaborations information </h2>
-                    {% for item in getAcInfo %}
-                    <h3> Academic collaborations Form </h3>
-                    <ul>
-                        <li> {{ item["startDate"] }} </li>
-                        <li> {{ item["endDate"] }} </li>
-                        <li> {{ item["nameOfInstitution"] }} </li>
-                        <li> {{ item["department"] }} </li>
-                        <li> {{ item["location"] }} </li>
-                        <li> {{ item["nameOfCollaborator"] }} </li>
-                        <li> {{ item["goal"] }} </li>
-                        <li> {{ item["frequency"] }} </li>
-                        <li> {{ item["primaryAttribution"] }} </li>
-                    </ul>  
-                    {% endfor %}
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- NON ACADEMIC COLLABORATIONS -->
-        <div class="collapse" id="nonAcademicCollabs">
-            <h1>Edit Non Academic Collaborations</h1>
-            <form action="" method="post">
-                {{ nonAcademicCollabsForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ nonAcademicCollabsForm.startDate.label }}<br>
-                    {{ nonAcademicCollabsForm.startDate(class="form-control", size=32) }}<br>
-                    {% for error in nonAcademicCollabsForm.startDate.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ nonAcademicCollabsForm.endDate.label }}<br>
-                    {{ nonAcademicCollabsForm.endDate(class="form-control", size=32) }}<br>
-                    {% for error in nonAcademicCollabsForm.endDate.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ nonAcademicCollabsForm.nameOfInstitution.label }}<br>
-                    {{ nonAcademicCollabsForm.nameOfInstitution(class="form-control", size=64) }}<br>
-                    {% for error in nonAcademicCollabsForm.nameOfInstitution.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ nonAcademicCollabsForm.department.label }}<br>
-                    {{ nonAcademicCollabsForm.department(class="form-control", size=32) }}<br>
-                    {% for error in nonAcademicCollabsForm.department.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ nonAcademicCollabsForm.nameOfCollaborator.label }}<br>
-                    {{ nonAcademicCollabsForm.nameOfCollaborator(class="form-control", size=64) }}<br>
-                    {% for error in nonAcademicCollabsForm.nameOfCollaborator.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ nonAcademicCollabsForm.goal.label }}<br>
-                    {{ nonAcademicCollabsForm.goal(class="form-control") }}<br>
-                    {% for error in nonAcademicCollabsForm.goal.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ nonAcademicCollabsForm.frequency.label }}<br>
-                    {{ nonAcademicCollabsForm.frequency(class="form-control", size=32) }}<br>
-                    {% for error in nonAcademicCollabsForm.frequency.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ nonAcademicCollabsForm.primaryAttribution.label }}<br>
-                    {{ nonAcademicCollabsForm.primaryAttribution(class="form-control", size=32) }}<br>
-                    {% for error in nonAcademicCollabsForm.primaryAttribution.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ nonAcademicCollabsForm.nonAcademicCollabsSubmit(class="btn btn-primary", action="nonAcademicCollabsSubmit") }}
+            <!-- NON ACADEMIC COLLABORATIONS -->
+            <div class="collapse" id="nonAcademicCollabs">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Add Non Academic Collaborations</h1>
+                        <form action="" method="post">
+                            {{ nonAcademicCollabsForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.startDate.label }}<br>
+                                {{ nonAcademicCollabsForm.startDate(class="form-control", id="nonAcColStartDate") }}<br>
+                                {% for error in nonAcademicCollabsForm.startDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.endDate.label }}<br>
+                                {{ nonAcademicCollabsForm.endDate(class="form-control", id="nonAcColEndDate") }}<br>
+                                {% for error in nonAcademicCollabsForm.endDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.nameOfInstitution.label }}<br>
+                                {{ nonAcademicCollabsForm.nameOfInstitution(class="form-control", id="nonAcColInstitution") }}<br>
+                                {% for error in nonAcademicCollabsForm.nameOfInstitution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.department.label }}<br>
+                                {{ nonAcademicCollabsForm.department(class="form-control", id="nonAcColDepartment") }}<br>
+                                {% for error in nonAcademicCollabsForm.department.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.nameOfCollaborator.label }}<br>
+                                {{ nonAcademicCollabsForm.nameOfCollaborator(class="form-control", id="nonAcColName") }}<br>
+                                {% for error in nonAcademicCollabsForm.nameOfCollaborator.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.goal.label }}<br>
+                                {{ nonAcademicCollabsForm.goal(class="form-control", id="nonAcColGoal") }}<br>
+                                {% for error in nonAcademicCollabsForm.goal.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.frequency.label }}<br>
+                                {{ nonAcademicCollabsForm.frequency(class="form-control", id="nonAcColFreq") }}<br>
+                                {% for error in nonAcademicCollabsForm.frequency.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.primaryAttribution.label }}<br>
+                                {{ nonAcademicCollabsForm.primaryAttribution(class="form-control", id="nonAcColPrimaryAttrib") }}<br>
+                                {% for error in nonAcademicCollabsForm.primaryAttribution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.nonAcademicCollabsSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs-show" aria-expanded="false" aria-controls="nonAcademicCollabs-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs-show" aria-expanded="false" aria-controls="nonAcademicCollabs-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="nonAcademicCollabs-show">
+                        {% for item in getNonAcInfo %}
+
+                        <div class="card mb-3" id="nonAcCol{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Start date: <span class="nonAcColStartDate">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="nonAcColEndDate">{{ item["endDate"] }}</span></p>
+                                <p>Name of institution: <span class="nonAcColInstitution">{{ item["nameOfInstitution"] }}</span></p>
+                                <p>Department within institution: <span class="nonAcColDepartment">{{ item["department"] }}</span></p>
+                                <p>Name of collaborator: <span class="nonAcColName">{{ item["nameOfCollaborator"] }}</span></p>
+                                <p>Primary goal: <span class="nonAcColGoal">{{ item["goal"] }}</span></p>
+                                <p>Frequency of interaction: <span class="nonAcColFreq">{{ item["frequency"] }}</span></p>
+                                <p>Primary attribution: <span class="nonAcColPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="nonAcCol{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="nonAcCol{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="nonAcCol-delete" name="nonAcCol-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="nonAcademicCollabs-show">
-                <p>
-                    <h2> Current non academic collaborations information </h2>
-                    {% for item in getNonAcInfo %}
-                    <h3> Non academic collaborations Form </h3>
-                    <ul>
-                        <li> {{ item["startDate"] }} </li>
-                        <li> {{ item["endDate"] }} </li>
-                        <li> {{ item["nameOfInstitution"] }} </li>
-                        <li> {{ item["department"] }} </li>
-                        <li> {{ item["location"] }} </li>
-                        <li> {{ item["nameOfCollaborator"] }} </li>
-                        <li> {{ item["goal"] }} </li>
-                        <li> {{ item["frequency"] }} </li>
-                        <li> {{ item["primaryAttribution"] }} </li>
-                    </ul>  
-                    {% endfor %}
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- EVENTS -->
-        <div class="collapse" id="events">
-            <h1>Edit Events</h1>
-            <form action="" method="post">
-                {{ eventsForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ eventsForm.startDate.label }}<br>
-                    {{ eventsForm.startDate(class="form-control", size=32) }}<br>
-                    {% for error in eventsForm.startDate.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ eventsForm.endDate.label }}<br>
-                    {{ eventsForm.endDate(class="form-control", size=32) }}<br>
-                    {% for error in eventsForm.endDate.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ eventsForm.title.label }}<br>
-                    {{ eventsForm.title(class="form-control") }}<br>
-                    {% for error in eventsForm.title.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ eventsForm.eventType.label }}<br>
-                    {{ eventsForm.eventType(class="form-control") }}<br>
-                    {% for error in eventsForm.eventType.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ eventsForm.role.label }}<br>
-                    {{ eventsForm.role(class="form-control", size=64) }}<br>
-                    {% for error in eventsForm.role.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ eventsForm.location.label }}<br>
-                    {{ eventsForm.location(class="form-control", size=64) }}<br>
-                    {% for error in eventsForm.location.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ eventsForm.primaryAttribution.label }}<br>
-                    {{ eventsForm.primaryAttribution(class="form-control", size=32) }}<br>
-                    {% for error in eventsForm.primaryAttribution.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ eventsForm.eventsSubmit(class="btn btn-primary", action="eventsSubmit") }}
+            <!-- EVENTS -->
+            <div class="collapse" id="events">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Add Events</h1>
+                        <form action="" method="post">
+                            {{ eventsForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ eventsForm.startDate.label }}<br>
+                                {{ eventsForm.startDate(class="form-control", id="eventStartDate") }}<br>
+                                {% for error in eventsForm.startDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ eventsForm.endDate.label }}<br>
+                                {{ eventsForm.endDate(class="form-control", id="eventEndDate") }}<br>
+                                {% for error in eventsForm.endDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ eventsForm.title.label }}<br>
+                                {{ eventsForm.title(class="form-control", id="eventTitle") }}<br>
+                                {% for error in eventsForm.title.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ eventsForm.eventType.label }}<br>
+                                {{ eventsForm.eventType(class="form-control", id="eventEventType") }}<br>
+                                {% for error in eventsForm.eventType.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ eventsForm.role.label }}<br>
+                                {{ eventsForm.role(class="form-control", id="eventRole") }}<br>
+                                {% for error in eventsForm.role.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ eventsForm.location.label }}<br>
+                                {{ eventsForm.location(class="form-control", id="eventLoc") }}<br>
+                                {% for error in eventsForm.location.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ eventsForm.primaryAttribution.label }}<br>
+                                {{ eventsForm.primaryAttribution(class="form-control", id="eventPrimaryAttrib") }}<br>
+                                {% for error in eventsForm.primaryAttribution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ eventsForm.eventsSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#events-show" aria-expanded="false" aria-controls="events-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#events-show" aria-expanded="false" aria-controls="events-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="events-show">
+                        {% for item in getEvInfo %}
+
+                        <div class="card mb-3" id="event{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Start date: <span class="eventStartDate">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="eventEndDate">{{ item["endDate"] }}</span></p>
+                                <p>Title: <span class="eventTitle">{{ item["title"] }}</span></p>
+                                <p>Event type: <span class="eventEventType">{{ item["eventType"] }}</span></p>
+                                <p>Role: <span class="eventRole">{{ item["role"] }}</span></p>
+                                <p>Location of event: <span class="eventLoc">{{ item["location"] }}</span></p>
+                                <p>Primary attribution: <span class="eventPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="event{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="event{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="event-delete" name="event-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="events-show">
-                <p>
-                    <h2> Current events information </h2>
-                    {% for item in getEvInfo %}
-                    <h3> Events Form </h3>
-                    <ul>
-                        <li> {{ item["startDate"] }} </li>
-                        <li> {{ item["endDate"] }} </li>
-                        <li> {{ item["title"] }} </li>
-                        <li> {{ item["eventType"] }} </li>
-                        <li> {{ item["role"] }} </li>
-                        <li> {{ item["location"] }} </li>
-                        <li> {{ item["primaryAttribution"] }} </li>
-                    </ul>  
-                    {% endfor %}
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- COMMUNCATIONS OVERVIEW -->
-        <div class="collapse" id="communications">
-            <h1>Communications Overview</h1>
-            <form action="" method="post">
-                {{ commForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ commForm.year.label }}<br>
-                    {{ commForm.year(class="form-control", size=4) }}<br>
-                    {% for error in commForm.year.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ commForm.numberOfLectures.label }}<br>
-                    {{ commForm.numberOfLectures(class="form-control", size=12) }}<br>
-                    {% for error in commForm.numberOfLectures.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ commForm.numberOfVisits.label }}<br>
-                    {{ commForm.numberOfVisits(class="form-control", size=12) }}<br>
-                    {% for error in commForm.numberOfVisits.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ commForm.numberOfMediaInteracations.label }}<br>
-                    {{ commForm.numberOfMediaInteracations(class="form-control", size=12) }}<br>
-                    {% for error in commForm.numberOfMediaInteracations.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ commForm.commSubmit(class="btn btn-primary", action="commSubmit") }}
+            <!-- COMMUNCATIONS OVERVIEW -->
+            <div class="collapse" id="communications">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Communications Overview</h1>
+                        <form action="" method="post">
+                            {{ commForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ commForm.year.label }}<br>
+                                {{ commForm.year(class="form-control", id="commYear") }}<br>
+                                {% for error in commForm.year.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ commForm.numberOfLectures.label }}<br>
+                                {{ commForm.numberOfLectures(class="form-control", id="commNumPublic") }}<br>
+                                {% for error in commForm.numberOfLectures.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ commForm.numberOfVisits.label }}<br>
+                                {{ commForm.numberOfVisits(class="form-control", id="commNumVisits") }}<br>
+                                {% for error in commForm.numberOfVisits.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ commForm.numberOfMediaInteracations.label }}<br>
+                                {{ commForm.numberOfMediaInteracations(class="form-control", id="commNumMedia") }}<br>
+                                {% for error in commForm.numberOfMediaInteracations.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ commForm.commSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#communications-show" aria-expanded="false" aria-controls="communications-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#communications-show" aria-expanded="false" aria-controls="communications-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="communications-show">
+                        {% for item in getCommInfo %}
+
+                        <div class="card mb-3" id="comm{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Year: <span class="commYear">{{ item["year"] }}</span></p>
+                                <p>Num. public lectures/demonstrations: <span class="commNumPublic">{{ item["numberOfLectures"] }}</span></p>
+                                <p>Num. visits: <span class="commNumVisits">{{ item["numberOfVisits"] }}</span></p>
+                                <p>Num. media interactions: <span class="commNumMedia">{{ item["numberOfMediaInteractions"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="comm{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="comm{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="comm-delete" name="comm-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="communications-show">
-                <p>
-                    <h2> Current communications overview information </h2>
-                    {% for item in getCommInfo %}
-                    <h3> Communications overview Form </h3>
-                    <ul>
-                        <li> {{ item["year"] }} </li>
-                        <li> {{ item["numberOfLectures"] }} </li>
-                        <li> {{ item["numberOfVisits"] }} </li>
-                        <li> {{ item["numberOfMediaInteracations"] }} </li>
-                    </ul>  
-                    {% endfor %}
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- SFI Funding Ratio -->
-        <div class="collapse" id="sfiFundingRatio">
-            <h1>SFI Funding Ratio</h1>
-            <form action="" method="post">
-                {{ fundRatioForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ fundRatioForm.year.label }}<br>
-                    {{ fundRatioForm.year(class="form-control", size=4) }}<br>
-                    {% for error in fundRatioForm.year.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ fundRatioForm.percentage.label }}<br>
-                    {{ fundRatioForm.percentage(class="form-control", size=4) }}<br>
-                    {% for error in fundRatioForm.percentage.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ fundRatioForm.sfiFundingRatioSubmit(class="btn btn-primary", action="fundRatioSubmit") }}
+            <!-- SFI Funding Ratio -->
+            <div class="collapse" id="sfiFundingRatio">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>SFI Funding Ratio</h1>
+                        <form action="" method="post">
+                            {{ fundRatioForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ fundRatioForm.year.label }}<br>
+                                {{ fundRatioForm.year(class="form-control", id="sfiYear") }}<br>
+                                {% for error in fundRatioForm.year.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ fundRatioForm.percentage.label }}<br>
+                                {{ fundRatioForm.percentage(class="form-control", id="sfiPercentage") }}<br>
+                                {% for error in fundRatioForm.percentage.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ fundRatioForm.sfiFundingRatioSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#sfiFundingRatio-show" aria-expanded="false" aria-controls="sfiFundingRatio-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#sfiFundingRatio-show" aria-expanded="false" aria-controls="sfiFundingRatio-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                   <div class="collapse col-md-5 show" id="sfiFundingRatio-show">
+                        {% for item in getSfiInfo %}
+
+                        <div class="card mb-3" id="sfi{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Year: <span class="sfiYear">{{ item["year"] }}</span></p>
+                                <p>Percentage: <span class="sfiPercentage">{{ item["percentage"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="sfi{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="sfi{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="sfi-delete" name="sfi-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="sfiFundingRatio-show">
-                <p>
-                    <h2> Current SFI funding ratio information </h2>
-                    {% for item in getSfiInfo %}
-                    <h3> SFI funding ratio Form </h3>
-                    <ul>
-                        <li> {{ item["year"] }} </li>
-                        <li> {{ item["percentage"] }} </li>
-                    </ul>  
-                    {% endfor %}
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
 
-        <!-- EDUCATION AND PUBLIC ENGAGEMENT -->
-        <div class="collapse" id="pubEngage">
-            <h1>Edit Education and Public Engagement</h1>
-            <form action="" method="post">
-                {{ pubEngageForm.hidden_tag() }}
-                <div class="form-group">
-                    {{ pubEngageForm.nameOfProject.label }}<br>
-                    {{ pubEngageForm.nameOfProject(class="form-control", size=32) }}<br>
-                    {% for error in pubEngageForm.nameOfProject.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubEngageForm.startDate.label }}<br>
-                    {{ pubEngageForm.startDate(class="form-control", size=12) }}<br>
-                    {% for error in pubEngageForm.startDate.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubEngageForm.endDate.label }}<br>
-                    {{ pubEngageForm.endDate(class="form-control", size=12) }}<br>
-                    {% for error in pubEngageForm.endDate.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubEngageForm.activityType.label }}<br>
-                    {{ pubEngageForm.activityType(class="form-control") }}<br>
-                    {% for error in pubEngageForm.activityType.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubEngageForm.otherType.label }}<br>
-                    {{ pubEngageForm.otherType(class="form-control", size=32) }}<br>
-                    {% for error in pubEngageForm.otherType.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubEngageForm.projectTopic.label }}<br>
-                    {{ pubEngageForm.projectTopic(class="form-control") }}<br>
-                    {% for error in pubEngageForm.projectTopic.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubEngageForm.otherType.label }}<br>
-                    {{ pubEngageForm.otherType(class="form-control", size=32) }}<br>
-                    {% for error in pubEngageForm.otherType.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubEngageForm.target.label }}<br>
-                    {{ pubEngageForm.target(class="form-control") }}<br>
-                    {% for error in pubEngageForm.target.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubEngageForm.localCountry.label }}<br>
-                    {{ pubEngageForm.localCountry(class="form-control", size=12) }}<br>
-                    {% for error in pubEngageForm.localCountry.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ pubEngageForm.pubEngageSubmit(class="btn btn-primary", action="pubEngageSubmit") }}
+            <!-- EDUCATION AND PUBLIC ENGAGEMENT -->
+            <div class="collapse" id="pubEngage">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Education and Public Engagement</h1>
+                        <form action="" method="post">
+                            {{ pubEngageForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ pubEngageForm.nameOfProject.label }}<br>
+                                {{ pubEngageForm.nameOfProject(class="form-control", id="pEngName") }}<br>
+                                {% for error in pubEngageForm.nameOfProject.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.startDate.label }}<br>
+                                {{ pubEngageForm.startDate(class="form-control", id="pEngStartDate") }}<br>
+                                {% for error in pubEngageForm.startDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.endDate.label }}<br>
+                                {{ pubEngageForm.endDate(class="form-control", id="pEngEndDate") }}<br>
+                                {% for error in pubEngageForm.endDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.activityType.label }}<br>
+                                {{ pubEngageForm.activityType(class="form-control", id="pEngActivityType") }}<br>
+                                {% for error in pubEngageForm.activityType.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.otherType.label }}<br>
+                                {{ pubEngageForm.otherType(class="form-control", id="pEngActivityOther") }}<br>
+                                {% for error in pubEngageForm.otherType.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.projectTopic.label }}<br>
+                                {{ pubEngageForm.projectTopic(class="form-control", id="pEngTopic") }}<br>
+                                {% for error in pubEngageForm.projectTopic.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.otherType.label }}<br>
+                                {{ pubEngageForm.otherType(class="form-control", id="pEngTopicOther") }}<br>
+                                {% for error in pubEngageForm.otherType.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.target.label }}<br>
+                                {{ pubEngageForm.target(class="form-control", id="pEngArea") }}<br>
+                                {% for error in pubEngageForm.target.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.localCountry.label }}<br>
+                                {{ pubEngageForm.localCountry(class="form-control", id="pEngAreaOther") }}<br>
+                                {% for error in pubEngageForm.localCountry.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.pubEngageSubmit(class="btn btn-primary") }}
 
-                    <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#pubEngage-show" aria-expanded="false" aria-controls="pubEngage-show">Show current</button>
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#pubEngage-show" aria-expanded="false" aria-controls="pubEngage-show">Show / Hide current</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="pubEngage-show">
+                        {% for item in getEdInfo %}
+
+                        <div class="card mb-3" id="pEng{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Name of project: <span class="pEngName">{{ item["nameOfProject"] }}</span></p>
+                                <p>Start date: <span class="pEngStartDate">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="pEngEndDate">{{ item["endDate"] }}</span></p>
+                                <p>Activity type: <span class="pEngActivityType">{{ item["activityType"] }}</span></p>
+                                <p>If other selected: <span class="pEngActivityOther">{{ item["otherType"] }}</span></p>
+                                <p>Project topic: <span class="pEngTopic">{{ item["projectTopic"] }}</span></p>
+                                <p>If other selected: <span class="pEngTopicOther">{{ item["otherTopic"] }}</span></p>
+                                <p>Target geographical area: <span class="pEngArea">{{ item["target"] }}</span></p>
+                                <p>If local: <span class="pEngAreaOther">{{ item["localCountry"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="pEng{{ loop.index }}-clone">Copy</button>
+                                <button class="btn btn-secondary" type="button" id="pEng{{ loop.index }}-edit">Edit</button>
+                                <form class="deleteForms" action="" method="post">
+                                    <input type="hidden" name="{{ loop.index }}" />
+                                    <input type="submit" class="btn btn-dark" id="pEng-delete" name="pEng-delete" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </form>
-            
-            <div class="collapse" id="pubEngage-show">
-                <p>
-                    <h2> Current education and public engagement information </h2>
-                    {% for item in getEdInfo %}
-                    <h3> Education and public engagement Form </h3>
-                    <ul>
-                        <li> {{ item["nameOfProject"] }} </li>
-                        <li> {{ item["startDate"] }} </li>
-                        <li> {{ item["endDate"] }} </li>
-                        <li> {{ item["activityType"] }} </li>
-                        <li> {{ item["otherType"] }} </li>
-                        <li> {{ item["projectTopic"] }} </li>
-                        <li> {{ item["otherTopic"] }} </li>
-                        <li> {{ item["target"] }} </li>
-                        <li> {{ item["localCountry"] }} </li>
-                    </ul>  
-                    {% endfor %}
-                </p>
+                <hr>
             </div>
-            <hr>
-        </div>
         </div>
     </div>
-</div>
 {% endblock %}

@@ -68,7 +68,7 @@ class GeneralInformationForm(FlaskForm):
     lastName = StringField("Last name", validators=[DataRequired() ])
     jobTitle = StringField("Job title", validators=[DataRequired() ])
     prefix = SelectField(u"Prefix", choices=\
-    [("dr", "Dr"), ("prof", "Prof"), ("mr", "Mr"), ("mrs", "Mrs"), ("ms", "Ms")], \
+    [("Dr", "Dr"), ("Prof", "Prof"), ("Mr", "Mr"), ("Mrs", "Mrs"), ("Ms", "Ms")], \
     validators=[DataRequired() ])
     suffix = StringField("Suffix", validators=[Optional() ])
     phoneNumPrefix = StringField("Phone prefix", validators=[Optional() ])
@@ -83,7 +83,8 @@ class EducationInformationForm(FlaskForm):
     institution = StringField("Institution", validators=[DataRequired() ])
     location = StringField("Location", validators=[DataRequired() ])
     yearOfDegreeAward = StringField("Year of degree award", validators=[DataRequired() ])
-    eduSubmit = SubmitField("Save")
+    eduSubmit = SubmitField("Add new")
+    eduEdit = SubmitField("Update")
 
 class EmploymentInformationForm(FlaskForm):
     company = StringField("Institution/Company", validators=[DataRequired() ])
@@ -98,7 +99,7 @@ class SocietiesInformationForm(FlaskForm):
     typeOfMembership = StringField("Type of membership", validators=[DataRequired() ])
     #This field will depend on the date - grey out it end date entered 
     status = SelectField(u"Status(if active)", choices=\
-    [("yes", "Yes"), ("no", "No")], validators=[DataRequired() ])
+    [("Yes", "Yes"), ("No", "No")], validators=[DataRequired() ])
     socSubmit = SubmitField("Save")
     
 class AwardsInformationForm(FlaskForm):
@@ -117,7 +118,7 @@ class FundingDiversificationForm(FlaskForm):
     fundingProgramme = StringField("Funding programme", validators=[DataRequired() ])
     status = SelectField(u"Status(if active or expired)", choices=\
     #This field will depend on the date - grey out it end date entered or set to yes
-    [("yes", "Yes"), ("no", "No")], validators=[DataRequired() ])
+    [("Yes", "Yes"), ("No", "No")], validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution(grant number to which funding is linked)", \
     validators=[DataRequired() ])
     fundingDivSubmit = SubmitField("Save")
@@ -148,16 +149,16 @@ class InnovationAndCommercialisationForm(FlaskForm):
 class PublicationsForm(FlaskForm):
     year = StringField("Year", validators=[DataRequired() ])
     type = SelectField(u"Type", choices=\
-    [("originalArticle", "Refereed original article"), \
-    ("reviewArticle", "Refereed review article"), \
-    ("conferencePaper", "Refereed conference paper"), \
-    ("book", "Book"), ("technicalReport", "Technical report")], \
+    [("Refereed original article", "Refereed original article"), \
+    ("Refereed review article", "Refereed review article"), \
+    ("Refereed conference paper", "Refereed conference paper"), \
+    ("Book", "Book"), ("Technical report", "Technical report")], \
     validators=[DataRequired() ])
     title = TextAreaField("Title", validators = [Length(min=0, max=140) ])
     name = TextAreaField("Journal / Conference name", \
     validators = [Length(min=0, max=140) ])
     publicationStatus = SelectField(u"Publication status", \
-    choices=[("published", "Published"), ("inPress", "In press")], \
+    choices=[("Published", "Published"), ("In press", "In press")], \
     validators=[DataRequired() ])
     doi = StringField("DOI", validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution", validators=[DataRequired() ])
@@ -167,8 +168,8 @@ class PresentationsForm(FlaskForm):
     year = StringField("Year", validators=[DataRequired() ])
     title = TextAreaField("Title", validators = [Length(min=0, max=140) ])
     eventType = SelectField(u"Event Type", choices=\
-    [("conference", "Conference"), ("seminar", "Invited seminar"), \
-    ("keynote", "Keynote")], validators=[DataRequired() ])
+    [("Conference", "Conference"), ("Invited seminar", "Invited seminar"), \
+    ("Keynote", "Keynote")], validators=[DataRequired() ])
     organisingBody = StringField("Organising Body", validators=[DataRequired() ])
     location = StringField("Location", validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution", validators=[DataRequired() ])
@@ -182,11 +183,11 @@ class AcademicCollaborationsForm(FlaskForm):
     location = StringField("Location", validators=[DataRequired() ])
     nameOfCollaborator = StringField("Name of collaborator", validators=[DataRequired() ])
     goal = SelectField(u"Primary goal of collaboration", choices=\
-    [("access", "Access to software/data/material/equipment"), \
-    ("training", "Training and career development"), \
-    ("publication", "Joint publication"), ("startup", "Startup development"), \
-    ("license", "License development"), \
-    ("building", "Building networks & relationships")], validators=[DataRequired() ])
+    [("Access to software/data/material/equipment", "Access to software/data/material/equipment"), \
+    ("Training and career development", "Training and career development"), \
+    ("Joint publication", "Joint publication"), ("Startup development", "Startup development"), \
+    ("License development", "License development"), \
+    ("Building networks & relationships", "Building networks & relationships")], validators=[DataRequired() ])
     frequency = StringField("Frequency of interaction", validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution", validators=[DataRequired() ])
     academicCollabsSubmit = SubmitField("Save")
@@ -199,11 +200,11 @@ class NonAcademicCollaborationsForm(FlaskForm):
     location = StringField("Location", validators=[DataRequired() ])
     nameOfCollaborator = StringField("Name of collaborator", validators=[DataRequired() ])
     goal = SelectField(u"Primary goal of collaboration", choices=\
-    [("access", "Access to software/data/material/equipment"), \
-    ("training", "Training and career development"), \
-    ("publication", "Joint publication"), ("startup", "Startup development"), \
-    ("license", "License development"), \
-    ("building", "Building networks & relationships")], validators=[DataRequired() ])
+    [("Access to software/data/material/equipment", "Access to software/data/material/equipment"), \
+    ("Training and career development", "Training and career development"), \
+    ("Joint publication", "Joint publication"), ("Startup development", "Startup development"), \
+    ("License development", "License development"), \
+    ("Building networks & relationships", "Building networks & relationships")], validators=[DataRequired() ])
     frequency = StringField("Frequency of interaction", validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution", validators=[DataRequired() ])
     nonAcademicCollabsSubmit = SubmitField("Save")
@@ -213,8 +214,8 @@ class EventsForms(FlaskForm):
     endDate = DateField("End date", validators=[DataRequired() ])
     title = TextAreaField("Title", validators = [Length(min=0, max=140) ])
     eventType = SelectField(u"Event Type", choices=\
-    [("conference", "Conference"), ("workshop", "Workshop"), \
-    ("seminar", "Seminar")], validators=[DataRequired() ])
+    [("Conference", "Conference"), ("Workshop", "Workshop"), \
+    ("Seminar", "Seminar")], validators=[DataRequired() ])
     role = StringField("Role",validators=[DataRequired() ])
     location = StringField("Location of event", validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution", validators=[DataRequired() ])
@@ -242,19 +243,19 @@ class EducationAndPublicEngagementForm(FlaskForm):
     startDate = DateField("Start date", validators=[DataRequired() ])
     endDate = DateField("End date", validators=[DataRequired()])
     activityType = SelectField(u"Activity type", choices=\
-    [("event", "Public event"), ("class", "In-class activities"), \
-    ("programme", "Career experience programme"), ("other", "Other(please specify")], \
+    [("Public event", "Public event"), ("In-class activities", "In-class activities"), \
+    ("Career experience programme", "Career experience programme"), ("Other (please specify)", "Other (please specify)")], \
     validators=[DataRequired() ])
     otherType = StringField("If other selected", validators=[Optional() ])
     projectTopic = SelectField(u"Project topic", choices=\
-    [("science", "Science"), ("math", "Math"), \
-    ("engineering", "Engineering"), ("technology", "Technology"), \
-    ("space", "Space related"), ("other", "Other(please specify")], \
+    [("Science", "Science"), ("Math", "Math"), \
+    ("Engineering", "Engineering"), ("Technology", "Technology"), \
+    ("Space related", "Space related"), ("Other (please specify)", "Other (please specify)")], \
     validators=[DataRequired() ])
     otherTopic = StringField("If other selected", validators=[Optional() ])
     target = SelectField(u"Target geographical area", choices=\
-    [("local", "Local (a specific county in Ireland)"), ("national", "National"), \
-    ("international", "International")], \
+    [("Local (a specific county in Ireland)", "Local (a specific county in Ireland)"), ("National", "National"), \
+    ("International", "International")], \
     validators=[DataRequired() ])
     localCountry = StringField("If local (a specific county in Ireland)", validators=[Optional() ])
     pubEngageSubmit = SubmitField("Save")
