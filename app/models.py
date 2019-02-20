@@ -222,11 +222,11 @@ class EducationPublicEngagement(db.Model):
 
     def __repr__(self):
         return "<EducationPublicEngagement {}>".format(self.data, self.id)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 37db4ffb7f7d18797e632fe60175479bef930e5c
+#<<<<<<< HEAD
+#<<<<<<< HEAD
+#=======
+#=======
+#>>>>>>> 37db4ffb7f7d18797e632fe60175479bef930e5c
 
 
 class ResearchGroup(db.Model):
@@ -241,9 +241,9 @@ class GroupMembership(db.Model):
 
     user = db.relationship("User", back_populates="groups")
     group = db.relationship("ResearchGroup", back_populates="users")
-<<<<<<< HEAD
->>>>>>> 4629aadecde3420e99e5e281a0041071c1ea43b8
-=======
+#<<<<<<< HEAD
+#>>>>>>> 4629aadecde3420e99e5e281a0041071c1ea43b8
+#=======
 
 class Publication(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -254,4 +254,4 @@ class Publication(db.Model):
     doi = db.Column(db.String(64))
     title = db.Column(db.Text)
     journal = db.Column(db.Text)
->>>>>>> 37db4ffb7f7d18797e632fe60175479bef930e5c
+#>>>>>>> 37db4ffb7f7d18797e632fe60175479bef930e5c
