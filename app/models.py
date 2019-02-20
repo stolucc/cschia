@@ -6,10 +6,12 @@ from hashlib import md5
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    orcid = db.Column(db.String(64), index=True, unique=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean, default=False)
+    is_reviewer = db.Column(db.Boolean, default=False)
     posts = db.relationship("Post", backref="author", lazy="dynamic")
 
     about_me = db.Column(db.String(140))
@@ -25,7 +27,6 @@ class User(UserMixin, db.Model):
     funding_diversification = db.relationship("FundingDiversification")
     impacts = db.relationship("Impacts")
     innovation_and_commercialisation = db.relationship("InnovationAndCommercialisation")
-    publications = db.relationship("Publications")
     presentations = db.relationship("Presentations")
     academic_collaborations = db.relationship("AcademicCollaborations")
     non_academic_collaborations = db.relationship("NonAcademicCollaborations")
@@ -35,7 +36,7 @@ class User(UserMixin, db.Model):
     education_public_engagement = db.relationship("EducationPublicEngagement")
 
     def __repr__(self):
-        return "<User {}>".format(self.username)
+        return "<User {} {} {} {}>".format(self.username, self.orcid, self.is_admin, self.is_reviewer)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -150,14 +151,6 @@ class InnovationAndCommercialisation(db.Model):
     def __repr__(self):
         return "<InnovationAndCommercialisation {}>".format(self.data, self.id)
 
-class Publications(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    data = db.Column(db.Text)
-
-    def __repr__(self):
-        return "<Publications {}>".format(self.data, self.id)
-
 class Presentations(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -209,10 +202,18 @@ class SfiFundingRatio(db.Model):
 
 class SfiProposalCalls(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    data_path = db.Column(db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    #data = db.Column(db.Text)
+    title = db.Column(db.Text)
+    deadline = db.Column(db.Date)
+    contact = db.Column(db.Text)
+    overview = db.Column(db.Text)
+    funding = db.Column(db.Text)
+    key_dates = db.Column(db.Text)
+    upload_data = db.Column(db.Text)
 
     def __repr__(self):
-        return "<SfiProposalCalls {}>".format(self.id, self.data_path)
+        return "<SfiProposalCalls {}>".format(self.deadline, self.id)
 
 class EducationPublicEngagement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -222,7 +223,10 @@ class EducationPublicEngagement(db.Model):
     def __repr__(self):
         return "<EducationPublicEngagement {}>".format(self.data, self.id)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 37db4ffb7f7d18797e632fe60175479bef930e5c
 
 
 class ResearchGroup(db.Model):
@@ -237,4 +241,17 @@ class GroupMembership(db.Model):
 
     user = db.relationship("User", back_populates="groups")
     group = db.relationship("ResearchGroup", back_populates="users")
+<<<<<<< HEAD
 >>>>>>> 4629aadecde3420e99e5e281a0041071c1ea43b8
+=======
+
+class Publication(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    primary_user = db.Column(db.Integer, db.ForeignKey("user.id"))
+    year = db.Column(db.Integer)
+    type = db.Column(db.String(64))
+    status = db.Column(db.String(64))
+    doi = db.Column(db.String(64))
+    title = db.Column(db.Text)
+    journal = db.Column(db.Text)
+>>>>>>> 37db4ffb7f7d18797e632fe60175479bef930e5c

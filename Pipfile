@@ -6,10 +6,12 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-
 flask = "*"
 "flask-sqlalchemy" = "*"
 "python-dotenv" = "*"
 "flask-migrate" = "*"
 "flask-login" = "*"
 "flask-wtf" = "*"
+"bootstrap-flask" = "*"
+flask-bootstrap = "*"
+ipython = "==6.5.0"

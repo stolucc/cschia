@@ -1,32 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>View Profile</h1>
+    {% if info != None %}
+    <h1>Viewing Profile of {{user.username}}({{user.orcid}}) </h1>
     <h3>General Information</h3>
     <ul>
         <li>
-            {{ info.firstName }}
+            {{ info["firstName"] }}
         </li>
         <li>
-            {{ info.lastName }}
+            {{ info["lastName"] }}
         </li>
         <li>
-            {{ info.jobTitle }}
+            {{ info["jobTitle"] }}
         </li>
         <li>
-            {{ info.prefix }}
+            {{ info["prefix"] }}
         </li>
         <li>
-            {{ info.suffix }}
+            {{ info["suffix"] }}
         </li>
         <li>
-            {{ info.email }}
+            {{ info["email"] }}
         </li>
         <li>
-            {{ info.orcid }}
+            {{ info["orcid"] }}
         </li>
     </ul>
-    <a href="{{ url_for("edit_general_information", _anchor="general_info" ) }}">Edit General Information</a>
+    {% else %}
+    <h1> This profile doesnt exist </h1>
+    {% endif %}
 
     
 {% endblock %}

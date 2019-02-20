@@ -1,25 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
 
-    <div class="row">
+<title>SESAME | Admin Control.</title>
 
-        <div class="col-sm">
-            Column one
-        </div>
-        
-        <div class="col-sm">
-            Column two
-        </div>
+<h1> Administrative operations </h1><br>
+<div class="row">
+    <div class="col-md-4">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                    {#class="btn btn-primary"#}
 
-        <div class="col-sm">
-            Column two
-        </div>
-
+                <a class="btn btn-primary" href="/admin_register_user">Register a new user</a>
+            </li>
+            <li class="list-group-item">
+                    <a class="btn btn-primary" href="/admin_publish_call">Publish call for proposals</a>    
+            </li>    
+        </ul>
     </div>
-
 </div>
+
+
 
 
 {% endblock %}
