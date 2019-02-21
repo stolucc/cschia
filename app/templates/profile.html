@@ -8,7 +8,7 @@
             <h3>General Info</h3>
             <ul class="list-unstyled">
                 <li>
-                    <b>First name:</b> {{ info["firstName"] }}
+                    <b>First name:</b> {{ info["prefix"] }}{{ info["firstName"] }}
                 </li>
                 <li>
                     <b>Last name:</b> {{ info["lastName"] }}
@@ -28,6 +28,16 @@
             <h3>Publications</h3>
         </div>
         <div class="col">
+            <ul class="list-unstyled">
+                {% for info in edu_info %}
+                <h3>Education</h3>
+                <li><b>Degree:</b> {{ info["degree"] }}</li>
+                <li><b>Field of Study:</b> {{ info["fieldOfStudy"] }}</li>
+                <li><b>Institution:</b> {{ info["institution"] }}</li>
+                <li><b>Location:</b> {{ info["location"] }}</li>
+                <li class="mb-2"><b>Year of degree award:</b> {{ info["yearOfDegreeAward"] }}</li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
     {% else %}

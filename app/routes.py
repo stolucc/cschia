@@ -20,6 +20,14 @@ from werkzeug.urls import url_parse
 from datetime import datetime
 import json
 
+def query_table(table):
+    return table.query.filter_by(user_id=current_user.id).all()
+
+def get_list(q):
+    lst = []
+    for item in q:
+        lst.append(json.loads(item.data))
+    return lst
 
 @app.before_request
 def before_request():
@@ -39,7 +47,8 @@ def index():
             formList.append(string)
 
     check_if_filled(GeneralInformation, "General Information")
-    check_if_filled(EmploymentInformation, "Education")
+    check_if_filled(EducationInformation, "Education")
+    check_if_filled(EmploymentInformation, "Employment")
     check_if_filled(SocietiesInformation, "Societies")
     check_if_filled(AwardsInformation, "Awards")
     check_if_filled(FundingDiversification, "Funding Diversification")
@@ -157,13 +166,19 @@ def user(username):
 @app.route("/profile/<username>", methods=["GET"])
 @login_required
 def show_profile(username):
+
     user = User.query.filter_by(username=username).first_or_404()
     check_if_exists = GeneralInformation.query.filter_by(user_id=user.id).first()
-    info = None
+    gen_info = None
     if check_if_exists is not None:
-        info = json.loads(check_if_exists.data)
+        gen_info = json.loads(check_if_exists.data)
 
-    return render_template("profile.html", title="View Profile", user=user, info=info)
+    edu_info = get_list(query_table(EducationInformation))
+
+
+    return render_template("profile.html", title="View Profile", user=user, 
+                                                                info=gen_info,
+                                                                edu_info=edu_info)
 
 
 @app.route("/edit_account", methods=["GET", "POST"])
@@ -215,9 +230,6 @@ def get_list(q):
     for item in q:
         lst.append(json.loads(item.data))
     return lst
-
-def query_table(table):
-    return table.query.filter_by(user_id=current_user.id).all()
 
 
 @app.route("/edit_profile", methods=["GET", "POST"])
