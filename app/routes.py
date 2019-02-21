@@ -52,7 +52,6 @@ def index():
     check_if_filled(SfiFundingRatio, "SFI Funding Ratio")
     check_if_filled(EducationPublicEngagement, "Education and Public engagement")
    
-
     return render_template("index.html", title="Home ", form=formList)
 
 
@@ -142,7 +141,7 @@ def publish_call():
         return redirect(url_for("index"))
     return render_template("admin_publish_call.html", title="Publish Call", form=form)
 
-
+"""
 # not needed
 @app.route("/user/<username>")
 @login_required
@@ -153,7 +152,7 @@ def user(username):
         {"author": user, "body": "Responding Funding call: Project12"}
     ]
     return render_template("user.html", user=user, posts=posts)
-
+"""
 
 @app.route("/profile/<username>", methods=["GET"])
 @login_required
@@ -165,6 +164,7 @@ def show_profile(username):
         info = json.loads(check_if_exists.data)
 
     return render_template("profile.html", title="View Profile", user=user, info=info)
+
 
 @app.route("/edit_account", methods=["GET", "POST"])
 @login_required
@@ -216,6 +216,9 @@ def get_list(q):
         lst.append(json.loads(item.data))
     return lst
 
+def query_table(table):
+    return table.query.filter_by(user_id=current_user.id).all()
+
 
 @app.route("/edit_profile", methods=["GET", "POST"])
 @login_required
@@ -243,47 +246,33 @@ def edit_profile():
     else:
         getGenInfo = ""
 
-    jsonEduInfo = EducationInformation.query.filter_by(user_id=current_user.id).all()
-    getEduInfo = get_list(jsonEduInfo)
+    getEduInfo = get_list(query_table(EducationInformation))
 
-    jsonEmployInfo = EmploymentInformation.query.filter_by(user_id=current_user.id).all()
-    getEmployInfo = get_list(jsonEmployInfo)
+    getEmployInfo = get_list(query_table(EmploymentInformation))
 
-    jsonSocInfo = SocietiesInformation.query.filter_by(user_id=current_user.id).all()
-    getSocInfo = get_list(jsonSocInfo)
+    getSocInfo = get_list(query_table(SocietiesInformation))
 
-    jsonAwardInfo = AwardsInformation.query.filter_by(user_id=current_user.id).all()
-    getAwardInfo = get_list(jsonAwardInfo)
+    getAwardInfo = get_list(query_table(AwardsInformation))
 
-    jsonFundInfo = FundingDiversification.query.filter_by(user_id=current_user.id).all()
-    getFundInfo = get_list(jsonFundInfo)
+    getFundInfo = get_list(query_table(FundingDiversification))
 
-    jsonImpInfo = Impacts.query.filter_by(user_id=current_user.id).all()
-    getImpInfo = get_list(jsonImpInfo)
+    getImpInfo = get_list(query_table(Impacts))
 
-    jsonInnInfo = InnovationAndCommercialisation.query.filter_by(user_id=current_user.id).all()
-    getInnInfo = get_list(jsonInnInfo)
+    getInnInfo = get_list(query_table(InnovationAndCommercialisation))
 
-    jsonPresInfo = Presentations.query.filter_by(user_id=current_user.id).all()
-    getPresInfo = get_list(jsonPresInfo)
+    getPresInfo = get_list(query_table(Presentations))
 
-    jsonAcInfo = AcademicCollaborations.query.filter_by(user_id=current_user.id).all()
-    getAcInfo = get_list(jsonAcInfo)
+    getAcInfo = get_list(query_table(AcademicCollaborations))
 
-    jsonNonAcInfo = NonAcademicCollaborations.query.filter_by(user_id=current_user.id).all()
-    getNonAcInfo = get_list(jsonNonAcInfo)
+    getNonAcInfo = get_list(query_table(NonAcademicCollaborations))
 
-    jsonEvInfo = Events.query.filter_by(user_id=current_user.id).all()
-    getEvInfo = get_list(jsonEvInfo)
+    getEvInfo = get_list(query_table(Events))
 
-    jsonCommInfo = CommunicationsOverview.query.filter_by(user_id=current_user.id).all()
-    getCommInfo = get_list(jsonCommInfo)
+    getCommInfo = get_list(query_table(CommunicationsOverview))
 
-    jsonSfiInfo = SfiFundingRatio.query.filter_by(user_id=current_user.id).all()
-    getSfiInfo = get_list(jsonSfiInfo)
+    getSfiInfo = get_list(query_table(SfiFundingRatio))
 
-    jsonEdInfo = EducationPublicEngagement.query.filter_by(user_id=current_user.id).all()
-    getEdInfo = get_list(jsonEdInfo)
+    getEdInfo = get_list(query_table(EducationPublicEngagement))
 
     if request.method == "POST":
 
@@ -951,22 +940,11 @@ def edit_profile():
 def search():
     keyword = request.args.get('keyword')
 
-    """
-    result = User.query.filter(User.username.contains(keyword)).order_by(
-        User.username.contains(keyword)).all()
-
-    result_orcid = User.query.filter(User.orcid.contains(keyword)).order_by(
-        User.orcid.contains(keyword)).all()
-    """
-
-
     result = User.query.filter(User.username.contains(keyword)).all()
     result_orcid = User.query.filter(User.orcid.contains(keyword)).all()
 
     if len(result) > 1 or len(result_orcid) > 1:
-    
         return render_template("search_result2.html", results=result, results_orcid=result_orcid)
-
     elif len(result) > 0:
         r = result[0].username
         return redirect(url_for("show_profile", username=r))

@@ -26,4 +26,7 @@
         {% endfor %}
     </table>
 
+    {% if results|length == 0 and results_orcid|length == 0 %}
+        <h1> No result found </h1>
+    {% endif %}
 {% endblock %}
