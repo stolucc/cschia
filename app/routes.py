@@ -958,16 +958,20 @@ def search():
     result_orcid = User.query.filter(User.orcid.contains(keyword)).order_by(
         User.orcid.contains(keyword)).all()
     """
-   
 
-    result = User.query.filter_by(username=keyword).first()
-    result_orcid = User.query.filter_by(orcid=keyword).first()
 
+    result = User.query.filter(User.username.contains(keyword)).all()
+    result_orcid = User.query.filter(User.orcid.contains(keyword)).all()
+
+    if len(result) > 1 or len(result_orcid) > 1:
     
-    if result is not None:
-        return redirect(url_for("show_profile", username=result.username))
-    elif result_orcid is not None:
-        orcid_username = result_orcid.username
+        return render_template("search_result2.html", results=result, results_orcid=result_orcid)
+
+    elif len(result) > 0:
+        r = result[0].username
+        return redirect(url_for("show_profile", username=r))
+    elif len(result_orcid) > 0:
+        orcid_username = result_orcid[0].username
         return redirect(url_for("show_profile", username=orcid_username))
     else:
         return render_template('search_not_found.html')
