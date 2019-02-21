@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, FileField, \
-TextAreaField, IntegerField, SelectField, DateField
+TextAreaField, IntegerField, SelectField, DateField, FieldList, FormField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length, \
 Optional
 from app.models import User
@@ -36,7 +36,7 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(orcid=orcid.data).first()
         if user is not None:
             raise ValidationError("An account with this orcid number already exists.")
-        
+
 class EditProfileForm(FlaskForm):
     username = StringField("Username", validators = [DataRequired() ])
     about_me = TextAreaField("About me", validators = [Length(min=0, max=140) ])
@@ -290,3 +290,36 @@ class EducationAndPublicEngagementForm(FlaskForm):
     pubEngageSubmit = SubmitField("Add new")
     pubEngageEdit = SubmitField("Update")
 
+
+class CollaboratorForm(FlaskForm):
+    name = StringField("Name")
+    org = StringField("Organisation")
+    email = StringField("Email")
+
+class GrantApplicationForm(FlaskForm):
+    title = StringField("Proposal Title")
+    duration = StringField("Duration of award")
+    nrp = SelectField(u"National Research Priority", choices=\
+            [("PAA","Priority Area A - Future Networks & Communications"), \
+            ("PAB","Priority Area B - DataAnalytics, Management, Security & Privacy"), \
+            ("PAC","Priority Area C - Digital Platforms, Content & Applications"), \
+            ("PAD","Priority Area D - Connected Health and Independent Living"), \
+            ("PAE","Priority Area E - Medical Devices"),("PAF","Priority Area F - Diagnostics"), \
+            ("PAG","Priority Area G - Therapeutics: Synthesis, Formulation, Processsing and Drug Delivery"), \
+            ("PAH","Priority Area H - Food for Health"), \
+            ("PAI","Priority Level I - Sustainable Food Production and Processing"), \
+            ("PAJ","Priority Area J - Marine Renewable Energy"), \
+            ("PAK","Priority Area K - Smart Grids & Smart Cities"), \
+            ("PAL","Priority Area L - Manufactoring Competitiveness"), \
+            ("PAM","Priority Area M - Processing Technologies and Novel Materials"), \
+            ("PAN","Priority Area N - Innovation in Services and Business Processes"),\
+            ("Software","Software"),("Other","Other")])
+    legal_align = TextAreaField("Plese describe how your proposal is aligned with SFI's legal remit (max 250 words)", validators = [Length(min=0,max=250)])
+    #ethical
+    country = StringField("Country of applicant")
+    #coapps
+    #collabs = FieldList(FormField(CollaboratorForm), min_entries=2)
+    sci_abstract = TextAreaField("Scientific Abstract", validators=[Length(min=0,max=200)])
+    lay_abstract = TextAreaField("Lay Abstract", validators=[Length(min=0,max=200)])
+    doc_uplaod = FileField("Programme Documents")
+    submit = SubmitField("Submit")

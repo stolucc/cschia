@@ -35,6 +35,8 @@ class User(UserMixin, db.Model):
     sfi_funding_ratio = db.relationship("SfiFundingRatio")
     education_public_engagement = db.relationship("EducationPublicEngagement")
 
+    #grant_applications = db.relationship("GrantApplications", backref="applicant", lazy="dynamic")
+
     def __repr__(self):
         return "<User {} {} {} {}>".format(self.username, self.orcid, self.is_admin, self.is_reviewer)
 
@@ -215,6 +217,27 @@ class SfiProposalCalls(db.Model):
     def __repr__(self):
         return "<SfiProposalCalls {}>".format(self.deadline, self.id)
 
+class GrantApplications(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    title = db.Column(db.Text)
+    duration = db.Column(db.Text)
+    nrp = db.Column(db.Text)
+    legal_align = db.Column(db.Text)
+    country = db.Column(db.Text)
+    sci_abstract = db.Column(db.Text)
+    lay_abstract = db.Column(db.Text)
+
+    attachment = db.relationship("GrantApplicationAttachment")
+
+
+class GrantApplicationAttachment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    grant_id = db.Column(db.Integer, db.ForeignKey("grant_applications.id"))
+    name = db.Column(db.String(128))
+    path = db.Column(db.String(128))
+
+
 class EducationPublicEngagement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -222,11 +245,6 @@ class EducationPublicEngagement(db.Model):
 
     def __repr__(self):
         return "<EducationPublicEngagement {}>".format(self.data, self.id)
-#<<<<<<< HEAD
-#<<<<<<< HEAD
-#=======
-#=======
-#>>>>>>> 37db4ffb7f7d18797e632fe60175479bef930e5c
 
 
 class ResearchGroup(db.Model):
@@ -241,9 +259,6 @@ class GroupMembership(db.Model):
 
     user = db.relationship("User", back_populates="groups")
     group = db.relationship("ResearchGroup", back_populates="users")
-#<<<<<<< HEAD
-#>>>>>>> 4629aadecde3420e99e5e281a0041071c1ea43b8
-#=======
 
 class Publication(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -254,4 +269,3 @@ class Publication(db.Model):
     doi = db.Column(db.String(64))
     title = db.Column(db.Text)
     journal = db.Column(db.Text)
-#>>>>>>> 37db4ffb7f7d18797e632fe60175479bef930e5c

@@ -7,13 +7,13 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInfor
     InnovationAndCommercialisationForm, \
     PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
     EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
-    ChangePassword, ChangeEmail, ProposalForm
+    ChangePassword, ChangeEmail, ProposalForm, GrantApplicationForm, CollaboratorForm
 
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
     Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
     CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls, \
-    Publication
+    Publication, GrantApplications
 
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -51,7 +51,7 @@ def index():
     check_if_filled(CommunicationsOverview, "Communications Overview")
     check_if_filled(SfiFundingRatio, "SFI Funding Ratio")
     check_if_filled(EducationPublicEngagement, "Education and Public engagement")
-   
+
 
     return render_template("index.html", title="Home ", form=formList)
 
@@ -105,6 +105,19 @@ def view_calls():
 def view_call(call_id):
     call = SfiProposalCalls.query.filter_by(id=call_id).first_or_404()
     return render_template("view_call.html", title="Funding Calls", call=call)
+
+@app.route("/apply", methods=["GET","POST"])
+def apply():
+    form = GrantApplicationForm()
+    if form.validate_on_submit():
+        application = GrantApplications(user_id=current_user.id, title=form.title.data, duration=form.duration.data, \
+        nrp=form.nrp.data, legal_align=form.legal_align.data, country=form.country.data, \
+        sci_abstract=form.sci_abstract.data, lay_abstract=form.lay_abstract.data)
+        db.session.add(application)
+        db.session.commit()
+        flash("You have completed the application")
+        return redirect(url_for("index"))
+    return render_template("application.html", title="Apply", form=form)
 
 
 @app.route("/admin_register_user", methods=["GET", "POST"])
@@ -907,7 +920,7 @@ def edit_profile():
             userInfo.data = infoJson
             db.session.commit()
             flash("Entry successfully updated.")
-        
+
         return redirect(url_for("edit_profile"))
 
     return render_template("edit_profile.html",
@@ -958,12 +971,12 @@ def search():
     result_orcid = User.query.filter(User.orcid.contains(keyword)).order_by(
         User.orcid.contains(keyword)).all()
     """
-   
+
 
     result = User.query.filter_by(username=keyword).first()
     result_orcid = User.query.filter_by(orcid=keyword).first()
 
-    
+
     if result is not None:
         return redirect(url_for("show_profile", username=result.username))
     elif result_orcid is not None:
