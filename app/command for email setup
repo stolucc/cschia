@@ -1,0 +1,21 @@
+echo "export SENDGRID_API_KEY='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'" > sendgrid.env
+
+echo "sendgrid.env" >> .gitignore
+
+source ./sendgrid.env
+
+pip install sendgrid
+
+
+
+COMMANDS FOR EMAIL SETUP
+pip install flask-mail
+pip install pyjwt
+
+
+SETUP 
+(venv) $ export MAIL_SERVER=smtp.sendgrid.net
+(venv) $ export MAIL_PORT=587
+(venv) $ export MAIL_USE_TLS=1
+(venv) $ export MAIL_USERNAME=apikey
+(venv) $ export MAIL_PASSWORD=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
