@@ -13,6 +13,8 @@ pip install flask-mail
 pip install pyjwt
 
 
+Using my own key atm for testing
+
 SETUP 
 (venv) $ export MAIL_SERVER=smtp.sendgrid.net
 (venv) $ export MAIL_PORT=587
