@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
     groups = db.relationship("GroupMembership", back_populates="user")
+    institution_affilations = db.relationship("InstitutionAffilation", back_populates="user")
 
     general_information = db.relationship("GeneralInformation", uselist=False)
     education_information = db.relationship("EducationInformation")
@@ -228,6 +229,10 @@ class GrantApplications(db.Model):
     sci_abstract = db.Column(db.Text)
     lay_abstract = db.Column(db.Text)
 
+    institution_id = db.Column(db.Integer, db.ForeignKey("institution.id"))
+    institution = db.relationship("Institution", back_populates="grant_applications")
+    institution_approved = db.Column(db.Boolean, default=False)
+
     attachment = db.relationship("GrantApplicationAttachment")
 
 
@@ -269,3 +274,20 @@ class Publication(db.Model):
     doi = db.Column(db.String(64))
     title = db.Column(db.Text)
     journal = db.Column(db.Text)
+
+
+class Institution(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text)
+
+    affilations = db.relationship("InstitutionAffilation", back_populates="institution")
+
+class InstitutionAffilation(db.Model):
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
+    institution_id = db.Column(db.Integer, db.ForeignKey("institution.id"), primary_key=True)
+
+    is_admin = db.Column(db.Boolean, default=False)
+
+    user = db.relationship("User", back_populates="institution_affilations")
+    institution = db.relationship("Institution", back_populates="affilations")
+    grant_applications = db.relationship("GrantApplications", back_populates="institution")
