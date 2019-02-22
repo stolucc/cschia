@@ -3,9 +3,9 @@
 {% block content %}
         <h1 class="mb-5">Hello, {{ current_user.username }} ({{ current_user.orcid }})!</h1>
         
-        <div calss="container"
+        <div calss="container">
                 <div class="row">
-                <div class="col border bg-warning text-dark"
+                <div class="col border bg-warning text-dark">
                 <div class="card mb-3">
                         <div class="card-body">
                                 <h4>Forms to be filled out ({{ form|length }}):</h4>
@@ -16,7 +16,7 @@
                                 </ul>
                                 <p class="text-center"><a class="btn btn-primary" href="{{ url_for("edit_profile")}}">Got to forms page</a></p>
                         </div>
-                </div
+                </div>
                 </div>
                 <div class="col"></div>
                 <div class="col"></div>
