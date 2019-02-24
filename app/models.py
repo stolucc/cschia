@@ -34,6 +34,7 @@ class User(UserMixin, db.Model):
     communications_overview = db.relationship("CommunicationsOverview")
     sfi_funding_ratio = db.relationship("SfiFundingRatio")
     education_public_engagement = db.relationship("EducationPublicEngagement")
+    annual_report = db.relationship("AnnualReport")
 
     def __repr__(self):
         return "<User {} {} {} {}>".format(self.username, self.orcid, self.is_admin, self.is_reviewer)
@@ -246,3 +247,24 @@ class Publication(db.Model):
     doi = db.Column(db.String(64))
     title = db.Column(db.Text)
     journal = db.Column(db.Text)
+
+class AnnualReport(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    is_submit = db.Column(db.Boolean, default=False)
+    date = db.Column(db.String, default=str(datetime.now().year))
+    publications_data = db.Column(db.Text)
+    edu_pub_engagement = db.Column(db.Text)
+    academic_collab = db.Column(db.Text)
+    nonacademic_collab = db.Column(db.Text)
+    commerc = db.Column(db.Text)
+    impact = db.Column(db.Text)
+    deviations = db.Column(db.Text)
+    highlights = db.Column(db.Text)
+    challenges = db.Column(db.Text)
+    activities = db.Column(db.Text)
+
+    def __repr__(self):
+        return "<AnnualReport {} {} {} {} {} {} {} {} {} {} {} {} {} {}>". \
+            format(self.id, self.user_id, self.is_submit, self.date, self.publications_data, self.edu_pub_engagement, self.academic_collab, \
+                    self.nonacademic_collab, self.commerc, self.impact, self.deviations, self.highlights, self.challenges, self.activities)
