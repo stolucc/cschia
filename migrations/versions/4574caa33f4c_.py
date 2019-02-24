@@ -1,8 +1,8 @@
-"""db init
+"""empty message
 
-Revision ID: f76eac118de1
+Revision ID: 4574caa33f4c
 Revises: 
-Create Date: 2019-02-14 16:48:41.617412
+Create Date: 2019-02-23 16:01:31.768447
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f76eac118de1'
+revision = '4574caa33f4c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -44,6 +44,7 @@ def upgrade():
     sa.Column('email', sa.String(length=120), nullable=True),
     sa.Column('password_hash', sa.String(length=128), nullable=True),
     sa.Column('is_admin', sa.Boolean(), nullable=True),
+    sa.Column('is_reviewer', sa.Boolean(), nullable=True),
     sa.Column('about_me', sa.String(length=140), nullable=True),
     sa.Column('last_seen', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
@@ -166,11 +167,16 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('publications',
+    op.create_table('publication',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.Column('data', sa.Text(), nullable=True),
-    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.Column('primary_user', sa.Integer(), nullable=True),
+    sa.Column('year', sa.Integer(), nullable=True),
+    sa.Column('type', sa.String(length=64), nullable=True),
+    sa.Column('status', sa.String(length=64), nullable=True),
+    sa.Column('doi', sa.String(length=64), nullable=True),
+    sa.Column('title', sa.Text(), nullable=True),
+    sa.Column('journal', sa.Text(), nullable=True),
+    sa.ForeignKeyConstraint(['primary_user'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('sfi_funding_ratio',
@@ -208,7 +214,7 @@ def downgrade():
     op.drop_table('societies_information')
     op.drop_table('sfi_proposal_calls')
     op.drop_table('sfi_funding_ratio')
-    op.drop_table('publications')
+    op.drop_table('publication')
     op.drop_table('presentations')
     op.drop_index(op.f('ix_post_timestamp'), table_name='post')
     op.drop_table('post')

@@ -20,6 +20,10 @@ class RegistrationForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField("Repeat password", validators=[DataRequired(), \
     EqualTo("password")])
+    prefix = SelectField(u"Account Type", choices=\
+    [("SFI ADMIN", "SFI ADMIN"), ("Reviewer", "Reviewer"), ("Researcher", "Researcher")], \
+    validators=[DataRequired() ])
+
     submit = SubmitField("Register")
 
     def validate_username(self, username):

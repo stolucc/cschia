@@ -98,9 +98,20 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for("index"))
     form = RegistrationForm()
+    admin = 0
+    reviewer = 0
+
+
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data)
+        print(form.prefix.data)
+        if form.prefix.data == "SFI ADMIN":
+            admin = 1
+        elif form.prefix.data == "Reviewer":
+            reviewer = 1
+
+        user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data , is_admin=admin , is_reviewer = reviewer)
         user.set_password(form.password.data)
+        
         db.session.add(user)
         db.session.commit()
         flash("Congratulations, you are now a registered user!")
@@ -154,6 +165,37 @@ def publish_call():
         flash("Your call for proposal has been published!")
         return redirect(url_for("index"))
     return render_template("admin_publish_call.html", title="Publish Call", form=form)
+
+
+@app.route("/admin_edit_proposals")
+@login_required
+def admin_edit_proposals():
+    admin_required(current_user)
+    print("testing testing 1 2 3 ")
+    return render_template("admin_edit_proposals.html", title="Admin Edit proposals")
+
+
+# @app.route("/publication")
+# @login_required
+# def publication():
+#     return render_template("publication.html", title="Publication")
+
+
+@app.route("/publications")
+@login_required
+def publications():
+    return render_template("publications.html", title="Publications")
+
+
+# @app.route("/view_publication")
+# @login_required
+# def view_publication():
+#     return render_template("view_publication.html", title="view Publications")
+
+
+
+
+
 
 """
 # not needed
