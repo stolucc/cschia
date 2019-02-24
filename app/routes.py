@@ -33,11 +33,14 @@ def before_request():
 @login_required
 def index():
     formList = []
+    appList = []
 
     def check_if_filled(tableName, string):
         result = tableName.query.filter_by(user_id=current_user.id).first()
         if result is None:
             formList.append(string)
+
+    appList = GrantApplications.query.filter_by(user_id=current_user.id).all()
 
     check_if_filled(GeneralInformation, "General Information")
     check_if_filled(EmploymentInformation, "Education")
@@ -54,7 +57,7 @@ def index():
     check_if_filled(EducationPublicEngagement, "Education and Public engagement")
 
 
-    return render_template("index.html", title="Home ", form=formList)
+    return render_template("index.html", title="Home ", form=formList, app=appList)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -982,7 +985,7 @@ def search():
     result_orcid = User.query.filter(User.orcid.contains(keyword)).all()
 
     if len(result) > 1 or len(result_orcid) > 1:
-    
+
         return render_template("search_result2.html", results=result, results_orcid=result_orcid)
 
     elif len(result) > 0:
