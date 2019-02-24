@@ -161,6 +161,19 @@ def publish_call():
         return redirect(url_for("index"))
     return render_template("admin_publish_call.html", title="Publish Call", form=form)
 
+
+@app.route("/admin_edit_proposals")
+@login_required
+def admin_edit_proposals():
+    admin_required(current_user)
+    print("testing testing 1 2 3 ")
+    return render_template("admin_edit_proposals.html", title="Admin Edit proposals")
+
+
+
+
+
+
 """
 # not needed
 @app.route("/user/<username>")
