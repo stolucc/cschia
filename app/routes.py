@@ -93,9 +93,20 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for("index"))
     form = RegistrationForm()
+    admin = 0
+    reviewer = 0
+
+
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data)
+        print(form.prefix.data)
+        if form.prefix.data == "SFI ADMIN":
+            admin = 1
+        elif form.prefix.data == "Reviewer":
+            reviewer = 1
+
+        user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data , is_admin=admin , is_reviewer = reviewer)
         user.set_password(form.password.data)
+        
         db.session.add(user)
         db.session.commit()
         flash("Congratulations, you are now a registered user!")
