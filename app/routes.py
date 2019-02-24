@@ -13,10 +13,11 @@ from app.models import User, GeneralInformation, EducationInformation, Employmen
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
     Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
     CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls, \
-    Publication, GrantApplications
+    Publication, GrantApplications, GrantApplicationAttachment
 
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename
 from datetime import datetime
 import json
 
@@ -108,6 +109,8 @@ def view_call(call_id):
 
 @app.route("/apply", methods=["GET","POST"])
 def apply():
+    call_id = request.form['call_id']
+    print(call_id)
     form = GrantApplicationForm()
     if form.validate_on_submit():
         application = GrantApplications(user_id=current_user.id, title=form.title.data, duration=form.duration.data, \
@@ -115,6 +118,10 @@ def apply():
         sci_abstract=form.sci_abstract.data, lay_abstract=form.lay_abstract.data)
         db.session.add(application)
         db.session.commit()
+        # file = request.files['file']
+        # filename = secure_filename(file.filename)
+        #
+        # attachment = GrantApplicationAttachment(grant_id=application.id, name=filename, path=)
         flash("You have completed the application")
         return redirect(url_for("index"))
     return render_template("application.html", title="Apply", form=form)

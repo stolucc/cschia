@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, FileField, \
-TextAreaField, IntegerField, SelectField, DateField, FieldList, FormField
+TextAreaField, IntegerField, SelectField, DateField, FieldList, FormField, MultipleFileField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length, \
 Optional
 from app.models import User
@@ -321,5 +321,5 @@ class GrantApplicationForm(FlaskForm):
     #collabs = FieldList(FormField(CollaboratorForm), min_entries=2)
     sci_abstract = TextAreaField("Scientific Abstract", validators=[Length(min=0,max=200)])
     lay_abstract = TextAreaField("Lay Abstract", validators=[Length(min=0,max=200)])
-    doc_uplaod = FileField("Programme Documents")
+    doc_uplaod = MultipleFileField("Programme Documents")
     submit = SubmitField("Submit")
