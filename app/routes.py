@@ -109,8 +109,6 @@ def view_call(call_id):
 
 @app.route("/apply", methods=["GET","POST"])
 def apply():
-    call_id = request.form['call_id']
-    print(call_id)
     form = GrantApplicationForm()
     if form.validate_on_submit():
         application = GrantApplications(user_id=current_user.id, title=form.title.data, duration=form.duration.data, \
