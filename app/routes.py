@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for, request
-from app import app, db, admin_required
+from app import app, db, admin_required, reviewer_required
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInformationForm, \
     EducationInformationForm, EmploymentInformationForm, \
     SocietiesInformationForm, AwardsInformationForm, \
@@ -7,7 +7,7 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInfor
     InnovationAndCommercialisationForm, \
     PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
     EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
-    ChangePassword, ChangeEmail, ProposalForm
+    ChangePassword, ChangeEmail, ProposalForm, ReviewProposalForm, AddReviewerForm
 
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
@@ -101,10 +101,11 @@ def view_calls():
     return render_template("view_calls.html", title="Funding Calls", calls=calls)
 
 
-@app.route("/calls/<call_id>")
+@app.route("/calls/<call_id>", methods=["GET", "POST"])
 def view_call(call_id):
     call = SfiProposalCalls.query.filter_by(id=call_id).first_or_404()
-    return render_template("view_call.html", title="Funding Calls", call=call)
+    form = AddReviewerForm()
+    return render_template("view_call.html", title="Funding Calls", call=call, form=form)
 
 
 @app.route("/admin_register_user", methods=["GET", "POST"])
@@ -141,6 +142,21 @@ def publish_call():
         flash("Your call for proposal has been published!")
         return redirect(url_for("index"))
     return render_template("admin_publish_call.html", title="Publish Call", form=form)
+
+
+@app.route("/admin_reviews")
+@login_required
+def admin_submitted_reviews():
+    admin_required(current_user)
+    return render_template("admin_submitted_reviews.html", title="Submitted reviews")
+
+
+@app.route("/review")
+@login_required
+def proposals_to_review():
+    reviewer_required(current_user)
+    form = ReviewProposalForm()
+    return render_template("proposals_to_review.html", title="Pending reviews", form=form)
 
 
 # not needed
