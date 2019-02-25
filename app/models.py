@@ -35,6 +35,8 @@ class User(UserMixin, db.Model):
     sfi_funding_ratio = db.relationship("SfiFundingRatio")
     education_public_engagement = db.relationship("EducationPublicEngagement")
 
+    #grant_applications = db.relationship("GrantApplications", backref="applicant", lazy="dynamic")
+
     def __repr__(self):
         return "<User {} {} {} {}>".format(self.username, self.orcid, self.is_admin, self.is_reviewer)
 
@@ -76,6 +78,7 @@ class FundingCall(db.Model):
     body = db.Column(db.Text)
 
     attachments = db.relationship("FundingCallAttachment")
+    applications = db.relationship("GrantApplications")
 
 
 class FundingCallAttachment(db.Model):
@@ -214,6 +217,32 @@ class SfiProposalCalls(db.Model):
 
     def __repr__(self):
         return "<SfiProposalCalls {}>".format(self.deadline, self.id)
+
+class GrantApplications(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
+    title = db.Column(db.Text)
+    duration = db.Column(db.Text)
+    nrp = db.Column(db.Text)
+    ethical_q1 = db.Column(db.Text)
+    ethical_q2 = db.Column(db.Text)
+    country = db.Column(db.Text)
+    coapps = db.Column(db.Text)
+    collabs = db.Column(db.Text)
+    legal_align = db.Column(db.Text)
+    sci_abstract = db.Column(db.Text)
+    lay_abstract = db.Column(db.Text)
+
+    attachment = db.relationship("GrantApplicationAttachment")
+
+
+class GrantApplicationAttachment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    grant_id = db.Column(db.Integer, db.ForeignKey("grant_applications.id"))
+    name = db.Column(db.String(128))
+    path = db.Column(db.String(128))
+
 
 class EducationPublicEngagement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
