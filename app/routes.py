@@ -207,27 +207,6 @@ def admin_edit_proposals():
     return render_template("admin_edit_proposals.html", title="Admin Edit proposals")
 
 
-# @app.route("/publication")
-# @login_required
-# def publication():
-#     return render_template("publication.html", title="Publication")
-
-
-@app.route("/publications")
-@login_required
-def publications():
-    return render_template("publications.html", title="Publications")
-
-
-# @app.route("/view_publication")
-# @login_required
-# def view_publication():
-#     return render_template("view_publication.html", title="view Publications")
-
-
-
-
-
 
 """
 # not needed
