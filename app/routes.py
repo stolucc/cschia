@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db, admin_required
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInformationForm, \
+from app.forms import LoginForm, RegistrationForm,RegistrationFormAdmin, EditProfileForm, GeneralInformationForm, \
     EducationInformationForm, EmploymentInformationForm, \
     SocietiesInformationForm, AwardsInformationForm, \
     FundingDiversificationForm, TeamMembersForm, ImpactsForm, \
@@ -127,18 +127,13 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for("index"))
     form = RegistrationForm()
-    admin = 0
-    reviewer = 0
+    
 
 
     if form.validate_on_submit():
-        print(form.prefix.data)
-        if form.prefix.data == "SFI ADMIN":
-            admin = 1
-        elif form.prefix.data == "Reviewer":
-            reviewer = 1
-
-        user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data , is_admin=admin , is_reviewer = reviewer)
+        
+        
+        user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data)
         user.set_password(form.password.data)
 
         db.session.add(user)
@@ -163,9 +158,17 @@ def view_call(call_id):
 @app.route("/admin_register_user", methods=["GET", "POST"])
 def admin_register_user():
     admin_required(current_user)
-    form = RegistrationForm()
+    form = RegistrationFormAdmin()
+    admin = 0
+    reviewer = 0
+
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data)
+        if form.prefix.data == "SFI ADMIN":
+            admin = 1
+        elif form.prefix.data == "Reviewer":
+            reviewer = 1
+
+        user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data , is_admin=admin , is_reviewer = reviewer)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
