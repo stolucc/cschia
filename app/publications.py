@@ -5,22 +5,43 @@ from flask_login import current_user, login_user, logout_user, login_required
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, FileField, \
-TextAreaField, IntegerField, SelectField
+TextAreaField, IntegerField, SelectField, TextAreaField
 from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length, \
 Optional, NumberRange
 from app.models import User
+from bibtexparser.bparser import BibTexParser
+from bibtexparser.bibdatabase import as_text
 
 @app.route("/publication/new", methods=["GET", "POST"])
 @login_required
 def new_publication():
     form = PublicationForm()
+    bibForm = BibtexPublicationForm()
+
     if form.validate_on_submit():
         publication = Publication(title=form.title.data, doi=form.doi.data, year=form.year.data, journal=form.journal.data, type=form.type.data, status=form.status.data, primary_user=current_user.id)
         db.session.add(publication)
         db.session.commit()
         return redirect(url_for("view_publication", id=publication.id))
-    return render_template("publication.html", form=form)
+
+    elif bibForm.validate_on_submit():
+        
+        bp = BibTexParser(interpolate_strings=False)
+        bib_database = bp.parse(bibForm.parse.data)
+        bib_database.entries[0]
+
+        def value(key):
+            return bib_database.entries[0][key]
+        
+        keys = ("author", "title", "doi", "year", "ID", "journal", "status")
+        if set(keys) <= set(bib_database.entries[0]):
+            publication = Publication(title=value("title"), doi=value("doi"), year=value("year"), journal=value("journal"), type=value("ENTRYTYPE"), status=value("status"), primary_user=current_user.id)
+            db.session.add(publication)
+            db.session.commit()
+            return redirect(url_for("view_publication", id=publication.id))
+
+    return render_template("publication.html", form=form, bibForm=bibForm)
 
 @app.route("/publication/edit/<int:id>", methods=["GET", "POST"])
 @login_required
@@ -73,3 +94,17 @@ class PublicationForm(FlaskForm):
         "Published",
         "In press"]])
     submit = SubmitField("Submit")
+
+class BibtexPublicationForm(FlaskForm):
+    parse = TextAreaField("BIBTex format", validators=[DataRequired(), Length(min=0,max=800)], \
+        description="""@(Refereed original article|Refereed review article|Refereed conference paper|\
+                        Book|Technical report)Refereed original article{
+                        title = {The ABC of Software Engineering Research},
+                        doi = {10.1145/3241743},
+                        year = {2018},
+                        journal =  {ACM Transactions on Software Engineering and Methodology},
+                        status(Published|In-press) = {Published} 
+                    }""")
+    submitBib = SubmitField("Submit")
+
+

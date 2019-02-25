@@ -2,5 +2,16 @@
 {% from 'bootstrap/form.html' import render_form %}
 
 {% block content %}
-{{ render_form(form) }}
+<div class="container">
+    <div class="row mb-5">
+        {{ render_form(form) }}
+    </div>
+
+    {% if bibForm is defined %}
+    <div class="row mb-5">
+        {{ render_form(bibForm) }}
+    </div>
+    {% endif %}
+
+</div>
 {% endblock %}
