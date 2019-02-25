@@ -1205,9 +1205,18 @@ def annual_report():
         return redirect(url_for("annual_report"))
 
     elif request.method == "GET":
-        getFreeTextInfo = get_list(query_table2(AnnualReport))
+
+        getFreeTextInfo = query_table2(AnnualReport)
+        if getFreeTextInfo is not None:
+            getFreeTextInfo = get_list(query_table2(AnnualReport))
+        else:
+            t = AnnualReport(user_id=current_user.id)
+            db.session.add(t)
+            getFreeTextInfo = get_list(query_table2(AnnualReport))
+            db.session.commit()
+
         if getFreeTextInfo["submit"]== True:
-            flash("Report already submitted for this year")
+           flash("Report already submitted for this year")
 
         if "impact" in getFreeTextInfo:
             impactsForm.title.data = getFreeTextInfo["impact"]["title"]
