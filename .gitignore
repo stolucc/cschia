@@ -124,3 +124,8 @@ dmypy.json
 
 #vscode stuff
 .vscode
+
+#DB stuff
+chia.db
+
+

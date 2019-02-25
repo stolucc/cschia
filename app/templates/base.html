@@ -43,7 +43,7 @@
                     {% if current_user.is_anonymous %}
                     <li class="nav-item"><a class="nav-link" href="{{ url_for("login") }}">Login</a></li>
                     {% else %}
-                    <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{url_for("show_groups")}}">My Groups</a></li></span>
+
                     <span class="border-right"><li class="nav-item">  
                         <div class="dropdown show">
                             <a class="nav-link dropdown-toggle text-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,6 +56,8 @@
                             </div>
                         </div>
                     </li></span>
+                    <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{url_for("list_publications")}}">Publications</a></li></span>
+                   <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{url_for("list_publications")}}">publications</a></li></span>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for("logout") }}">Logout</a>
                     {% endif %}
 
