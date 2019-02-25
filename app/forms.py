@@ -6,6 +6,15 @@ Optional
 from app.models import User
 
 #Account forms
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request Password Reset')
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField(
+        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Request Password Reset')
 
 class LoginForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
@@ -294,7 +303,6 @@ class EducationAndPublicEngagementForm(FlaskForm):
     pubEngageSubmit = SubmitField("Add new")
     pubEngageEdit = SubmitField("Update")
 
-
 class FreeTextForm(FlaskForm):
     deviations = TextAreaField("Please indicate any deviations of the originally \
         approved research plan", validators = [Length(min=0,max=1000)])
@@ -314,4 +322,3 @@ class FreeTextForm(FlaskForm):
     #freeTextEdit = SubmitField("Edit")
     #freeTextPreview = SubmitField("Preview")
     freeTextSubmit = SubmitField("Add new")
-    
