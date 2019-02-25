@@ -94,8 +94,10 @@
                     <p>Please fill out the form first</p>
                 {% endif %}
 
-        {% if form is defined and form["submit"] == false %}
+        {% if form["submit"] == false %}
+            <form class="" action="" method="post">
                 <input type="submit" class="btn btn-danger text-center mt-5 mb-5" id="submitFinalVersion" name="submitFinalVersion" value="Submit draft">
+            </form>
         {% endif %}    
         </div>
         <div class="col"></div>

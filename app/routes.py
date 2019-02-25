@@ -1180,9 +1180,10 @@ def annual_report():
             flash("Changes saved.")
 
         elif "submitFinalVersion" in request.form:  
-            if None in getFreeTextInfo:
+            if len(getFreeTextInfo) < 11:
                 flash("You must complete all forms first")
             else:
+                flash(getFreeTextInfo)
                 if userInfo is None:
                     userInfo = AnnualReport(user_id=current_user.id)
                 db.session.add(userInfo)
