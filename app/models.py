@@ -225,14 +225,15 @@ class GrantApplications(db.Model):
     title = db.Column(db.Text)
     duration = db.Column(db.Text)
     nrp = db.Column(db.Text)
-    ethical_q1 = db.Column(db.Text)
-    ethical_q2 = db.Column(db.Text)
+    ethical_q1 = db.Column(db.Boolean)
+    ethical_q2 = db.Column(db.Boolean)
     country = db.Column(db.Text)
     coapps = db.Column(db.Text)
     collabs = db.Column(db.Text)
     legal_align = db.Column(db.Text)
     sci_abstract = db.Column(db.Text)
     lay_abstract = db.Column(db.Text)
+    is_draft = db.Column(db.Boolean)
 
     attachment = db.relationship("GrantApplicationAttachment")
 

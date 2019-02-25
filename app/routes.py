@@ -116,12 +116,11 @@ def apply():
     if form.validate_on_submit():
         application = GrantApplications(user_id=current_user.id, title=form.title.data, duration=form.duration.data, \
         nrp=form.nrp.data, legal_align=form.legal_align.data, country=form.country.data, \
-        sci_abstract=form.sci_abstract.data, lay_abstract=form.lay_abstract.data)
+        sci_abstract=form.sci_abstract.data, lay_abstract=form.lay_abstract.data, is_draft=False)
         db.session.add(application)
         db.session.commit()
         # file = request.files['file']
         # filename = secure_filename(file.filename)
-        #
         # attachment = GrantApplicationAttachment(grant_id=application.id, name=filename, path=)
         flash("You have completed the application")
         return redirect(url_for("index"))
