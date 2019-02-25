@@ -303,3 +303,22 @@ class EducationAndPublicEngagementForm(FlaskForm):
     pubEngageSubmit = SubmitField("Add new")
     pubEngageEdit = SubmitField("Update")
 
+class FreeTextForm(FlaskForm):
+    deviations = TextAreaField("Please indicate any deviations of the originally \
+        approved research plan", validators = [Length(min=0,max=1000)])
+    highlight1 = TextAreaField("Please bullet point one of the most important \
+        research highlights from the reporting period", \
+        validators = [Length(min=0,max=200)])
+    highlight2 = TextAreaField("Please bullet point one of the most important \
+        research highlights from the reporting period", \
+         validators = [Length(min=0,max=200)])
+    highlight3 = TextAreaField("Please bullet point one of the most important research \
+        highlights from the reporting period", validators = [Length(min=0,max=200)])
+    challenges = TextAreaField("Please bullet point any challenges encountered \
+        during the reporting period", validators = [Length(min=0,max=200)])
+    activities = TextAreaField("Please bullet point the planned activities for \
+        the coming year (200 word limit)", validators = [Length(min=0,max=200)])
+    #freeTextDraft = SubmitField("Save draft")
+    #freeTextEdit = SubmitField("Edit")
+    #freeTextPreview = SubmitField("Preview")
+    freeTextSubmit = SubmitField("Add new")
