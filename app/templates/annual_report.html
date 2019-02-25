@@ -1,0 +1,551 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block content %}
+
+<h1> {{current_user.username}}'s annual report {% if getFreeTextInfo["submit"] == false %} (DRAFT MODE) {% endif %} </h1>
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="list-group list-group-flush" id="section-buttons">
+                <li class="list-group-item">
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#pubEngage" aria-expanded="false" aria-controls="pubEngage">Education and Public Engagement
+                    <span class="badge badge-dark badge-pill float-right" id="numPEng">{% if getEdInfo %}{{ getEdInfo|length }}{% endif %}</span></button>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#academicCollabs" aria-expanded="false" aria-controls="academicCollabs">Academic Collaborations
+                    <span class="badge badge-dark badge-pill float-right" id="numAc">{% if getAcInfo %}{{ getAcInfo|length }}{% endif %}</span></button>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs" aria-expanded="false" aria-controls="nonAcademicCollabs">Non Academic Collaborations
+                    <span class="badge badge-dark badge-pill float-right" id="numNonAc">{% if getNonAcInfo %}{{ getNonAcInfo|length }}{% endif %}</span></button>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#innovCom" aria-expanded="false" aria-controls="innovCom">Innovation and Commercialisation
+                    <span class="badge badge-dark badge-pill float-right" id="numInnovCom">{% if getInnovInfo %}{{ getInnovInfo|length }}{% endif %}</span></button>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#impacts" aria-expanded="false" aria-controls="impacts">Impacts
+                    <span class="badge badge-dark badge-pill float-right" id="numImpacts">{% if getImpInfo %}{{ getImpInfo|length }}{% endif %}</span></button>
+                </li>
+                <!--<li class="list-group-item">
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#publications" aria-expanded="false" aria-controls="publications">Publications
+                    <span class="badge badge-dark badge-pill float-right" id="numPub">{% if getPubInfo %}{{ getPubInfo|length }}{% endif %}</span></button>
+                </li>--> <!-- publications moved -->
+                <li class="list-group-item">
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#freeText" aria-expanded="false" aria-controls="freeText">Free text information
+                    <span class="badge badge-dark badge-pill float-right" id="numFreeText">{% if getFreeText %}{{ getFreeText|length }}{% endif %}</span></button>
+                </li>    
+            </ul>
+        </div>
+
+        <!--@TODO add publications -->
+        <div class="col-md-8">
+            <!-- EDUCATION AND PUBLIC ENGAGEMENT -->
+            <div class="collapse" id="pubEngage">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1 id="pEngTitle">Education and Public Engagement</h1>
+                        <form action="" method="post" id="pEngForm">
+                            {{ pubEngageForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ pubEngageForm.nameOfProject.label }}
+                                {{ pubEngageForm.nameOfProject(class="form-control", id="pEngName") }}
+                                {% for error in pubEngageForm.nameOfProject.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.startDate.label }}
+                                {{ pubEngageForm.startDate(class="form-control", id="pEngStartDate") }}
+                                {% for error in pubEngageForm.startDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.endDate.label }}
+                                {{ pubEngageForm.endDate(class="form-control", id="pEngEndDate") }}
+                                {% for error in pubEngageForm.endDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.activityType.label }}
+                                {{ pubEngageForm.activityType(class="form-control", id="pEngActivityType") }}
+                                {% for error in pubEngageForm.activityType.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.otherType.label }}
+                                {{ pubEngageForm.otherType(class="form-control", id="pEngActivityOther") }}
+                                {% for error in pubEngageForm.otherType.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.projectTopic.label }}
+                                {{ pubEngageForm.projectTopic(class="form-control", id="pEngTopic") }}
+                                {% for error in pubEngageForm.projectTopic.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.otherType.label }}
+                                {{ pubEngageForm.otherType(class="form-control", id="pEngTopicOther") }}
+                                {% for error in pubEngageForm.otherType.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.target.label }}
+                                {{ pubEngageForm.target(class="form-control", id="pEngArea") }}
+                                {% for error in pubEngageForm.target.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.localCountry.label }}
+                                {{ pubEngageForm.localCountry(class="form-control", id="pEngAreaOther") }}
+                                {% for error in pubEngageForm.localCountry.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ pubEngageForm.pubEngageSubmit(class="btn btn-primary") }}
+                                {{ pubEngageForm.pubEngageEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="pubEngageIndex" />
+
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#pubEngage-show" 
+                                        aria-expanded="false" aria-controls="pubEngage-show">Show / Hide profile forms</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="pubEngage-show">
+                        {% for item in getEdInfo %}
+
+                        <div class="card mb-3" id="pEng{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Name of project: <span class="pEngName">{{ item["nameOfProject"] }}</span></p>
+                                <p>Start date: <span class="pEngStartDate">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="pEngEndDate">{{ item["endDate"] }}</span></p>
+                                <p>Activity type: <span class="pEngActivityType">{{ item["activityType"] }}</span></p>
+                                <p>If other selected: <span class="pEngActivityOther">{{ item["otherType"] }}</span></p>
+                                <p>Project topic: <span class="pEngTopic">{{ item["projectTopic"] }}</span></p>
+                                <p>If other selected: <span class="pEngTopicOther">{{ item["otherTopic"] }}</span></p>
+                                <p>Target geographical area: <span class="pEngArea">{{ item["target"] }}</span></p>
+                                <p>If local: <span class="pEngAreaOther">{{ item["localCountry"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="pEng{{ loop.index }}-clone">Clone from profile</button>
+                                
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>                    
+                </div>
+                <hr>
+            </div>
+
+            <!-- ACADEMIC COLLABORATIONS -->
+            <div class="collapse" id="academicCollabs">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1 id="acColTitle">Add Academic Collaborations</h1>
+                        <form action="" method="post" id="acColForm">
+                            {{ academicCollabsForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ academicCollabsForm.startDate.label }}
+                                {{ academicCollabsForm.startDate(class="form-control", id="acColStartDate") }}
+                                {% for error in academicCollabsForm.startDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.endDate.label }}
+                                {{ academicCollabsForm.endDate(class="form-control", id="acColEndDate") }}
+                                {% for error in academicCollabsForm.endDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.nameOfInstitution.label }}
+                                {{ academicCollabsForm.nameOfInstitution(class="form-control", id="acColInstitution") }}
+                                {% for error in academicCollabsForm.nameOfInstitution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.department.label }}
+                                {{ academicCollabsForm.department(class="form-control", id="acColDepartment") }}
+                                {% for error in academicCollabsForm.department.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.nameOfCollaborator.label }}
+                                {{ academicCollabsForm.nameOfCollaborator(class="form-control", id="acColName") }}
+                                {% for error in academicCollabsForm.nameOfCollaborator.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.goal.label }}
+                                {{ academicCollabsForm.goal(class="form-control", id="acColGoal") }}
+                                {% for error in academicCollabsForm.goal.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.frequency.label }}
+                                {{ academicCollabsForm.frequency(class="form-control", id="acColFreq") }}
+                                {% for error in academicCollabsForm.frequency.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.primaryAttribution.label }}
+                                {{ academicCollabsForm.primaryAttribution(class="form-control", id="acColPrimaryAttrib") }}
+                                {% for error in academicCollabsForm.primaryAttribution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ academicCollabsForm.academicCollabsSubmit(class="btn btn-primary") }}
+                                {{ academicCollabsForm.academicCollabsEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="acIndex" />
+
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#academicCollabs-show" 
+                                        aria-expanded="false" aria-controls="academicCollabs-show">Show / Hide profile forms</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="academicCollabs-show">
+                        {% for item in getAcInfo %}
+
+                        <div class="card mb-3" id="acCol{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Start date: <span class="acColStartDate">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="acColEndDate">{{ item["endDate"] }}</span></p>
+                                <p>Name of institution: <span class="acColInstitution">{{ item["nameOfInstitution"] }}</span></p>
+                                <p>Department within institution: <span class="acColDepartment">{{ item["department"] }}</span></p>
+                                <p>Name of collaborator: <span class="acColName">{{ item["nameOfCollaborator"] }}</span></p>
+                                <p>Primary goal: <span class="acColGoal">{{ item["goal"] }}</span></p>
+                                <p>Frequency of interaction: <span class="acColFreq">{{ item["frequency"] }}</span></p>
+                                <p>Primary attribution: <span class="acColPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="acCol{{ loop.index }}-clone">Clone from profile</button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <!-- NON ACADEMIC COLLABORATIONS -->
+            <div class="collapse" id="nonAcademicCollabs">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1 id="nonAcColTitle">Add Non Academic Collaborations</h1>
+                        <form action="" method="post" id="nonAcColForm">
+                            {{ nonAcademicCollabsForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.startDate.label }}
+                                {{ nonAcademicCollabsForm.startDate(class="form-control", id="nonAcColStartDate") }}
+                                {% for error in nonAcademicCollabsForm.startDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.endDate.label }}
+                                {{ nonAcademicCollabsForm.endDate(class="form-control", id="nonAcColEndDate") }}
+                                {% for error in nonAcademicCollabsForm.endDate.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.nameOfInstitution.label }}
+                                {{ nonAcademicCollabsForm.nameOfInstitution(class="form-control", id="nonAcColInstitution") }}
+                                {% for error in nonAcademicCollabsForm.nameOfInstitution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.department.label }}
+                                {{ nonAcademicCollabsForm.department(class="form-control", id="nonAcColDepartment") }}
+                                {% for error in nonAcademicCollabsForm.department.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.nameOfCollaborator.label }}
+                                {{ nonAcademicCollabsForm.nameOfCollaborator(class="form-control", id="nonAcColName") }}
+                                {% for error in nonAcademicCollabsForm.nameOfCollaborator.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.goal.label }}
+                                {{ nonAcademicCollabsForm.goal(class="form-control", id="nonAcColGoal") }}
+                                {% for error in nonAcademicCollabsForm.goal.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.frequency.label }}
+                                {{ nonAcademicCollabsForm.frequency(class="form-control", id="nonAcColFreq") }}
+                                {% for error in nonAcademicCollabsForm.frequency.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.primaryAttribution.label }}
+                                {{ nonAcademicCollabsForm.primaryAttribution(class="form-control", id="nonAcColPrimaryAttrib") }}
+                                {% for error in nonAcademicCollabsForm.primaryAttribution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ nonAcademicCollabsForm.nonAcademicCollabsSubmit(class="btn btn-primary") }}
+                                {{ nonAcademicCollabsForm.nonAcademicCollabsEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="nonAcIndex" />
+
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#nonAcademicCollabs-show" 
+                                        aria-expanded="false" aria-controls="nonAcademicCollabs-show">Show / Hide profile forms</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="nonAcademicCollabs-show">
+                        {% for item in getNonAcInfo %}
+
+                        <div class="card mb-3" id="nonAcCol{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Start date: <span class="nonAcColStartDate">{{ item["startDate"] }}</span></p>
+                                <p>End date: <span class="nonAcColEndDate">{{ item["endDate"] }}</span></p>
+                                <p>Name of institution: <span class="nonAcColInstitution">{{ item["nameOfInstitution"] }}</span></p>
+                                <p>Department within institution: <span class="nonAcColDepartment">{{ item["department"] }}</span></p>
+                                <p>Name of collaborator: <span class="nonAcColName">{{ item["nameOfCollaborator"] }}</span></p>
+                                <p>Primary goal: <span class="nonAcColGoal">{{ item["goal"] }}</span></p>
+                                <p>Frequency of interaction: <span class="nonAcColFreq">{{ item["frequency"] }}</span></p>
+                                <p>Primary attribution: <span class="nonAcColPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="nonAcCol{{ loop.index }}-clone">Clone from profile</button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <!-- INNOVATION AND COMMERCIALISATION -->
+            <div class="collapse" id="innovCom">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1 id="innovComTitle">Add Innovation and Commercialisation Information</h1>
+                        <form action="" method="post" id="innovComForm">
+                            {{ innovForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ innovForm.year.label }}
+                                {{ innovForm.year(class="form-control", id="innovComYear") }}
+                                {% for error in innovForm.year.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ innovForm.type.label }}
+                                {{ innovForm.type(class="form-control", id="innovComType") }}
+                                {% for error in innovForm.type.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ innovForm.title.label }}
+                                {{ innovForm.title(class="form-control", id="innovComTitle2") }}
+                                {% for error in innovForm.title.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ innovForm.primaryAttribution.label }}
+                                {{ innovForm.primaryAttribution(class="form-control", id="innovComPrimaryAttrib") }}
+                                {% for error in innovForm.primaryAttribution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ innovForm.innovSubmit(class="btn btn-primary") }}
+                                {{ innovForm.innovEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="innovIndex" />
+
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#innovCom-show" 
+                                    aria-expanded="false" aria-controls="innovCom-show">Show / Hide profile forms</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="innovCom-show">
+                        {% for item in getInnovInfo %}
+
+                        <div class="card mb-3" id="innovCom{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Year: <span class="innovComYear">{{ item["year"] }}</span></p>
+                                <p>Type: <span class="innovComType">.{{ item["type"] }}</span></p>
+                                <p>Title: <span class="innovComTitle">{{ item["title"] }}</span></p>
+                                <p>Primary attribution: <span class="innovComPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="innovCom{{ loop.index }}-clone">Clone from profile</button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <!-- IMPACTS -->
+            <div class="collapse" id="impacts">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1 id="impactTitle">Add Impacts Information</h1>
+                        <form action="" method="post" id="impactForm">
+                            {{ impactsForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ impactsForm.title.label }}
+                                {{ impactsForm.title(class="form-control", id="impactsTitle") }}
+                                {% for error in impactsForm.title.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ impactsForm.category.label }}
+                                {{ impactsForm.category(class="form-control", id="impactCategory") }}
+                                {% for error in impactsForm.category.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ impactsForm.primaryBeneficiary.label }}
+                                {{ impactsForm.primaryBeneficiary(class="form-control", id="impactPrimaryBen") }}
+                                {% for error in impactsForm.primaryBeneficiary.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ impactsForm.primaryAttribution.label }}
+                                {{ impactsForm.primaryAttribution(class="form-control", id="impactPrimaryAttrib") }}
+                                {% for error in impactsForm.primaryAttribution.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ impactsForm.impactsSubmit(class="btn btn-primary") }}
+                                {{ impactsForm.impactsEdit(class="btn btn-primary d-none") }}
+
+                                <input type="hidden" name="" id="impactsIndex" />
+
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#impacts-show" 
+                                        aria-expanded="false" aria-controls="impacts-show">Show / Hide profile forms</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="collapse col-md-5 show" id="impacts-show">
+                        {% for item in getImpInfo %}
+
+                        <div class="card mb-3" id="impact{{ loop.index }}">
+                            <div class="card-body">
+                                <p>Title: <span class="impactTitle">{{ item["title"] }}</span></p>
+                                <p>Category: <span class="impactCategory">{{ item["category"] }}</span></p>
+                                <p>Primary beneficiary: <span class="impactPrimaryBen">{{ item["primaryBeneficiary"] }}</span></p>
+                                <p>Primary attribution: <span class="impactPrimaryAttrib">{{ item["primaryAttribution"] }}</span></p>
+
+                                <button class="btn btn-secondary" type="button" id="impact{{ loop.index }}-clone">Clone from profile</button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <!-- FREE TEXT -->
+            <div class="collapse" id="freeText">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1 id="impactTitle">Add Free text Information</h1>
+                        <form action="" method="post" id="freeForm">
+                            {{ freeForm.hidden_tag() }}
+                            <div class="form-group">
+                                {{ freeForm.deviations.label }}
+                                {{ freeForm.deviations(class="form-control", id="freeTextDeviations") }}
+                                {% for error in freeForm.deviations.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ freeForm.highlight1.label }}
+                                {{ freeForm.highlight1(class="form-control", id="freeTextHighlight1") }}
+                                {% for error in freeForm.highlight1.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ freeForm.highlight2.label }}
+                                {{ freeForm.highlight2(class="form-control", id="freeTextHighlight2") }}
+                                {% for error in freeForm.highlight2.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ freeForm.highlight3.label }}
+                                {{ freeForm.highlight3(class="form-control", id="freeTextHighlight3") }}
+                                {% for error in freeForm.highlight3.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ freeForm.challenges.label }}
+                                {{ freeForm.challenges(class="form-control", id="freeTextChallenges") }}
+                                {% for error in freeForm.challenges.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ freeForm.activities.label }}
+                                {{ freeForm.activities(class="form-control", id="freeTextActivities") }}
+                                {% for error in freeForm.activities.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ freeForm.freeTextSubmit(class="btn btn-primary") }}
+
+                                <input type="hidden" name="" id="FreeTextIndex" />
+
+                                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#freeText-show" 
+                                        aria-expanded="false" aria-controls="freeText-show">Show / Hide profile forms</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+        <div class="row  mt-5 mb-5">
+                <form class="" action="" method="post">
+                    {% if getFreeTextInfo["submit"] == false %}
+                    <input type="submit" class="btn btn-danger" id="submitFinalVersion" name="submitFinalVersion" value="Submit draft">
+                    {% endif %}
+                    <input type="submit" class="btn btn-danger" id="viewDraft" name="viewDraft" value="View draft">
+                    <input type="submit" class="btn btn-danger" id="editDraft" name="editDraft" value="Edit in draft-mode">
+                </form>
+            </div>
+        </div>
+{% endblock %}

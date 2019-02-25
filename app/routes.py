@@ -7,7 +7,8 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInfor
     InnovationAndCommercialisationForm, \
     PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
     EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
-    ChangePassword, ChangeEmail, ProposalForm, FreeTextForm
+    ChangePassword, ChangeEmail, ProposalForm, ResetPasswordRequestForm, ResetPasswordForm, FreeTextForm
+from app.email import send_password_reset_email
 
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
@@ -29,12 +30,40 @@ def get_list(q):
         lst.append(json.loads(item.data))
     return lst
 
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset.')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)
+
 @app.before_request
 def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
 
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash('Check your email for the instructions to reset your password')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html',
+                           title='Reset Password', form=form)
 
 @app.route("/")
 @login_required
@@ -65,7 +94,7 @@ def index():
     if q is None:
         formList.append("Annual Report")
 
-   
+
     return render_template("index.html", title="Home ", form=formList)
 
 
@@ -111,7 +140,7 @@ def register():
 
         user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data , is_admin=admin , is_reviewer = reviewer)
         user.set_password(form.password.data)
-        
+
         db.session.add(user)
         db.session.commit()
         flash("Congratulations, you are now a registered user!")
@@ -223,7 +252,7 @@ def show_profile(username):
     edu_info = get_list(query_table(EducationInformation))
 
 
-    return render_template("profile.html", title="View Profile", user=user, 
+    return render_template("profile.html", title="View Profile", user=user,
                                                                 info=gen_info,
                                                                 edu_info=edu_info)
 
@@ -943,7 +972,7 @@ def edit_profile():
             userInfo.data = infoJson
             db.session.commit()
             flash("Entry successfully updated.")
-        
+
         return redirect(url_for("edit_profile"))
 
     return render_template("edit_profile.html",
@@ -1002,7 +1031,7 @@ def annual_report():
     def query_table2(table):
         year = int(datetime.now().year)
         return table.query.filter_by(user_id=current_user.id, date=year).first()
-    
+
     def get_list2(q):
         lst = []
         for item in q:
@@ -1035,18 +1064,18 @@ def annual_report():
             imp = json.loads(item.impact)
             final["impact"] = imp
         if item.deviations is not None:
-            dev["deviations"] = item.deviations 
+            dev["deviations"] = item.deviations
         if item.highlights is not None:
             hi = json.loads(item.highlights)
         if item.challenges is not None:
             ch["challenges"] = item.challenges
         if item.activities is not None:
-            act["activities"] = item.activities      
+            act["activities"] = item.activities
         temp = {**act, **ch, **hi, **dev}
         final["freeText"] = temp
         return final
 
-    pubEngageForm = EducationAndPublicEngagementForm() 
+    pubEngageForm = EducationAndPublicEngagementForm()
     academicCollabsForm = AcademicCollaborationsForm()
     nonAcademicCollabsForm = NonAcademicCollaborationsForm()
     innovForm = InnovationAndCommercialisationForm()
@@ -1124,7 +1153,7 @@ def annual_report():
             userInfo.nonacademic_collab = infoJson
             db.session.commit()
             flash("Changes saved.")
-        
+
         elif impactsForm.validate_on_submit and "impactsSubmit" in request.form:
             if userInfo is None:
                 userInfo = AnnualReport(user_id=current_user.id)
@@ -1155,7 +1184,7 @@ def annual_report():
 
             db.session.commit()
             flash("Changes saved.")
-        
+
         elif freeForm.validate_on_submit and "freeTextSubmit" in request.form:
             if userInfo is None:
                 userInfo = AnnualReport(user_id=current_user.id)
@@ -1172,10 +1201,11 @@ def annual_report():
             db.session.commit()
             flash("Changes saved.")
 
-        elif "submitFinalVersion" in request.form:  
-            if None in getFreeTextInfo:
+        elif "submitFinalVersion" in request.form:
+            if len(getFreeTextInfo) < 11:
                 flash("You must complete all forms first")
             else:
+                flash(getFreeTextInfo)
                 if userInfo is None:
                     userInfo = AnnualReport(user_id=current_user.id)
                 db.session.add(userInfo)
@@ -1198,16 +1228,25 @@ def annual_report():
         return redirect(url_for("annual_report"))
 
     elif request.method == "GET":
-        getFreeTextInfo = get_list(query_table2(AnnualReport))
+
+        getFreeTextInfo = query_table2(AnnualReport)
+        if getFreeTextInfo is not None:
+            getFreeTextInfo = get_list(query_table2(AnnualReport))
+        else:
+            t = AnnualReport(user_id=current_user.id)
+            db.session.add(t)
+            getFreeTextInfo = get_list(query_table2(AnnualReport))
+            db.session.commit()
+
         if getFreeTextInfo["submit"]== True:
-            flash("Report already submitted for this year")
+           flash("Report already submitted for this year")
 
         if "impact" in getFreeTextInfo:
             impactsForm.title.data = getFreeTextInfo["impact"]["title"]
             impactsForm.category.data = getFreeTextInfo["impact"]["category"]
             impactsForm.primaryBeneficiary.data = getFreeTextInfo["impact"]["primaryBeneficiary"]
             impactsForm.primaryAttribution.data = getFreeTextInfo["impact"]["primaryAttribution"]
-        
+
         if "edu_pub_engagement" in getFreeTextInfo:
             pubEngageForm.nameOfProject.data = getFreeTextInfo["edu_pub_engagement"]["nameOfProject"]
             pubEngageForm.startDate.data = getFreeTextInfo["edu_pub_engagement"]["startDate"]

@@ -1,0 +1,14 @@
+my one 
+echo "export SENDGRID_API_KEY='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'" > sendgrid.env
+
+colms one 
+echo "export
+SENDGRID_API_KEY='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" > sendgrid.env
+
+
+echo "sendgrid.env" >> .gitignore
+
+source ./sendgrid.env
+
+pip install sendgrid
+

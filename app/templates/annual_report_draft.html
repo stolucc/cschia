@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1> {{current_user.username}}'s final version of annual report </h1><br>
+    <div class="row">
+        <div class="col">
+            
+            <h3 class="border-bottom">Education & Public Engagement activities</h3>
+                {% if form["edu_pub_engagement"] is defined %}
+                <ul class="list-unstyled">
+                    <li><b>Name of project:</b> {{form["edu_pub_engagement"]["nameOfProject"]}}</li>
+                    <li><b>Start date:</b> {{form["edu_pub_engagement"]["startDate"]}}</li>
+                    <li><b>End date:</b> {{form["edu_pub_engagement"]["endDate"]}}</li>
+                    <li><b>Acitivty type:</b> {{form["edu_pub_engagement"]["activityType"]}}</li>
+                    <li><b>Other type:</b> {{form["edu_pub_engagement"]["otherType"]}}</li>
+                    <li><b>Project topic:</b> {{form["edu_pub_engagement"]["projectTopic"]}}</li>
+                    <li><b>Other topic:</b> {{form["edu_pub_engagement"]["otherTopic"]}}</li>
+                    <li><b>Target:</b> {{form["edu_pub_engagement"]["target"]}}</li>
+                    <li><b>Local country:</b> {{form["edu_pub_engagement"]["localCountry"]}}</li>
+                </ul>
+                {% else %}
+                    <p>Please fill out the form first</p>
+                {% endif %}
+
+            <h3 class="border-bottom">Academic collaborations</h3>
+                {% if form["academic_collab"] is defined %}
+                <ul class="list-unstyled">
+                    <li><b>Start date:</b> {{form["academic_collab"]["startDate"]}}</li>
+                    <li><b>End date:</b> {{form["academic_collab"]["endDate"]}}</li>
+                    <li><b>Name of institution:</b> {{form["academic_collab"]["nameOfInstitution"]}}</li>
+                    <li><b>Department within institution:</b> {{form["academic_collab"]["department"]}}</li>
+                    <li><b>Location:</b> {{form["academic_collab"]["location"]}}</li>
+                    <li><b>Name of collaborator:</b> {{form["academic_collab"]["nameOfCollaborator"]}}</li>
+                    <li><b>Primary goal of collaboration:</b> {{form["academic_collab"]["goal"]}}</li>
+                    <li><b>Frequency of interaction:</b> {{form["academic_collab"]["frequency"]}}</li>
+                    <li><b>Primary attribution:</b> {{form["academic_collab"]["primaryAttribution"]}}</li>
+                </ul>
+                {% else %}
+                    <p>Please fill out the form first</p>
+                {% endif %}
+
+            <h3 class="border-bottom">Non-academic collaborations</h3>
+                {% if form["nonacademic_collab"] is defined %}
+                <ul class="list-unstyled">
+                    <li><b>Start date:</b> {{form["nonacademic_collab"]["startDate"]}}</li>
+                    <li><b>End date:</b> {{form["nonacademic_collab"]["endDate"]}}</li>
+                    <li><b>Name of institution:</b> {{form["nonacademic_collab"]["nameOfInstitution"]}}</li>
+                    <li><b>Department within institution:</b> {{form["nonacademic_collab"]["department"]}}</li>
+                    <li><b>Location:</b> {{form["nonacademic_collab"]["location"]}}</li>
+                    <li><b>Name of collaborator:</b> {{form["nonacademic_collab"]["nameOfCollaborator"]}}</li>
+                    <li><b>Primary goal of collaboration:</b> {{form["nonacademic_collab"]["goal"]}}</li>
+                    <li><b>Frequency of interaction:</b> {{form["nonacademic_collab"]["frequency"]}}</li>
+                    <li><b>Primary attribution:</b> {{form["nonacademic_collab"]["primaryAttribution"]}}</li>
+                </ul>
+                {% else %}
+                    <p>Please fill out the form first</p>
+                {% endif %}
+
+            <h3 class="border-bottom">Commercialisation</h3>
+                {% if form["commerc"] is defined %}
+                <ul class="list-unstyled">
+                    <li><b>Year:</b> {{form["commerc"]["year"]}}</li>
+                    <li><b>Type:</b> {{form["commerc"]["type"]}}</li>
+                    <li><b>Title:</b> {{form["commerc"]["title"]}}</li>
+                    <li><b>Primary Attribution:</b> {{form["commerc"]["primaryAttribution"]}}</li>
+                </ul>
+                {% else %}
+                    <p>Please fill out the form first</p>
+                {% endif %}
+
+            <h3 class="border-bottom">Impact</h3>
+                {% if form["impact"] is defined %}
+                <ul class="list-unstyled">
+                    <li><b>Title:</b> {{form["impact"]["title"]}}</li>
+                    <li><b>Category:</b> {{form["impact"]["category"]}}</li>
+                    <li><b>Primary Beneficiary:</b> {{form["impact"]["primaryBeneficiary"]}}</li>
+                    <li><b>Primary Attribution:</b> {{form["impact"]["primaryAttribution"]}}</li>
+                </ul>
+                {% else %}
+                    <p>Please fill out the form first</p>
+                {% endif %}            
+                
+            <h3 class="border-bottom">Free text information</h3>
+                {% if form["freeText"] is defined and form["freeText"] | length == 6 %}
+                <ul class="list-unstyled">
+                    <li><b>Deviations:</b> {{form["freeText"]["deviations"]}}</li>
+                    <li><b>Highlight 1:</b> {{form["freeText"]["highlight1"]}}</li>
+                    <li><b>Highlight 2:</b> {{form["freeText"]["highlight2"]}}</li>
+                    <li><b>Highlight 3:</b> {{form["freeText"]["highlight3"]}}</li>
+                    <li><b>Challenges:</b> {{form["freeText"]["challenges"]}}</li>
+                    <li><b>Activities:</b> {{form["freeText"]["activities"]}}</li>
+                </ul>
+                {% else %}
+                    <p>Please fill out the form first</p>
+                {% endif %}
+
+        {% if form["submit"] == false %}
+            <form class="" action="" method="post">
+                <input type="submit" class="btn btn-danger text-center mt-5 mb-5" id="submitFinalVersion" name="submitFinalVersion" value="Submit draft">
+            </form>
+        {% endif %}    
+        </div>
+        <div class="col"></div>
+    </div>
+{% endblock %}
