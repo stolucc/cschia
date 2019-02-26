@@ -97,12 +97,14 @@ def index():
     if q is None:
         formList.append("Annual Report")
 
+    proposals = SfiProposalCalls.query.all()
 
-    return render_template("index.html", title="Home ", form=formList)
+    return render_template("index.html", title="Home ", form=formList, proposals=proposals)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
     if current_user.is_authenticated:
         return redirect(url_for("index"))
     form = LoginForm()
