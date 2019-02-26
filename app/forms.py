@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, FileField, \
-TextAreaField, IntegerField, SelectField, DateField
+TextAreaField, IntegerField, SelectField, DateField, FieldList, FormField, MultipleFileField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length, \
 Optional
 from app.models import User
@@ -48,7 +48,6 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError("An account with this orcid number already exists.")
 
-
 class RegistrationFormAdmin(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
@@ -77,8 +76,6 @@ class RegistrationFormAdmin(FlaskForm):
         if user is not None:
             raise ValidationError("An account with this orcid number already exists.")
 
-
-        
 class EditProfileForm(FlaskForm):
     username = StringField("Username", validators = [DataRequired() ])
     about_me = TextAreaField("About me", validators = [Length(min=0, max=140) ])
@@ -351,3 +348,49 @@ class FreeTextForm(FlaskForm):
     #freeTextEdit = SubmitField("Edit")
     #freeTextPreview = SubmitField("Preview")
     freeTextSubmit = SubmitField("Add new")
+
+class ReviewProposalForm(FlaskForm):
+    description = TextAreaField("Description", validators = [Length(min=0,max=1500)])
+    rating = SelectField(u"Rating", choices=\
+    [("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5"), ("6", "6"), ("7", "7"), ("8", "8"), ("9", "9"), ("10", "10")], \
+    validators=[DataRequired() ])
+    submit = SubmitField("Submit")
+    
+class AddReviewerForm(FlaskForm):
+    reviewer_username = StringField("Reviewer Username", validators=[DataRequired() ])
+    submit = SubmitField("Add")
+
+class CollaboratorForm(FlaskForm):
+    name = StringField("Name")
+    org = StringField("Organisation")
+    email = StringField("Email")
+
+class GrantApplicationForm(FlaskForm):
+    title = StringField("Proposal Title")
+    duration = StringField("Duration of award")
+    nrp = SelectField(u"National Research Priority", choices=\
+            [("PAA","Priority Area A - Future Networks & Communications"), \
+            ("PAB","Priority Area B - DataAnalytics, Management, Security & Privacy"), \
+            ("PAC","Priority Area C - Digital Platforms, Content & Applications"), \
+            ("PAD","Priority Area D - Connected Health and Independent Living"), \
+            ("PAE","Priority Area E - Medical Devices"),("PAF","Priority Area F - Diagnostics"), \
+            ("PAG","Priority Area G - Therapeutics: Synthesis, Formulation, Processsing and Drug Delivery"), \
+            ("PAH","Priority Area H - Food for Health"), \
+            ("PAI","Priority Level I - Sustainable Food Production and Processing"), \
+            ("PAJ","Priority Area J - Marine Renewable Energy"), \
+            ("PAK","Priority Area K - Smart Grids & Smart Cities"), \
+            ("PAL","Priority Area L - Manufactoring Competitiveness"), \
+            ("PAM","Priority Area M - Processing Technologies and Novel Materials"), \
+            ("PAN","Priority Area N - Innovation in Services and Business Processes"),\
+            ("Software","Software"),("Other","Other")])
+    legal_align = TextAreaField("Plese describe how your proposal is aligned with SFI's legal remit (max 250 words)", validators = [Length(min=0,max=250)])
+    ethical_q1 = SelectField("Does the research involve the use of animals?", choices=[("No","No"),("Yes","Yes")])
+    ethical_q2 = SelectField("Does the research involve human participants, human biological material, or identifiable data?", choices=[(0,"No"),(1,"Yes")])
+    country = StringField("Country of applicant")
+    coapps = TextAreaField("Coapplicants", validators=[Length(min=0,max=200)])
+    collabs = FieldList(FormField(CollaboratorForm), min_entries=2)
+    sci_abstract = TextAreaField("Scientific Abstract", validators=[Length(min=0,max=200)])
+    lay_abstract = TextAreaField("Lay Abstract", validators=[Length(min=0,max=200)])
+    doc_uplaod = MultipleFileField("Programme Documents")
+    submit = SubmitField("Submit")
+

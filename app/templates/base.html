@@ -35,8 +35,15 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav pt-5 mr-auto">
                     <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{ url_for("index") }}">Home</a></li></span>
+                    {% if current_user.is_reviewer %}
+                    <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{url_for("proposals_to_review")}}">Proposals to review</a></li></span>
+                    {% endif %}
+
+                    {% if not current_user.is_reviewer %}
                     {% if current_user.is_admin %}
                     <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{url_for("admin_control")}}">Admin Controls</a></li></span>
+                    <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{url_for("admin_submitted_reviews")}}">Submitted Reviews</a></li></span>
+                    {% endif %}
                     {% endif %}
                     <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{ url_for("view_calls") }}">Funding Calls</a></li></span>
 
@@ -44,7 +51,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url_for("login") }}">Login</a></li>
                     {% else %}
 
-                    {% if current_user.is_admin == false %}
+                    {% if current_user.is_admin == false and  current_user.is_reviewer == false%}
                     <span class="border-right"><li class="nav-item">  
                         <div class="dropdown show">
                             <a class="nav-link dropdown-toggle text-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col border-right">
 
-                    {% if current_user.is_admin == false %}
+                    {% if current_user.is_admin == false and current_user.is_reviewer == false%}
                     <div class="card mb-3 bg-warning">
                         <div class="card-body">
                                 <h4>Forms to be filled out ({{ form|length }}):</h4>
@@ -23,7 +23,7 @@
                                 <p class="text-center"><a class="btn btn-primary" href="{{ url_for("edit_profile")}}">Go to forms page</a></p>
                         </div>
                      </div>
-                    {% elif current_user.is_admin == true %}
+                    {% elif current_user.is_admin == true  %}
                     <div class="card mb-3 bg-warning">
                         <div class="card-body">
                             <h4>Active Calls for proposals({{ proposals|length }}):</h4>

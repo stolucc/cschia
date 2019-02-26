@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for, request
-from app import app, db, admin_required
+from app import app, db, admin_required, reviewer_required
 from app.forms import LoginForm, RegistrationForm,RegistrationFormAdmin, EditProfileForm, GeneralInformationForm, \
     EducationInformationForm, EmploymentInformationForm, \
     SocietiesInformationForm, AwardsInformationForm, \
@@ -7,17 +7,20 @@ from app.forms import LoginForm, RegistrationForm,RegistrationFormAdmin, EditPro
     InnovationAndCommercialisationForm, \
     PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
     EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
-    ChangePassword, ChangeEmail, ProposalForm, ResetPasswordRequestForm, ResetPasswordForm, FreeTextForm
-from app.email import send_password_reset_email
+    ChangePassword, ChangeEmail, ProposalForm, GrantApplicationForm, CollaboratorForm, \
+    ReviewProposalForm, AddReviewerForm, ResetPasswordRequestForm, ResetPasswordForm, \
+    FreeTextForm
 
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
     Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
     CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls, \
-    Publication, AnnualReport
+    Publication, GrantApplications, GrantApplicationAttachment, FundingCallReviewers, \
+    AnnualReport
 
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename
 from datetime import datetime
 import json
 
@@ -151,10 +154,37 @@ def view_calls():
     return render_template("view_calls.html", title="Funding Calls", calls=calls)
 
 
-@app.route("/calls/<call_id>")
+@app.route("/calls/<call_id>", methods=["GET", "POST"])
 def view_call(call_id):
     call = SfiProposalCalls.query.filter_by(id=call_id).first_or_404()
-    return render_template("view_call.html", title="Funding Calls", call=call)
+    form = AddReviewerForm()
+    if form.validate_on_submit():
+        reviewer_usr = User.query.filter_by(username=form.reviewer_username.data).first()
+        if reviewer_usr is not None:
+            reviewer = FundingCallReviewers(call_id=call_id, reviewer_id=reviewer_usr.id)
+            db.session.add(reviewer)
+            db.session.commit()
+            flash("Successfully invited reviewer for call for proposal.")
+        else:
+            flash("Reviewer of that username does not exist.")
+    return render_template("view_call.html", title="Funding Calls", call=call, form=form)
+
+@app.route("/apply", methods=["GET","POST"])
+def apply():
+    form = GrantApplicationForm()
+    if form.validate_on_submit():
+        application = GrantApplications(user_id=current_user.id, title=form.title.data, duration=form.duration.data, \
+        nrp=form.nrp.data, legal_align=form.legal_align.data, country=form.country.data, \
+        sci_abstract=form.sci_abstract.data, lay_abstract=form.lay_abstract.data)
+        db.session.add(application)
+        db.session.commit()
+        # file = request.files['file']
+        # filename = secure_filename(file.filename)
+        #
+        # attachment = GrantApplicationAttachment(grant_id=application.id, name=filename, path=)
+        flash("You have completed the application")
+        return redirect(url_for("index"))
+    return render_template("application.html", title="Apply", form=form)
 
 
 @app.route("/admin_register_user", methods=["GET", "POST"])
@@ -200,7 +230,6 @@ def publish_call():
         return redirect(url_for("index"))
     return render_template("admin_publish_call.html", title="Publish Call", form=form)
 
-
 @app.route("/admin_edit_proposals")
 @login_required
 def admin_edit_proposals():
@@ -209,8 +238,30 @@ def admin_edit_proposals():
     return render_template("admin_edit_proposals.html", title="Admin Edit proposals")
 
 
+@app.route("/admin_reviews")
+@login_required
+def admin_submitted_reviews():
+    admin_required(current_user)
+    return render_template("admin_submitted_reviews.html", title="Submitted reviews")
 
-"""
+
+@app.route("/review", methods=["GET", "POST"])
+@login_required
+def proposals_to_review():
+    reviewer_required(current_user)
+    form = ReviewProposalForm()
+    jsonCallIds = FundingCallReviewers.query.filter_by(reviewer_id=current_user.id).all()
+    getPendingFunds = []
+    
+    for item in jsonCallIds:
+        getPendingFunds.append(SfiProposalCalls.query.filter_by(id=item.call_id).first())
+
+    return render_template("proposals_to_review.html",
+                            title="Pending reviews",
+                            form=form,
+                            getPendingFunds=getPendingFunds)
+
+
 # not needed
 @app.route("/user/<username>")
 @login_required
@@ -221,7 +272,7 @@ def user(username):
         {"author": user, "body": "Responding Funding call: Project12"}
     ]
     return render_template("user.html", user=user, posts=posts)
-"""
+
 
 @app.route("/profile/<username>", methods=["GET"])
 @login_required
@@ -1321,3 +1372,4 @@ def annual_report():
                            getNonAcInfo=getNonAcInfo,
                            getEdInfo=getEdInfo,
                            getFreeTextInfo=getFreeTextInfo)
+

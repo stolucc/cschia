@@ -40,6 +40,8 @@ class User(UserMixin, db.Model):
     education_public_engagement = db.relationship("EducationPublicEngagement")
     annual_report = db.relationship("AnnualReport")
 
+    #grant_applications = db.relationship("GrantApplications", backref="applicant", lazy="dynamic")
+
     def __repr__(self):
         return "<User {} {} {} {} {}>".format(self.username, self.orcid, self.is_admin, self.is_reviewer, self.password_hash)
 
@@ -94,6 +96,7 @@ class FundingCall(db.Model):
     body = db.Column(db.Text)
 
     attachments = db.relationship("FundingCallAttachment")
+    applications = db.relationship("GrantApplications")
 
 
 class FundingCallAttachment(db.Model):
@@ -232,6 +235,32 @@ class SfiProposalCalls(db.Model):
 
     def __repr__(self):
         return "<SfiProposalCalls {}>".format(self.deadline, self.id)
+
+class GrantApplications(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
+    title = db.Column(db.Text)
+    duration = db.Column(db.Text)
+    nrp = db.Column(db.Text)
+    ethical_q1 = db.Column(db.Text)
+    ethical_q2 = db.Column(db.Text)
+    country = db.Column(db.Text)
+    coapps = db.Column(db.Text)
+    collabs = db.Column(db.Text)
+    legal_align = db.Column(db.Text)
+    sci_abstract = db.Column(db.Text)
+    lay_abstract = db.Column(db.Text)
+
+    attachment = db.relationship("GrantApplicationAttachment")
+
+
+class GrantApplicationAttachment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    grant_id = db.Column(db.Integer, db.ForeignKey("grant_applications.id"))
+    name = db.Column(db.String(128))
+    path = db.Column(db.String(128))
+
 
 class EducationPublicEngagement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -383,9 +412,9 @@ if check_exists("admin") is None:
     db.session.add(admin)
     db.session.commit()
 
-if check_exists("admin") is None:
+if check_exists("reviewer") is None:
     password = "reviewer"
-    admin = User(id=-2, orcid="-2", username="admin", email="reviewer@admreviewerin.com", is_admin=True)
+    admin = User(id=-2, orcid="-2", username="reviewer", email="reviewer@reviewer.com", is_reviewer=True)
     admin.set_password(password)
 
     db.session.add(admin)
@@ -395,4 +424,17 @@ make_user("IainFelming", "0000-0000-0000-0001", "IainFelming@gmail.com", "test")
 make_user("MaryamHines", "0000-0000-0000-0002", "MaryamHines@gmail.com", "test")
 make_user("AshantiCresswell", "0000-0000-0000-0003", "AshantiCresswell@gmail.com", "test")
 make_user("AprilCooper", "0000-0000-0000-0004", "AprilCooper@gmail.com", "test")
+
+
+class FundingCallReviewers(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
+    reviewer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    
+class Reviews(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
+    reviewer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    desc = db.Column(db.Text())
+    rating = db.Column(db.Integer)
 
