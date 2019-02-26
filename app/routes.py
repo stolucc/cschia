@@ -40,7 +40,7 @@ def index():
         if result is None:
             formList.append(string)
 
-    appList = GrantApplications.query.filter_by(user_id=current_user.id).all()
+    appList = GrantApplications.query.filter_by(user_id=current_user.id).filter_by(is_draft=1).all()
 
     check_if_filled(GeneralInformation, "General Information")
     check_if_filled(EmploymentInformation, "Education")

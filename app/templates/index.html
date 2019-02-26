@@ -19,10 +19,10 @@
                 </div
                 </div>
                 <div class="col">
-                        <h4>Pending Applications</h4>
+                        <h4>My Draft Applications</h4>
                         <ul class="list-unstyled">
                         {% for apps in app %}
-                                <li> {{apps.title}} <a class="btn btn-primary" href="{{ url_for("apply")}}">Edit</a></li>
+                                <li> {{apps.title}} <t> <a class="btn btn-primary" href="{{ url_for("apply")}}">Edit</a></li>
                         {% endfor %}
                         </ul>
                 </div>
