@@ -322,6 +322,34 @@ def make_education(user_id, degree, fieldOfStudy, institution, location, yearOfD
     db.session.add(r)
     db.session.commit()
 
+def make_employment(user_id, company, location, years):
+    dataJson = {
+            "company": company,
+            "location": location,
+            "years":  years
+            }
+    data = json.dumps(dataJson)
+    r = EmploymentInformation(user_id=user_id, data=data)
+    db.session.add(r)
+    db.session.commit()
+
+def make_edupubeng(user_id, nameOfProject, startDate, endDate, activityType, otherType, projectTopic, otherTopic, target, localCountry):
+    dataJson = {
+            "nameOfProject": nameOfProject,
+            "startDate": startDate,
+            "endDate": endDate,
+            "activityType": activityType,
+            "otherType": otherType,
+            "projectTopic": projectTopic,
+            "otherTopic": otherTopic,
+            "target": target,
+            "localCountry": localCountry
+            }
+    data = json.dumps(dataJson)
+    r = EducationPublicEngagement(user_id=user_id, data=data)
+    db.session.add(r)
+    db.session.commit()
+
 def make_user(name, orcid, email, password):
     if check_exists(name):
         q = User.query.filter_by(username=name).delete()
@@ -338,6 +366,14 @@ def make_user(name, orcid, email, password):
     if EducationInformation.query.filter_by(user_id=row.id).first() is not None:
         delete(GeneralInformation, row.id)
     make_education(row.id, "Phd Computer Science", "Artificial Intelligence", "University College Cork", "Cork, Ireland", "2000")
+
+    if EmploymentInformation.query.filter_by(user_id=row.id).first() is not None:
+        delete(EmploymentInformation, row.id)
+    make_employment(row.id, "University College Cork", "Cork, Ireland", "10")
+
+    if EducationPublicEngagement.query.filter_by(user_id=row.id).first() is not None:
+        delete(EducationPublicEngagement, row.id)
+    make_edupubeng(row.id, "Artificial Intelligence presentation", "2019-01-01", "2019-01-01", "In-class activities", " ", "Science", " ", "National", "Cork")
 
 if check_exists("admin") is None:
     password = "admin"
