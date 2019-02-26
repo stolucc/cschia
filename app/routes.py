@@ -1006,6 +1006,28 @@ def search():
         return render_template('search_result.html')
 
 
+# @app.route('/search')
+# @login_required
+# def search():
+#     keyword = request.args.get('keyword')
+
+#     result = User.query.filter(User.username.contains(keyword)).all()
+#     result_orcid = User.query.filter(User.orcid.contains(keyword)).all()
+
+#     if len(result) > 1 or len(result_orcid) > 1:
+#         return render_template("search_result2.html", results=result, results_orcid=result_orcid)
+#     elif len(result) > 0:
+#         r = result[0].username
+#         return redirect(url_for("show_profile", username=r))
+#     elif len(result_orcid) > 0:
+#         orcid_username = result_orcid[0].username
+#         return redirect(url_for("show_profile", username=orcid_username))
+#     else:
+#         return render_template('search_not_found.html')
+
+
+
+
 @app.route("/annual_report", methods=["GET", "POST"])
 @login_required
 def annual_report():
