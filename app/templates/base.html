@@ -18,7 +18,7 @@
     {% else %}
     <title>SESAME</title>
     {% endif %}
-</head> 
+</head>
 
 <body>
     <div class="wrapper"></div>
@@ -27,11 +27,11 @@
                 <div class="navbar-header">
                     <a href="{{url_for("index")}}"><img class="navbar-brand" src="/static/sfi_logo.png" height="100"/></a>
                 </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" 
+                <button class="navbar-toggler" type="button" data-toggle="collapse"  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                 </button>
-                
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav pt-5 mr-auto">
                     <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{ url_for("index") }}">Home</a></li></span>
@@ -64,8 +64,9 @@
                             </div>
                         </div>
                     </li></span>
+                    <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{url_for("view_applications")}}">My Grants</a></li></span>
                     {% endif %}
-                    <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{url_for("list_publications")}}">Publications</a></li></span>
+                    <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{url_for("list_publications")}}">Publications</a></li></span>      
                     <li class="nav-item"><a class="nav-link" href="{{ url_for("logout") }}">Logout</a>
                     {% endif %}
 
@@ -81,8 +82,12 @@
             </form>
             </div>
         </div>
+<<<<<<< HEAD
         {% endif %} -->
 
+=======
+        {% endif %}
+>>>>>>> IL-GrantApplication
 
         {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -96,4 +101,3 @@
 
 </body>
 </html>
-

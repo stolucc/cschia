@@ -72,11 +72,14 @@ def reset_password_request():
 @login_required
 def index():
     formList = []
+    appList = []
 
     def check_if_filled(tableName, string):
         result = tableName.query.filter_by(user_id=current_user.id).first()
         if result is None:
             formList.append(string)
+
+    appList = GrantApplications.query.filter_by(user_id=current_user.id).filter_by(is_draft=1).all()
 
     check_if_filled(GeneralInformation, "General Information")
     check_if_filled(EducationInformation, "Education")
@@ -98,7 +101,7 @@ def index():
         formList.append("Annual Report")
 
 
-    return render_template("index.html", title="Home ", form=formList)
+    return render_template("index.html", title="Home ", form=formList, app=appList)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -173,13 +176,9 @@ def apply():
     if form.validate_on_submit():
         application = GrantApplications(user_id=current_user.id, title=form.title.data, duration=form.duration.data, \
         nrp=form.nrp.data, legal_align=form.legal_align.data, country=form.country.data, \
-        sci_abstract=form.sci_abstract.data, lay_abstract=form.lay_abstract.data)
+        sci_abstract=form.sci_abstract.data, lay_abstract=form.lay_abstract.data, is_draft=False)
         db.session.add(application)
         db.session.commit()
-        # file = request.files['file']
-        # filename = secure_filename(file.filename)
-        #
-        # attachment = GrantApplicationAttachment(grant_id=application.id, name=filename, path=)
         flash("You have completed the application")
         return redirect(url_for("index"))
     return render_template("application.html", title="Apply", form=form)
@@ -259,6 +258,18 @@ def proposals_to_review():
                             form=form,
                             getPendingFunds=getPendingFunds)
 
+@app.route("/applications")
+def view_applications():
+    draft = GrantApplications.query.filter_by(is_draft=1).all()
+    pending = GrantApplications.query.filter_by(is_awarded=1).all()
+    awarded = GrantApplications.query.filter_by(is_pending=1).all()
+
+    return render_template("view_applications.html", title="MyGrants", draft=draft, pending=pending, awarded=awarded)
+
+@app.route("/applications/<grant_id>")
+def view_application(grant_id):
+    grant = GrantApplications.query.filter_by(id=grant_id).first_or_404()
+    return render_template("view_application.html", title="Grant Application", grant=grant)
 
 # not needed
 @app.route("/user/<username>")
