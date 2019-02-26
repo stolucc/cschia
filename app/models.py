@@ -292,9 +292,6 @@ def check_exists(name):
 def delete(table, value):
     table.query.filter_by(user_id=value).delete()
 
-def check_general(userid):
-    return GeneralInformation.query.filter_by(user_id=userid).first()
-
 def make_general(user_id, first, last, job, pref, suf, phonePref, phone, email, orcid):
     dataJson = {
             "firstName": first,
@@ -311,7 +308,19 @@ def make_general(user_id, first, last, job, pref, suf, phonePref, phone, email, 
     r = GeneralInformation(user_id=user_id, data=data)
     db.session.add(r)
     db.session.commit()
-    
+
+def make_education(user_id, degree, fieldOfStudy, institution, location, yearOfDegreeAward):
+    dataJson = {
+            "degree": degree,
+            "fieldOfStudy": fieldOfStudy,
+            "institution": institution,
+            "location": location,
+            "yearOfDegreeAward": yearOfDegreeAward
+            }
+    data = json.dumps(dataJson)
+    r = EducationInformation(user_id=user_id, data=data)
+    db.session.add(r)
+    db.session.commit()
 
 def make_user(name, orcid, email, password):
     if check_exists(name):
@@ -322,9 +331,13 @@ def make_user(name, orcid, email, password):
     db.session.add(row)
     db.session.commit()
 
-    if check_general(row.id):
-       delete(GeneralInformation, row.id)
-    make_general(row.id, "Iain", "Fleming", "Dr", "", "Jr", "+353", "0851111213", "IainFleming@email.com", row.orcid)
+    if GeneralInformation.query.filter_by(user_id=row.id).first() is not None:
+        delete(GeneralInformation, row.id)
+    make_general(row.id, "Iain", "Felming", "Lecturer", "Dr", "Jr", "+353", "0851111213", "IainFleming@email.com", row.orcid)
+
+    if EducationInformation.query.filter_by(user_id=row.id).first() is not None:
+        delete(GeneralInformation, row.id)
+    make_education(row.id, "Phd Computer Science", "Artificial Intelligence", "University College Cork", "Cork, Ireland", "2000")
 
 if check_exists("admin") is None:
     password = "admin"
@@ -342,7 +355,7 @@ if check_exists("admin") is None:
     db.session.add(admin)
     db.session.commit()
 
-make_user("IainFelming", "0000-0000-0000-0001", "IainFleming@gmail.com", "test")
+make_user("IainFelming", "0000-0000-0000-0001", "IainFelming@gmail.com", "test")
 make_user("MaryamHines", "0000-0000-0000-0002", "MaryamHines@gmail.com", "test")
 make_user("AshantiCresswell", "0000-0000-0000-0003", "AshantiCresswell@gmail.com", "test")
 make_user("AprilCooper", "0000-0000-0000-0004", "AprilCooper@gmail.com", "test")

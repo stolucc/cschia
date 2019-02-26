@@ -9,13 +9,13 @@
                 <li class="list-group-item">
                         {#class="btn btn-primary"#}
     
-                    <a class="btn btn-primary" href="/admin_register_user"button">Register</a>
+                    <a class="btn btn-primary btn-block" href="{{ url_for('admin_register_user') }}">Register</a>
                 </li>
                 <li class="list-group-item">
-                        <a class="btn btn-primary" href="/admin_publish_call"button">Publish call for proposals</a>    
+                        <a class="btn btn-primary btn-block" href="{{ url_for('publish_call') }}">Publish call for proposals</a>    
                 </li> 
                 <li class="list-group-item">
-                    <a class="btn btn-primary" href="/admin_edit_proposals"button">edit proposals</a>    
+                    <a class="btn btn-primary btn-block" href="{{ url_for('admin_edit_proposals') }}">Edit proposals</a>    
             </li> 
                 
     
@@ -24,7 +24,7 @@
         </div>
 
     <div class="col-md-6">
-        <h1>Admin Register a new Reasercher</h1>
+        <h1>Register a new type of user</h1>
 
 
         {{ render_form(form) }}

@@ -30,36 +30,6 @@ def get_list(q):
         lst.append(json.loads(item.data))
     return lst
 
-@app.route("/sample_data", methods=["GET"])
-def sample_data():
-    #Sample data
-    #0000 hash
-    oid = 2
-
-    u1 = User(orcid=oid, username="IainFleming", email="IainFleming@email.com")
-    u1.set_password("0000")
-    oid += 1
-
-    dataJson = {
-            "firstName": "Iain",
-            "lastName": "Fleming",
-            "jobTitle": "Dr",
-            "prefix": "",
-            "suffix": "",
-            "phoneNumPrefix": "+353",
-            "phoneNum": "0853214354",
-            "email": "IainFleming@email.com",
-            "orcid": u1.id
-            }
-
-    data = json.dumps(dataJson)
-    g1 = GeneralInformation(user_id=u1.id, data=data)
-
-    db.session.add_all([u1, g1])   
-    db.session.commit()
-
-    return redirect(url_for('index'))
-
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
@@ -124,7 +94,9 @@ def index():
     if q is None:
         formList.append("Annual Report")
 
-    return render_template("index.html", title="Home ", form=formList)
+    proposals = SfiProposalCalls.query.all()
+
+    return render_template("index.html", title="Home ", form=formList, proposals=proposals)
 
 
 @app.route("/login", methods=["GET", "POST"])
