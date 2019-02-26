@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ grant.title }}</h1>
+<h4>Duration</h4>
+<p>{{ grant.duration }}</p>
+<h4>National Research Priority</h4>
+<p>{{ grant.nrp }}</p>
+<h4>Does the research involve the use of animals?</h4>
+<p>{{ grant.ethical_q1 }}</p>
+<h4>Does the research involve human participants, human biological material, or identifiable data?</h4>
+<p>{{ grant.ethical_q2 }}</p>
+<h4>Country</h4>
+<p>{{ grant.country }}</p>
+<h4>Coapplicants</h4>
+<p>{{ grant.coapps }}</p>
+<h4>Collaborators</h4>
+<p>{{ grant.collabs }}</p>
+<h4>Legal Aligment with SFI</h4>
+<p>{{ grant.legal_align }}</p>
+<h4>Scientific Abstract</h4>
+<p>{{ grant.sci_abstract }}</p>
+<h4>Lay Abstract</h4>
+<p>{{ grant.lay_abstract }}</p>
+{% endblock %}
