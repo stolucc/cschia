@@ -119,9 +119,6 @@ def apply():
         sci_abstract=form.sci_abstract.data, lay_abstract=form.lay_abstract.data, is_draft=False)
         db.session.add(application)
         db.session.commit()
-        # file = request.files['file']
-        # filename = secure_filename(file.filename)
-        # attachment = GrantApplicationAttachment(grant_id=application.id, name=filename, path=)
         flash("You have completed the application")
         return redirect(url_for("index"))
     return render_template("application.html", title="Apply", form=form)
@@ -161,6 +158,20 @@ def publish_call():
         flash("Your call for proposal has been published!")
         return redirect(url_for("index"))
     return render_template("admin_publish_call.html", title="Publish Call", form=form)
+
+@app.route("/applications")
+def view_applications():
+    draft = GrantApplications.query.filter_by(is_draft=1).all()
+    pending = GrantApplications.query.filter_by(is_awarded=1).all()
+    awarded = GrantApplications.query.filter_by(is_pending=1).all()
+
+    return render_template("view_applications.html", title="MyGrants", draft=draft, pending=pending, awarded=awarded)
+
+@app.route("/applications/<grant_id>")
+def view_application(grant_id):
+    grant = GrantApplications.query.filter_by(id=grant_id).first_or_404()
+    return render_template("view_application.html", title="Grant Application", grant=grant)
+
 
 
 # not needed

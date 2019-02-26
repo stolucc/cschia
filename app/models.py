@@ -234,6 +234,8 @@ class GrantApplications(db.Model):
     sci_abstract = db.Column(db.Text)
     lay_abstract = db.Column(db.Text)
     is_draft = db.Column(db.Boolean)
+    is_pending = db.Column(db.Boolean)
+    is_awarded = db.Column(db.Boolean)
 
     attachment = db.relationship("GrantApplicationAttachment")
 

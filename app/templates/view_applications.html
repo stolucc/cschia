@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>My Grant Applications</h1>
+
+    <h2>Awarded Grants</h2>
+    <ul class="list-group">
+    {% for d in draft %}
+        <li class="list-group-item">
+            <h3><a href="{{ url_for('view_application', grant_id=d.id) }}">{{ d.title }}</a></h3>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <h2>Pending Grants</h2>
+    <ul class="list-group">
+    {% for p in pending %}
+        <li class="list-group-item">
+            <h3><a href="{{ url_for('view_application', grant_id=p.id) }}">{{ p.title }}</a></h3>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <h2>Draft Grants</h2>
+    <ul class="list-group">
+    {% for award in awarded %}
+        <li class="list-group-item">
+            <h3> {{ award.title }} <t><a href="{{ url_for('apply') }}" class="btn btn-primary">Edit</a></h3>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
