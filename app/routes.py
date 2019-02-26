@@ -188,8 +188,7 @@ def proposals_to_review():
     getPendingFunds = []
     
     for item in jsonCallIds:
-        title = SfiProposalCalls.query.filter_by(id=item.call_id).first().title
-        getPendingFunds.append(title)
+        getPendingFunds.append(SfiProposalCalls.query.filter_by(id=item.call_id).first())
 
     return render_template("proposals_to_review.html",
                             title="Pending reviews",

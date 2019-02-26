@@ -42,7 +42,7 @@
                     {% if not current_user.is_reviewer %}
                     {% if current_user.is_admin %}
                     <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{url_for("admin_control")}}">Admin Controls</a></li></span>
-                    <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{url_for("admin_submitted_reviews")}}">Submitted reviews</a></li></span>
+                    <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{url_for("admin_submitted_reviews")}}">Submitted Reviews</a></li></span>
                     {% endif %}
                     {% endif %}
                     <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{ url_for("view_calls") }}">Funding Calls</a></li></span>

@@ -280,3 +280,10 @@ class FundingCallReviewers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
     reviewer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    
+class Reviews(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
+    reviewer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    desc = db.Column(db.Text())
+    rating = db.Column(db.Integer) 
