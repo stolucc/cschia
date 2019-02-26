@@ -6,8 +6,13 @@ to get started:
 - start server ( `pipenv run flask run` )
 
 
-remove the chia.db
-remove the migrations folder
-run pipenv run flask db init
-run pipenv run flask db migrate
-run pipenv run flask db update
+- remove the chia.db
+- remove the migrations folder
+- run pipenv run flask db init
+- run pipenv run flask db migrate
+- run pipenv run flask db update
+
+
+Accounts:
+Host institution
+SFI admin
