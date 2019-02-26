@@ -163,7 +163,7 @@ def view_call(call_id):
     form = AddReviewerForm()
     if form.validate_on_submit():
         reviewer_usr = User.query.filter_by(username=form.reviewer_username.data).first()
-        if reviewer_usr is not None:
+        if reviewer_usr is not None and reviewer_usr.is_reviewer == 1:
             reviewer = FundingCallReviewers(call_id=call_id, reviewer_id=reviewer_usr.id)
             db.session.add(reviewer)
             db.session.commit()
