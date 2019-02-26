@@ -5,6 +5,7 @@ from flask_login import UserMixin
 from hashlib import md5
 from time import time
 import jwt
+import json
 from app import app
 
 class User(UserMixin, db.Model):
@@ -40,7 +41,7 @@ class User(UserMixin, db.Model):
     annual_report = db.relationship("AnnualReport")
 
     def __repr__(self):
-        return "<User {} {} {} {}>".format(self.username, self.orcid, self.is_admin, self.is_reviewer)
+        return "<User {} {} {} {} {}>".format(self.username, self.orcid, self.is_admin, self.is_reviewer, self.password_hash)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -284,3 +285,65 @@ class AnnualReport(db.Model):
         return "<AnnualReport {} {} {} {} {} {} {} {} {} {} {} {} {} {}>". \
             format(self.id, self.user_id, self.is_submit, self.date, self.publications_data, self.edu_pub_engagement, self.academic_collab, \
                     self.nonacademic_collab, self.commerc, self.impact, self.deviations, self.highlights, self.challenges, self.activities)
+
+def check_exists(name):
+    return User.query.filter_by(username=name).first()
+
+def delete(table, value):
+    table.query.filter_by(user_id=value).delete()
+
+def check_general(userid):
+    return GeneralInformation.query.filter_by(user_id=userid).first()
+
+def make_general(user_id, first, last, job, pref, suf, phonePref, phone, email, orcid):
+    dataJson = {
+            "firstName": first,
+            "lastName": last,
+            "jobTitle": job,
+            "prefix": pref,
+            "suffix": suf,
+            "phoneNumPrefix": phonePref,
+            "phoneNum": phone,
+            "email": email,
+            "orcid": orcid
+            }
+    data = json.dumps(dataJson)
+    r = GeneralInformation(user_id=user_id, data=data)
+    db.session.add(r)
+    db.session.commit()
+    
+
+def make_user(name, orcid, email, password):
+    if check_exists(name):
+        q = User.query.filter_by(username=name).delete()
+        db.session.commit()
+    row = User(orcid=orcid, username=name, email=email)
+    row.set_password(password)
+    db.session.add(row)
+    db.session.commit()
+
+    if check_general(row.id):
+       delete(GeneralInformation, row.id)
+    make_general(row.id, "Iain", "Fleming", "Dr", "", "Jr", "+353", "0851111213", "IainFleming@email.com", row.orcid)
+
+if check_exists("admin") is None:
+    password = "admin"
+    admin = User(id=-1, orcid="0", username="admin", email="admin@admin.com", is_admin=True)
+    admin.set_password(password)
+
+    db.session.add(admin)
+    db.session.commit()
+
+if check_exists("admin") is None:
+    password = "reviewer"
+    admin = User(id=-2, orcid="-2", username="admin", email="reviewer@admreviewerin.com", is_admin=True)
+    admin.set_password(password)
+
+    db.session.add(admin)
+    db.session.commit()
+
+make_user("IainFelming", "0000-0000-0000-0001", "IainFleming@gmail.com", "test")
+make_user("MaryamHines", "0000-0000-0000-0002", "MaryamHines@gmail.com", "test")
+make_user("AshantiCresswell", "0000-0000-0000-0003", "AshantiCresswell@gmail.com", "test")
+make_user("AprilCooper", "0000-0000-0000-0004", "AprilCooper@gmail.com", "test")
+
