@@ -14,7 +14,7 @@ from app.models import User, GeneralInformation, EducationInformation, Employmen
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
     Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
     CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls, \
-    Publication, GrantApplications, GrantApplicationAttachment
+    Publication, GrantApplications, GrantApplicationAttachment, FundingCallReviewers
 
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -107,6 +107,15 @@ def view_calls():
 def view_call(call_id):
     call = SfiProposalCalls.query.filter_by(id=call_id).first_or_404()
     form = AddReviewerForm()
+    if form.validate_on_submit():
+        reviewer_usr = User.query.filter_by(username=form.reviewer_username.data).first()
+        if reviewer_usr is not None:
+            reviewer = FundingCallReviewers(call_id=call_id, reviewer_id=reviewer_usr.id)
+            db.session.add(reviewer)
+            db.session.commit()
+            flash("Successfully invited reviewer for call for proposal.")
+        else:
+            flash("Reviewer of that username does not exist.")
     return render_template("view_call.html", title="Funding Calls", call=call, form=form)
 
 @app.route("/apply", methods=["GET","POST"])
@@ -170,12 +179,22 @@ def admin_submitted_reviews():
     return render_template("admin_submitted_reviews.html", title="Submitted reviews")
 
 
-@app.route("/review")
+@app.route("/review", methods=["GET", "POST"])
 @login_required
 def proposals_to_review():
     reviewer_required(current_user)
     form = ReviewProposalForm()
-    return render_template("proposals_to_review.html", title="Pending reviews", form=form)
+    jsonCallIds = FundingCallReviewers.query.filter_by(reviewer_id=current_user.id).all()
+    getPendingFunds = []
+    
+    for item in jsonCallIds:
+        title = SfiProposalCalls.query.filter_by(id=item.call_id).first().title
+        getPendingFunds.append(title)
+
+    return render_template("proposals_to_review.html",
+                            title="Pending reviews",
+                            form=form,
+                            getPendingFunds=getPendingFunds)
 
 
 # not needed

@@ -298,7 +298,7 @@ class ReviewProposalForm(FlaskForm):
     submit = SubmitField("Submit")
     
 class AddReviewerForm(FlaskForm):
-    reviewer_id = StringField("Reviewer ID", validators=[DataRequired() ])
+    reviewer_username = StringField("Reviewer Username", validators=[DataRequired() ])
     submit = SubmitField("Add")
 
 class CollaboratorForm(FlaskForm):

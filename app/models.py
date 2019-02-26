@@ -275,3 +275,8 @@ class Publication(db.Model):
     doi = db.Column(db.String(64))
     title = db.Column(db.Text)
     journal = db.Column(db.Text)
+    
+class FundingCallReviewers(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
+    reviewer_id = db.Column(db.Integer, db.ForeignKey("user.id"))

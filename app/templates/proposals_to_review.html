@@ -7,10 +7,10 @@
 		<div class="col-md-2"></div>
 
 		<div class="col-md-8">
-			<!-- for item in getPendingFunds -->
+			{% for item in getPendingFunds %}
 			<div class="card">
 				<div class="card-body">
-					<h2>Funding call name here</h2>
+					<h2>{{ item }}</h2>
 					<div class="card">
 						<div class="card-body">Proposal 1</div>
 					</div><br>
@@ -19,7 +19,8 @@
 					</div>
 				</div>
 			</div><br>
-			<!-- endfor -->
+			{% endfor %}
+			
 
 			<hr>
 
