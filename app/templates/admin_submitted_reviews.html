@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<h1>Submitted reviews</h1><br>
+	<div class="row">
+		<div class="col-md-2"></div>
+
+		<div class="col-md-8">
+			<!-- for item in getSubmittedReviews -->
+			<!-- @TODO: order table by best average review -->
+			<div class="card">
+				<div class="card-body">
+					<h2>Funding call name here</h2>
+					<div class="card">
+						<div class="card-body">Review 1: rating</div>
+					</div><br>
+					<div class="card">
+						<div class="card-body">Review 2: rating</div>
+					</div>
+				</div>
+			</div><br>
+			<!-- endfor -->
+		</div>
+	</div>
+
+{% endblock %}

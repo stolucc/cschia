@@ -8,4 +8,25 @@
 <p>{{ call.funding }}</p>
 <h2>Key Dates</h2>
 <p>{{ call.key_dates }}</p>
+
+{% if current_user.is_admin %}
+<div class="card w-25">
+	<div class="card-body">
+		<form action="" method="post">
+		    {{ form.hidden_tag() }}
+		    <div class="form-group">
+		        {{ form.reviewer_username.label }}
+		        {{ form.reviewer_username(class="form-control") }}
+		        {% for error in form.reviewer_username.errors %}
+		        <span style="color: red;">[{{ error }}]</span>
+		        {% endfor %}
+		    </div>
+		    <div class="form-group">
+		        {{ form.submit(class="btn btn-primary") }}
+		    </div>
+		</form>
+	</div>
+</div><br>
+{% endif %}
+
 {% endblock %}
