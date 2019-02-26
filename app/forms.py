@@ -29,7 +29,7 @@ class RegistrationForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField("Repeat password", validators=[DataRequired(), \
     EqualTo("password")])
-    
+
 
     submit = SubmitField("Register")
 
@@ -355,7 +355,7 @@ class ReviewProposalForm(FlaskForm):
     [("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5"), ("6", "6"), ("7", "7"), ("8", "8"), ("9", "9"), ("10", "10")], \
     validators=[DataRequired() ])
     submit = SubmitField("Submit")
-    
+
 class AddReviewerForm(FlaskForm):
     reviewer_username = StringField("Reviewer Username", validators=[DataRequired() ])
     submit = SubmitField("Add")

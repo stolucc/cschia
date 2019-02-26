@@ -100,12 +100,14 @@ def index():
     if q is None:
         formList.append("Annual Report")
 
+    proposals = SfiProposalCalls.query.all()
 
-    return render_template("index.html", title="Home ", form=formList, app=appList)
+    return render_template("index.html", title="Home ", form=formList, proposals=proposals, app=appList)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
     if current_user.is_authenticated:
         return redirect(url_for("index"))
     form = LoginForm()
@@ -133,12 +135,12 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for("index"))
     form = RegistrationForm()
-    
+
 
 
     if form.validate_on_submit():
-        
-        
+
+
         user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data)
         user.set_password(form.password.data)
 
@@ -249,7 +251,7 @@ def proposals_to_review():
     form = ReviewProposalForm()
     jsonCallIds = FundingCallReviewers.query.filter_by(reviewer_id=current_user.id).all()
     getPendingFunds = []
-    
+
     for item in jsonCallIds:
         getPendingFunds.append(SfiProposalCalls.query.filter_by(id=item.call_id).first())
 
@@ -257,6 +259,7 @@ def proposals_to_review():
                             title="Pending reviews",
                             form=form,
                             getPendingFunds=getPendingFunds)
+
 
 @app.route("/applications")
 def view_applications():
@@ -1381,4 +1384,18 @@ def annual_report():
                            getNonAcInfo=getNonAcInfo,
                            getEdInfo=getEdInfo,
                            getFreeTextInfo=getFreeTextInfo)
+
+
+    if len(result) > 1 or len(result_orcid) > 1:
+
+        return render_template("search_result2.html", results=result, results_orcid=result_orcid)
+
+    elif len(result) > 0:
+        r = result[0].username
+        return redirect(url_for("show_profile", username=r))
+    elif len(result_orcid) > 0:
+        orcid_username = result_orcid[0].username
+        return redirect(url_for("show_profile", username=orcid_username))
+    else:
+        return render_template('search_not_found.html')
 
