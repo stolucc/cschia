@@ -42,6 +42,7 @@
 
             </div>
 
+             {% if current_user.is_admin == false and current_user.is_reviewer == false%}
             <div class="col border-right">
                 <div class="card mb-3 bg-warning">
                     <div class="card-body">
@@ -53,7 +54,11 @@
                         </ul>
                     </div>
                 </div>
+            
             </div>
+            {% else %}
+            <div class="col"></div>
+            {% endif %}
             <div class="col"></div>
 
         </div>

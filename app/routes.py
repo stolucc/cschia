@@ -1387,7 +1387,7 @@ def annual_report():
                            getEdInfo=getEdInfo,
                            getFreeTextInfo=getFreeTextInfo)
 
-
+    """
     if len(result) > 1 or len(result_orcid) > 1:
 
         return render_template("search_result2.html", results=result, results_orcid=result_orcid)
@@ -1400,3 +1400,4 @@ def annual_report():
         return redirect(url_for("show_profile", username=orcid_username))
     else:
         return render_template('search_not_found.html')
+    """
