@@ -39,7 +39,9 @@ def admin_required(current_user):
     if not current_user.is_admin:
         abort(403)
 
-
+def reviewer_required(current_user):
+    if not current_user.is_reviewer:
+        abort(403)
 
 
 

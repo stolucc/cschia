@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for, request
-from app import app, db, admin_required
+from app import app, db, admin_required, reviewer_required
 from app.forms import LoginForm, RegistrationForm,RegistrationFormAdmin, EditProfileForm, GeneralInformationForm, \
     EducationInformationForm, EmploymentInformationForm, \
     SocietiesInformationForm, AwardsInformationForm, \
@@ -7,17 +7,20 @@ from app.forms import LoginForm, RegistrationForm,RegistrationFormAdmin, EditPro
     InnovationAndCommercialisationForm, \
     PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
     EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
-    ChangePassword, ChangeEmail, ProposalForm, ResetPasswordRequestForm, ResetPasswordForm, FreeTextForm
-from app.email import send_password_reset_email
+    ChangePassword, ChangeEmail, ProposalForm, GrantApplicationForm, CollaboratorForm, \
+    ReviewProposalForm, AddReviewerForm, ResetPasswordRequestForm, ResetPasswordForm, \
+    FreeTextForm
 
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
     Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
     CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls, \
-    Publication, AnnualReport
+    Publication, GrantApplications, GrantApplicationAttachment, FundingCallReviewers, \
+    AnnualReport
 
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename
 from datetime import datetime
 import json
 
@@ -69,11 +72,14 @@ def reset_password_request():
 @login_required
 def index():
     formList = []
+    appList = []
 
     def check_if_filled(tableName, string):
         result = tableName.query.filter_by(user_id=current_user.id).first()
         if result is None:
             formList.append(string)
+
+    appList = GrantApplications.query.filter_by(user_id=current_user.id).filter_by(is_draft=1).all()
 
     check_if_filled(GeneralInformation, "General Information")
     check_if_filled(EducationInformation, "Education")
@@ -94,12 +100,33 @@ def index():
     if q is None:
         formList.append("Annual Report")
 
+    proposals = SfiProposalCalls.query.all()
 
-    return render_template("index.html", title="Home ", form=formList)
+    return render_template("index.html", title="Home ", form=formList, proposals=proposals, app=appList)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
+    def check_exists(name):
+        return User.query.filter_by(username=name).first()
+
+    if check_exists("admin") is None:
+        password = "admin"
+        admin = User(id=-1, orcid="0", username="admin", email="admin@admin.com", is_admin=True)
+        admin.set_password(password)
+
+        db.session.add(admin)
+        db.session.commit()
+
+    if check_exists("reviewer") is None:
+        password = "reviewer"
+        admin = User(id=-2, orcid="-2", username="reviewer", email="reviewer@reviewer.com", is_reviewer=True)
+        admin.set_password(password)
+
+        db.session.add(admin)
+        db.session.commit()
+
     if current_user.is_authenticated:
         return redirect(url_for("index"))
     form = LoginForm()
@@ -124,15 +151,16 @@ def logout():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+
     if current_user.is_authenticated:
         return redirect(url_for("index"))
     form = RegistrationForm()
-    
+
 
 
     if form.validate_on_submit():
-        
-        
+
+
         user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data)
         user.set_password(form.password.data)
 
@@ -149,10 +177,33 @@ def view_calls():
     return render_template("view_calls.html", title="Funding Calls", calls=calls)
 
 
-@app.route("/calls/<call_id>")
+@app.route("/calls/<call_id>", methods=["GET", "POST"])
 def view_call(call_id):
     call = SfiProposalCalls.query.filter_by(id=call_id).first_or_404()
-    return render_template("view_call.html", title="Funding Calls", call=call)
+    form = AddReviewerForm()
+    if form.validate_on_submit():
+        reviewer_usr = User.query.filter_by(username=form.reviewer_username.data).first()
+        if reviewer_usr is not None:
+            reviewer = FundingCallReviewers(call_id=call_id, reviewer_id=reviewer_usr.id)
+            db.session.add(reviewer)
+            db.session.commit()
+            flash("Successfully invited reviewer for call for proposal.")
+        else:
+            flash("Reviewer of that username does not exist.")
+    return render_template("view_call.html", title="Funding Calls", call=call, form=form)
+
+@app.route("/apply", methods=["GET","POST"])
+def apply():
+    form = GrantApplicationForm()
+    if form.validate_on_submit():
+        application = GrantApplications(user_id=current_user.id, title=form.title.data, duration=form.duration.data, \
+        nrp=form.nrp.data, legal_align=form.legal_align.data, country=form.country.data, \
+        sci_abstract=form.sci_abstract.data, lay_abstract=form.lay_abstract.data, is_draft=False)
+        db.session.add(application)
+        db.session.commit()
+        flash("You have completed the application")
+        return redirect(url_for("index"))
+    return render_template("application.html", title="Apply", form=form)
 
 
 @app.route("/admin_register_user", methods=["GET", "POST"])
@@ -207,8 +258,44 @@ def admin_edit_proposals():
     return render_template("admin_edit_proposals.html", title="Admin Edit proposals")
 
 
+@app.route("/admin_reviews")
+@login_required
+def admin_submitted_reviews():
+    admin_required(current_user)
+    return render_template("admin_submitted_reviews.html", title="Submitted reviews")
 
-"""
+
+@app.route("/review", methods=["GET", "POST"])
+@login_required
+def proposals_to_review():
+    reviewer_required(current_user)
+    form = ReviewProposalForm()
+    jsonCallIds = FundingCallReviewers.query.filter_by(reviewer_id=current_user.id).all()
+    getPendingFunds = []
+
+    for item in jsonCallIds:
+        getPendingFunds.append(SfiProposalCalls.query.filter_by(id=item.call_id).first())
+
+    return render_template("proposals_to_review.html",
+                            title="Pending reviews",
+                            form=form,
+                            getPendingFunds=getPendingFunds)
+
+
+@app.route("/applications")
+def view_applications():
+    draft = GrantApplications.query.filter_by(is_draft=1).all()
+    pending = GrantApplications.query.filter_by(is_awarded=1).all()
+    awarded = GrantApplications.query.filter_by(is_pending=1).all()
+
+    return render_template("view_applications.html", title="MyGrants", draft=draft, pending=pending, awarded=awarded)
+
+@app.route("/applications/<grant_id>")
+def view_application(grant_id):
+    grant = GrantApplications.query.filter_by(id=grant_id).first_or_404()
+    return render_template("view_application.html", title="Grant Application", grant=grant)
+
+
 # not needed
 @app.route("/user/<username>")
 @login_required
@@ -219,7 +306,7 @@ def user(username):
         {"author": user, "body": "Responding Funding call: Project12"}
     ]
     return render_template("user.html", user=user, posts=posts)
-"""
+
 
 @app.route("/profile/<username>", methods=["GET"])
 @login_required
@@ -1319,3 +1406,18 @@ def annual_report():
                            getNonAcInfo=getNonAcInfo,
                            getEdInfo=getEdInfo,
                            getFreeTextInfo=getFreeTextInfo)
+
+    """
+    if len(result) > 1 or len(result_orcid) > 1:
+
+        return render_template("search_result2.html", results=result, results_orcid=result_orcid)
+
+    elif len(result) > 0:
+        r = result[0].username
+        return redirect(url_for("show_profile", username=r))
+    elif len(result_orcid) > 0:
+        orcid_username = result_orcid[0].username
+        return redirect(url_for("show_profile", username=orcid_username))
+    else:
+        return render_template('search_not_found.html')
+    """

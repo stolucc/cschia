@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Proposal Application</h1>
+        <form enctype="multipart/form-data" method="post">
+            <div class="form-group">
+                {{ form.hidden_tag() }}
+                {{ form.title.label(class="form-text") }}
+                {{ form.title(class="form-control") }}
+                {% for error in form.title.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.duration.label(class="form-text") }}
+                {{ form.duration(class="form-control") }}
+                {% for error in form.duration.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.nrp.label(class="form-text") }}
+                {{ form.nrp(class="form-control") }}
+                {% for error in form.nrp.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.legal_align.label(class="form-text") }}
+                {{ form.legal_align(class="form-control") }}
+                {% for error in form.legal_align.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.ethical_q1.label(class="form-text") }}
+                {{ form.ethical_q1(class="form-control") }}
+                {% for error in form.ethical_q1.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.ethical_q2.label(class="form-text") }}
+                {{ form.ethical_q2(class="form-control") }}
+                {% for error in form.ethical_q2.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.country.label(class="form-text") }}
+                {{ form.country(class="form-control") }}
+                {% for error in form.country.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.coapps.label(class="form-text") }}
+                {{ form.coapps(class="form-control") }}
+                {% for error in form.coapps.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label for="collabs">Collaborators</label><br>
+                {{ form.collabs(class="form-control") }}
+                {% for error in form.collabs.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.sci_abstract.label(class="form-text") }}
+                {{ form.sci_abstract(class="form-control") }}
+                {% for error in form.sci_abstract.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.lay_abstract.label(class="form-text") }}
+                {{ form.lay_abstract(class="form-control") }}
+                {% for error in form.lay_abstract.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.doc_uplaod.label(class="form-text") }}
+                {{ form.doc_uplaod(class="form-control") }}
+                {% for error in form.doc_uplaod.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div>
+                <br>
+                <p>Submission of an application confirms acceptance of
+                 and agreement with the SFI Terms and Conditions of Research Grants;
+                 that the applicant meets eligibility requirements; that the project
+                 is in full agreement with all legal and regulatory matters governing
+                 research in Ireland; that no aspect of this project is already being
+                 funded from another source and that all details provided are correct.
+             </p>
+                 {{ form.declare(value=True) }} I agree
+             </div><br>
+            <div>{{ form.submit(class="btn btn-primary") }}</div>
+            <div>{{ form.draft(class="btn btn-primary") }}</div>
+        </form>
+    {% endblock %}

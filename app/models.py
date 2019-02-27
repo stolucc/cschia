@@ -5,6 +5,7 @@ from flask_login import UserMixin
 from hashlib import md5
 from time import time
 import jwt
+import json
 from app import app
 
 class User(UserMixin, db.Model):
@@ -39,8 +40,10 @@ class User(UserMixin, db.Model):
     education_public_engagement = db.relationship("EducationPublicEngagement")
     annual_report = db.relationship("AnnualReport")
 
+    #grant_applications = db.relationship("GrantApplications", backref="applicant", lazy="dynamic")
+
     def __repr__(self):
-        return "<User {} {} {} {}>".format(self.username, self.orcid, self.is_admin, self.is_reviewer)
+        return "<User {} {} {} {} {}>".format(self.username, self.orcid, self.is_admin, self.is_reviewer, self.password_hash)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -93,6 +96,7 @@ class FundingCall(db.Model):
     body = db.Column(db.Text)
 
     attachments = db.relationship("FundingCallAttachment")
+    applications = db.relationship("GrantApplications")
 
 
 class FundingCallAttachment(db.Model):
@@ -232,6 +236,35 @@ class SfiProposalCalls(db.Model):
     def __repr__(self):
         return "<SfiProposalCalls {}>".format(self.deadline, self.id)
 
+class GrantApplications(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
+    title = db.Column(db.Text)
+    duration = db.Column(db.Text)
+    nrp = db.Column(db.Text)
+    ethical_q1 = db.Column(db.Boolean)
+    ethical_q2 = db.Column(db.Boolean)
+    country = db.Column(db.Text)
+    coapps = db.Column(db.Text)
+    collabs = db.Column(db.Text)
+    legal_align = db.Column(db.Text)
+    sci_abstract = db.Column(db.Text)
+    lay_abstract = db.Column(db.Text)
+    is_draft = db.Column(db.Boolean)
+    is_pending = db.Column(db.Boolean)
+    is_awarded = db.Column(db.Boolean)
+
+    attachment = db.relationship("GrantApplicationAttachment")
+
+
+class GrantApplicationAttachment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    grant_id = db.Column(db.Integer, db.ForeignKey("grant_applications.id"))
+    name = db.Column(db.String(128))
+    path = db.Column(db.String(128))
+
+
 class EducationPublicEngagement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -284,3 +317,126 @@ class AnnualReport(db.Model):
         return "<AnnualReport {} {} {} {} {} {} {} {} {} {} {} {} {} {}>". \
             format(self.id, self.user_id, self.is_submit, self.date, self.publications_data, self.edu_pub_engagement, self.academic_collab, \
                     self.nonacademic_collab, self.commerc, self.impact, self.deviations, self.highlights, self.challenges, self.activities)
+"""
+def check_exists(name):
+    return User.query.filter_by(username=name).first()
+
+def delete(table, value):
+    table.query.filter_by(user_id=value).delete()
+
+def make_general(user_id, first, last, job, pref, suf, phonePref, phone, email, orcid):
+    dataJson = {
+            "firstName": first,
+            "lastName": last,
+            "jobTitle": job,
+            "prefix": pref,
+            "suffix": suf,
+            "phoneNumPrefix": phonePref,
+            "phoneNum": phone,
+            "email": email,
+            "orcid": orcid
+            }
+    data = json.dumps(dataJson)
+    r = GeneralInformation(user_id=user_id, data=data)
+    db.session.add(r)
+    db.session.commit()
+
+def make_education(user_id, degree, fieldOfStudy, institution, location, yearOfDegreeAward):
+    dataJson = {
+            "degree": degree,
+            "fieldOfStudy": fieldOfStudy,
+            "institution": institution,
+            "location": location,
+            "yearOfDegreeAward": yearOfDegreeAward
+            }
+    data = json.dumps(dataJson)
+    r = EducationInformation(user_id=user_id, data=data)
+    db.session.add(r)
+    db.session.commit()
+
+def make_employment(user_id, company, location, years):
+    dataJson = {
+            "company": company,
+            "location": location,
+            "years":  years
+            }
+    data = json.dumps(dataJson)
+    r = EmploymentInformation(user_id=user_id, data=data)
+    db.session.add(r)
+    db.session.commit()
+
+def make_edupubeng(user_id, nameOfProject, startDate, endDate, activityType, otherType, projectTopic, otherTopic, target, localCountry):
+    dataJson = {
+            "nameOfProject": nameOfProject,
+            "startDate": startDate,
+            "endDate": endDate,
+            "activityType": activityType,
+            "otherType": otherType,
+            "projectTopic": projectTopic,
+            "otherTopic": otherTopic,
+            "target": target,
+            "localCountry": localCountry
+            }
+    data = json.dumps(dataJson)
+    r = EducationPublicEngagement(user_id=user_id, data=data)
+    db.session.add(r)
+    db.session.commit()
+
+def make_user(name, orcid, email, password):
+    if check_exists(name):
+        q = User.query.filter_by(username=name).delete()
+        db.session.commit()
+    row = User(orcid=orcid, username=name, email=email)
+    row.set_password(password)
+    db.session.add(row)
+    db.session.commit()
+
+    if GeneralInformation.query.filter_by(user_id=row.id).first() is not None:
+        delete(GeneralInformation, row.id)
+    make_general(row.id, "Iain", "Felming", "Lecturer", "Dr", "Jr", "+353", "0851111213", "IainFleming@email.com", row.orcid)
+
+    if EducationInformation.query.filter_by(user_id=row.id).first() is not None:
+        delete(GeneralInformation, row.id)
+    make_education(row.id, "Phd Computer Science", "Artificial Intelligence", "University College Cork", "Cork, Ireland", "2000")
+
+    if EmploymentInformation.query.filter_by(user_id=row.id).first() is not None:
+        delete(EmploymentInformation, row.id)
+    make_employment(row.id, "University College Cork", "Cork, Ireland", "10")
+
+    if EducationPublicEngagement.query.filter_by(user_id=row.id).first() is not None:
+        delete(EducationPublicEngagement, row.id)
+    make_edupubeng(row.id, "Artificial Intelligence presentation", "2019-01-01", "2019-01-01", "In-class activities", " ", "Science", " ", "National", "Cork")
+
+if check_exists("admin") is None:
+    password = "admin"
+    admin = User(id=-1, orcid="0", username="admin", email="admin@admin.com", is_admin=True)
+    admin.set_password(password)
+
+    db.session.add(admin)
+    db.session.commit()
+
+if check_exists("reviewer") is None:
+    password = "reviewer"
+    admin = User(id=-2, orcid="-2", username="reviewer", email="reviewer@reviewer.com", is_reviewer=True)
+    admin.set_password(password)
+
+    db.session.add(admin)
+    db.session.commit()
+
+make_user("IainFelming", "0000-0000-0000-0001", "IainFelming@gmail.com", "test")
+make_user("MaryamHines", "0000-0000-0000-0002", "MaryamHines@gmail.com", "test")
+make_user("AshantiCresswell", "0000-0000-0000-0003", "AshantiCresswell@gmail.com", "test")
+make_user("AprilCooper", "0000-0000-0000-0004", "AprilCooper@gmail.com", "test")
+"""
+class FundingCallReviewers(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
+    reviewer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    
+class Reviews(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
+    reviewer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    desc = db.Column(db.Text())
+    rating = db.Column(db.Integer)
+
