@@ -16,7 +16,7 @@ from app.models import User, GeneralInformation, EducationInformation, Employmen
     Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
     CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls, \
     Publication, GrantApplications, GrantApplicationAttachment, FundingCallReviewers, \
-    AnnualReport
+    AnnualReport, Reviews
 
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -172,6 +172,7 @@ def view_call(call_id):
             flash("Reviewer of that username does not exist.")
     return render_template("view_call.html", title="Funding Calls", call=call, form=form)
 
+
 @app.route("/apply", methods=["GET","POST"])
 def apply():
     form = GrantApplicationForm()
@@ -241,14 +242,15 @@ def admin_edit_proposals():
 @login_required
 def admin_submitted_reviews():
     admin_required(current_user)
-    return render_template("admin_submitted_reviews.html", title="Submitted reviews")
+    getSubmittedReviews = Reviews.query.all()
+    
+    return render_template("admin_submitted_reviews.html", title="Submitted reviews", getSubmittedReviews=getSubmittedReviews)
 
 
 @app.route("/review", methods=["GET", "POST"])
 @login_required
 def proposals_to_review():
     reviewer_required(current_user)
-    form = ReviewProposalForm()
     jsonCallIds = FundingCallReviewers.query.filter_by(reviewer_id=current_user.id).all()
     getPendingFunds = []
 
@@ -257,7 +259,6 @@ def proposals_to_review():
 
     return render_template("proposals_to_review.html",
                             title="Pending reviews",
-                            form=form,
                             getPendingFunds=getPendingFunds)
 
 
@@ -269,10 +270,23 @@ def view_applications():
 
     return render_template("view_applications.html", title="MyGrants", draft=draft, pending=pending, awarded=awarded)
 
-@app.route("/applications/<grant_id>")
+@app.route("/applications/<grant_id>", methods=["GET", "POST"])
 def view_application(grant_id):
     grant = GrantApplications.query.filter_by(id=grant_id).first_or_404()
-    return render_template("view_application.html", title="Grant Application", grant=grant)
+    reviewer = FundingCallReviewers.query.filter_by(call_id=grant.call_id).first()
+    
+    if reviewer is not None:
+        form = ReviewProposalForm()
+    else:
+        form = None
+    
+    if form.validate_on_submit():
+        review = Reviews(call_id=grant.call_id, reviewer_id=reviewer.reviewer_id, desc=form.description.data, rating=form.rating.data)
+        db.session.add(review)
+        db.session.commit()
+        flash("Your review has been successfully submitted.")
+    
+    return render_template("view_application.html", title="Grant Application", grant=grant, form=form)
 
 # not needed
 @app.route("/user/<username>")
