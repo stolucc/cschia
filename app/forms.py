@@ -29,7 +29,7 @@ class RegistrationForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField("Repeat password", validators=[DataRequired(), \
     EqualTo("password")])
-    
+
 
     submit = SubmitField("Register")
 
@@ -355,7 +355,7 @@ class ReviewProposalForm(FlaskForm):
     [("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5"), ("6", "6"), ("7", "7"), ("8", "8"), ("9", "9"), ("10", "10")], \
     validators=[DataRequired() ])
     submit = SubmitField("Submit")
-    
+
 class AddReviewerForm(FlaskForm):
     reviewer_username = StringField("Reviewer Username", validators=[DataRequired() ])
     submit = SubmitField("Add")
@@ -384,13 +384,14 @@ class GrantApplicationForm(FlaskForm):
             ("PAN","Priority Area N - Innovation in Services and Business Processes"),\
             ("Software","Software"),("Other","Other")])
     legal_align = TextAreaField("Plese describe how your proposal is aligned with SFI's legal remit (max 250 words)", validators = [Length(min=0,max=250)])
-    ethical_q1 = SelectField("Does the research involve the use of animals?", choices=[("No","No"),("Yes","Yes")])
-    ethical_q2 = SelectField("Does the research involve human participants, human biological material, or identifiable data?", choices=[(0,"No"),(1,"Yes")])
+    ethical_q1 = SelectField(u"Does the research involve the use of animals?", choices=[("No","No"),("Yes","Yes")])
+    ethical_q2 = SelectField(u"Does the research involve human participants, human biological material, or identifiable data?", choices=[("No","No"),("Yes","Yes")])
     country = StringField("Country of applicant")
     coapps = TextAreaField("Coapplicants", validators=[Length(min=0,max=200)])
     collabs = FieldList(FormField(CollaboratorForm), min_entries=2)
     sci_abstract = TextAreaField("Scientific Abstract", validators=[Length(min=0,max=200)])
     lay_abstract = TextAreaField("Lay Abstract", validators=[Length(min=0,max=200)])
     doc_uplaod = MultipleFileField("Programme Documents")
+    declare = BooleanField()
     submit = SubmitField("Submit")
-
+    draft = SubmitField("Save Draft")

@@ -72,11 +72,14 @@ def reset_password_request():
 @login_required
 def index():
     formList = []
+    appList = []
 
     def check_if_filled(tableName, string):
         result = tableName.query.filter_by(user_id=current_user.id).first()
         if result is None:
             formList.append(string)
+
+    appList = GrantApplications.query.filter_by(user_id=current_user.id).filter_by(is_draft=1).all()
 
     check_if_filled(GeneralInformation, "General Information")
     check_if_filled(EducationInformation, "Education")
@@ -99,7 +102,7 @@ def index():
 
     proposals = SfiProposalCalls.query.all()
 
-    return render_template("index.html", title="Home ", form=formList, proposals=proposals)
+    return render_template("index.html", title="Home ", form=formList, proposals=proposals, app=appList)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -132,12 +135,12 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for("index"))
     form = RegistrationForm()
-    
+
 
 
     if form.validate_on_submit():
-        
-        
+
+
         user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data)
         user.set_password(form.password.data)
 
@@ -175,13 +178,9 @@ def apply():
     if form.validate_on_submit():
         application = GrantApplications(user_id=current_user.id, title=form.title.data, duration=form.duration.data, \
         nrp=form.nrp.data, legal_align=form.legal_align.data, country=form.country.data, \
-        sci_abstract=form.sci_abstract.data, lay_abstract=form.lay_abstract.data)
+        sci_abstract=form.sci_abstract.data, lay_abstract=form.lay_abstract.data, is_draft=False)
         db.session.add(application)
         db.session.commit()
-        # file = request.files['file']
-        # filename = secure_filename(file.filename)
-        #
-        # attachment = GrantApplicationAttachment(grant_id=application.id, name=filename, path=)
         flash("You have completed the application")
         return redirect(url_for("index"))
     return render_template("application.html", title="Apply", form=form)
@@ -230,6 +229,7 @@ def publish_call():
         return redirect(url_for("index"))
     return render_template("admin_publish_call.html", title="Publish Call", form=form)
 
+
 @app.route("/admin_edit_proposals")
 @login_required
 def admin_edit_proposals():
@@ -252,7 +252,7 @@ def proposals_to_review():
     form = ReviewProposalForm()
     jsonCallIds = FundingCallReviewers.query.filter_by(reviewer_id=current_user.id).all()
     getPendingFunds = []
-    
+
     for item in jsonCallIds:
         getPendingFunds.append(SfiProposalCalls.query.filter_by(id=item.call_id).first())
 
@@ -260,6 +260,20 @@ def proposals_to_review():
                             title="Pending reviews",
                             form=form,
                             getPendingFunds=getPendingFunds)
+
+
+@app.route("/applications")
+def view_applications():
+    draft = GrantApplications.query.filter_by(is_draft=1).all()
+    pending = GrantApplications.query.filter_by(is_awarded=1).all()
+    awarded = GrantApplications.query.filter_by(is_pending=1).all()
+
+    return render_template("view_applications.html", title="MyGrants", draft=draft, pending=pending, awarded=awarded)
+
+@app.route("/applications/<grant_id>")
+def view_application(grant_id):
+    grant = GrantApplications.query.filter_by(id=grant_id).first_or_404()
+    return render_template("view_application.html", title="Grant Application", grant=grant)
 
 
 # not needed
@@ -1373,3 +1387,16 @@ def annual_report():
                            getEdInfo=getEdInfo,
                            getFreeTextInfo=getFreeTextInfo)
 
+
+    if len(result) > 1 or len(result_orcid) > 1:
+
+        return render_template("search_result2.html", results=result, results_orcid=result_orcid)
+
+    elif len(result) > 0:
+        r = result[0].username
+        return redirect(url_for("show_profile", username=r))
+    elif len(result_orcid) > 0:
+        orcid_username = result_orcid[0].username
+        return redirect(url_for("show_profile", username=orcid_username))
+    else:
+        return render_template('search_not_found.html')

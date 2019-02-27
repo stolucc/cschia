@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>Proposal Application</h1>
-        <form action="" enctype="multipart/form-data" method="post">
+        <form enctype="multipart/form-data" method="post">
             <div class="form-group">
                 {{ form.hidden_tag() }}
                 {{ form.title.label(class="form-text") }}
@@ -88,6 +88,18 @@
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </div>
+            <div>
+                <br>
+                <p>Submission of an application confirms acceptance of
+                 and agreement with the SFI Terms and Conditions of Research Grants;
+                 that the applicant meets eligibility requirements; that the project
+                 is in full agreement with all legal and regulatory matters governing
+                 research in Ireland; that no aspect of this project is already being
+                 funded from another source and that all details provided are correct.
+             </p>
+                 {{ form.declare(value=True) }} I agree
+             </div><br>
             <div>{{ form.submit(class="btn btn-primary") }}</div>
+            <div>{{ form.draft(class="btn btn-primary") }}</div>
         </form>
     {% endblock %}
