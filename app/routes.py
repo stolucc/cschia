@@ -113,7 +113,7 @@ def login():
 
     if check_exists("admin") is None:
         password = "admin"
-        admin = User(id=-1, orcid="0", username="admin", email="admin@admin.com", is_admin=True)
+        admin = User(id=0, orcid="0", username="admin", email="admin@admin.com", is_admin=True)
         admin.set_password(password)
 
         db.session.add(admin)
@@ -121,7 +121,7 @@ def login():
 
     if check_exists("reviewer") is None:
         password = "reviewer"
-        admin = User(id=-2, orcid="-2", username="reviewer", email="reviewer@reviewer.com", is_reviewer=True)
+        admin = User(id=1, orcid="-2", username="reviewer", email="reviewer@reviewer.com", is_reviewer=True)
         admin.set_password(password)
 
         db.session.add(admin)
@@ -197,6 +197,8 @@ def view_call(call_id):
 
 @app.route("/apply/<call_id>", methods=["GET","POST"])
 def apply(call_id):
+    call = SfiProposalCalls.query.filter_by(id=call_id).first_or_404()
+    flash(call.title)
     is_applied = GrantApplications.query.filter_by(user_id=current_user.id, call_id=call_id).first()
     form = GrantApplicationForm()
 
@@ -206,7 +208,7 @@ def apply(call_id):
                 is_applied = GrantApplications(user_id=current_user.id, call_id=call_id)
                 db.session.add(is_applied)
               
-            is_applied.title=form.title.data
+            is_applied.title=call.title
             is_applied.duration=form.duration.data 
             is_applied.nrp=form.nrp.data
             is_applied.legal_align=form.legal_align.data
@@ -215,6 +217,10 @@ def apply(call_id):
             is_applied.country=form.country.data
             is_applied.sci_abstract=form.sci_abstract.data 
             is_applied.lay_abstract=form.lay_abstract.data
+
+            if Collaborators.query.filter_by(grant_id=is_applied.id, user_id=current_user.id).first() is None:
+                collab_row = Collaborators(grant_id=is_applied.id, user_id=current_user.id, is_pi=True)
+                db.session.add(collab_row)
             
             db.session.commit()
 
@@ -237,12 +243,13 @@ def apply(call_id):
         return redirect(url_for("index"))
 
     if request.method == "GET":
+        form.title.data = call.title
         if is_applied is not None and is_applied.is_pending is True:
             flash("You have already applied for this award")
             return redirect(url_for("view_calls"))
-        elif is_applied is not None and is_applied.is_draft is True:
             
-            form.title.data = is_applied.title
+        elif is_applied is not None:
+            
             form.duration.data  = is_applied.duration
             form.nrp.data = is_applied.nrp
             form.legal_align.data = is_applied.legal_align
@@ -330,10 +337,18 @@ def proposals_to_review():
 
 @app.route("/applications")
 def view_applications():
-    draft = GrantApplications.query.filter_by(is_draft=1).all()
+    draft = GrantApplications.query.filter_by(user_id=current_user.id, is_draft=1).all()
     #pending = GrantApplications.query.filter_by(is_awarded=1).all()
-    pending = GrantApplications.query.filter_by(is_pending=1).all()
-    awarded = Grants.query.all()
+    pending = GrantApplications.query.filter_by(user_id=current_user.id, is_pending=1).all()
+    
+    g = Collaborators.query.filter_by(user_id=current_user.id).all()
+    grant_ids = []
+    for a in g:
+        grant_ids.append(a.grant_id)
+
+    awarded = []
+    for grant in grant_ids:
+        awarded.append(Grants.query.filter_by(id=grant).first())
 
     return render_template("view_applications.html", title="MyGrants", draft=draft, pending=pending, awarded=awarded)
 
@@ -346,6 +361,7 @@ def view_application(grant_id):
 def view_grant(id):
     grant = Grants.query.filter_by(id=id).first_or_404()
     collabs = Collaborators.query.filter_by(grant_id=grant.id).all()
+    userC = Collaborators.query.filter_by(user_id=current_user.id).first()
     collabForm = AddCollaboratorForm()
 
     if collabForm.validate_on_submit():
@@ -360,7 +376,7 @@ def view_grant(id):
             db.session.commit()
             flash("New collaborator added")
 
-    return render_template("view_grant.html", grant=grant, collabs=collabs, collabForm=collabForm)
+    return render_template("view_grant.html", user=userC, grant=grant, collabs=collabs, collabForm=collabForm)
 
 # not needed
 @app.route("/user/<username>")
