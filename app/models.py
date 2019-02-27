@@ -317,7 +317,7 @@ class AnnualReport(db.Model):
         return "<AnnualReport {} {} {} {} {} {} {} {} {} {} {} {} {} {}>". \
             format(self.id, self.user_id, self.is_submit, self.date, self.publications_data, self.edu_pub_engagement, self.academic_collab, \
                     self.nonacademic_collab, self.commerc, self.impact, self.deviations, self.highlights, self.challenges, self.activities)
-
+"""
 def check_exists(name):
     return User.query.filter_by(username=name).first()
 
@@ -427,7 +427,7 @@ make_user("IainFelming", "0000-0000-0000-0001", "IainFelming@gmail.com", "test")
 make_user("MaryamHines", "0000-0000-0000-0002", "MaryamHines@gmail.com", "test")
 make_user("AshantiCresswell", "0000-0000-0000-0003", "AshantiCresswell@gmail.com", "test")
 make_user("AprilCooper", "0000-0000-0000-0004", "AprilCooper@gmail.com", "test")
-
+"""
 class FundingCallReviewers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
