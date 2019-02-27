@@ -120,6 +120,13 @@ dmypy.json
 .idea
 
 #Mac Stuff
+
+.DS_Storesendgrid.env
+sendgrid.env
+sendgrid.env
+sendgrid.env
+sendgrid.env
+
 .DS_Store
 
 #vscode stuff
@@ -127,5 +134,4 @@ dmypy.json
 
 #DB stuff
 chia.db
-
 

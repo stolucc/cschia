@@ -48,6 +48,22 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError("An account with this orcid number already exists.")
 
+class UpgradeUser(FlaskForm):
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    Admin = BooleanField("Admin")
+    Reviewer = BooleanField("Reviewer")
+    HostI = BooleanField("Host Institution")
+    
+    submit = SubmitField("Change Account Type")
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is None:
+            raise ValidationError("Email doesnt exist.")
+
+
+
+
 class RegistrationFormAdmin(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
@@ -296,7 +312,7 @@ class SfiFundingRatioForm(FlaskForm):
     sfiFundingRatioEdit = SubmitField("Update")
 
 class ProposalForm(FlaskForm):
-    deadline = DateField("Deadline")
+    deadline = DateField("Deadline yyyy-mm-dd")
     contact = StringField("Contact")
     title = TextAreaField("Title", validators = [Length(min=0,max=128)])
     overview = TextAreaField("Overview", validators = [Length(min=0,max=1500)])

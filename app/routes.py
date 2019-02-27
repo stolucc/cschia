@@ -108,6 +108,25 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
 
+    def check_exists(name):
+        return User.query.filter_by(username=name).first()
+
+    if check_exists("admin") is None:
+        password = "admin"
+        admin = User(id=-1, orcid="0", username="admin", email="admin@admin.com", is_admin=True)
+        admin.set_password(password)
+
+        db.session.add(admin)
+        db.session.commit()
+
+    if check_exists("reviewer") is None:
+        password = "reviewer"
+        admin = User(id=-2, orcid="-2", username="reviewer", email="reviewer@reviewer.com", is_reviewer=True)
+        admin.set_password(password)
+
+        db.session.add(admin)
+        db.session.commit()
+
     if current_user.is_authenticated:
         return redirect(url_for("index"))
     form = LoginForm()
@@ -132,6 +151,7 @@ def logout():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+
     if current_user.is_authenticated:
         return redirect(url_for("index"))
     form = RegistrationForm()
@@ -1400,7 +1420,7 @@ def annual_report():
                            getEdInfo=getEdInfo,
                            getFreeTextInfo=getFreeTextInfo)
 
-
+    """
     if len(result) > 1 or len(result_orcid) > 1:
 
         return render_template("search_result2.html", results=result, results_orcid=result_orcid)
@@ -1413,4 +1433,4 @@ def annual_report():
         return redirect(url_for("show_profile", username=orcid_username))
     else:
         return render_template('search_not_found.html')
-
+    """

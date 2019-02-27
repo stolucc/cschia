@@ -1,8 +1,8 @@
-"""empty message
+"""init
 
-Revision ID: 4accbe4294b0
+Revision ID: 46eb56be6a71
 Revises: 
-Create Date: 2019-02-26 14:51:42.531905
+Create Date: 2019-02-27 14:08:23.925297
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '4accbe4294b0'
+revision = '46eb56be6a71'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -56,6 +56,24 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('data', sa.Text(), nullable=True),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('annual_report',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('is_submit', sa.Boolean(), nullable=True),
+    sa.Column('date', sa.String(), nullable=True),
+    sa.Column('publications_data', sa.Text(), nullable=True),
+    sa.Column('edu_pub_engagement', sa.Text(), nullable=True),
+    sa.Column('academic_collab', sa.Text(), nullable=True),
+    sa.Column('nonacademic_collab', sa.Text(), nullable=True),
+    sa.Column('commerc', sa.Text(), nullable=True),
+    sa.Column('impact', sa.Text(), nullable=True),
+    sa.Column('deviations', sa.Text(), nullable=True),
+    sa.Column('highlights', sa.Text(), nullable=True),
+    sa.Column('challenges', sa.Text(), nullable=True),
+    sa.Column('activities', sa.Text(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -109,6 +127,14 @@ def upgrade():
     sa.ForeignKeyConstraint(['call_id'], ['funding_call.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('funding_call_reviewers',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('call_id', sa.Integer(), nullable=True),
+    sa.Column('reviewer_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['call_id'], ['funding_call.id'], ),
+    sa.ForeignKeyConstraint(['reviewer_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('funding_diversification',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
@@ -139,6 +165,8 @@ def upgrade():
     sa.Column('sci_abstract', sa.Text(), nullable=True),
     sa.Column('lay_abstract', sa.Text(), nullable=True),
     sa.Column('is_draft', sa.Boolean(), nullable=True),
+    sa.Column('is_pending', sa.Boolean(), nullable=True),
+    sa.Column('is_awarded', sa.Boolean(), nullable=True),
     sa.ForeignKeyConstraint(['call_id'], ['funding_call.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -199,6 +227,16 @@ def upgrade():
     sa.ForeignKeyConstraint(['primary_user'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('reviews',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('call_id', sa.Integer(), nullable=True),
+    sa.Column('reviewer_id', sa.Integer(), nullable=True),
+    sa.Column('desc', sa.Text(), nullable=True),
+    sa.Column('rating', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['call_id'], ['funding_call.id'], ),
+    sa.ForeignKeyConstraint(['reviewer_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('sfi_funding_ratio',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
@@ -243,6 +281,7 @@ def downgrade():
     op.drop_table('societies_information')
     op.drop_table('sfi_proposal_calls')
     op.drop_table('sfi_funding_ratio')
+    op.drop_table('reviews')
     op.drop_table('publication')
     op.drop_table('presentations')
     op.drop_index(op.f('ix_post_timestamp'), table_name='post')
@@ -254,6 +293,7 @@ def downgrade():
     op.drop_table('grant_applications')
     op.drop_table('general_information')
     op.drop_table('funding_diversification')
+    op.drop_table('funding_call_reviewers')
     op.drop_table('funding_call_attachment')
     op.drop_table('events')
     op.drop_table('employment_information')
@@ -261,6 +301,7 @@ def downgrade():
     op.drop_table('education_information')
     op.drop_table('communications_overview')
     op.drop_table('awards_information')
+    op.drop_table('annual_report')
     op.drop_table('academic_collaborations')
     op.drop_index(op.f('ix_user_username'), table_name='user')
     op.drop_index(op.f('ix_user_orcid'), table_name='user')
