@@ -39,11 +39,12 @@ class User(UserMixin, db.Model):
     sfi_funding_ratio = db.relationship("SfiFundingRatio")
     education_public_engagement = db.relationship("EducationPublicEngagement")
     annual_report = db.relationship("AnnualReport")
+    collaborators = db.relationship("Collaborators")
 
     #grant_applications = db.relationship("GrantApplications", backref="applicant", lazy="dynamic")
 
     def __repr__(self):
-        return "<User {} {} {} {} {}>".format(self.username, self.orcid, self.is_admin, self.is_reviewer, self.password_hash)
+        return "<User {} {} {} {} {} {}>".format(self.id, self.username, self.orcid, self.is_admin, self.is_reviewer, self.password_hash)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -244,17 +245,17 @@ class GrantApplications(db.Model):
     title = db.Column(db.Text)
     duration = db.Column(db.Text)
     nrp = db.Column(db.Text)
-    ethical_q1 = db.Column(db.Boolean)
-    ethical_q2 = db.Column(db.Boolean)
+    ethical_q1 = db.Column(db.String)
+    ethical_q2 = db.Column(db.String)
     country = db.Column(db.Text)
     coapps = db.Column(db.Text)
     collabs = db.Column(db.Text)
     legal_align = db.Column(db.Text)
     sci_abstract = db.Column(db.Text)
     lay_abstract = db.Column(db.Text)
-    is_draft = db.Column(db.Boolean)
-    is_pending = db.Column(db.Boolean)
-    is_awarded = db.Column(db.Boolean)
+    is_draft = db.Column(db.Boolean, default=False)
+    is_pending = db.Column(db.Boolean, default=False)
+    is_awarded = db.Column(db.Boolean,default=False)
 
     attachment = db.relationship("GrantApplicationAttachment")
 
@@ -451,7 +452,14 @@ class Grants(db.Model):
     title = db.Column(db.Text)
     duration = db.Column(db.Text)
 
+    def __repr__(self):
+        return "<Grants {} {} {} {} {}>".format(self.id, self.call_id, self.application_id, self.title, self.duration)
+
+
 class Collaborators(db.Model):
     grant_id = db.Column(db.Integer, db.ForeignKey("grants.id"), primary_key=True)
     user_id = db.Column(db.String, db.ForeignKey("user.id"),  primary_key=True)
     is_pi = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return "<Collaborators {} {} {}>".format(self.grant_id, self.user_id, self.is_pi)

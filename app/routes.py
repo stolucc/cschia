@@ -9,14 +9,14 @@ from app.forms import LoginForm, RegistrationForm,RegistrationFormAdmin, EditPro
     EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
     ChangePassword, ChangeEmail, ProposalForm, GrantApplicationForm, CollaboratorForm, \
     ReviewProposalForm, AddReviewerForm, ResetPasswordRequestForm, ResetPasswordForm, \
-    FreeTextForm
+    FreeTextForm, AddCollaboratorForm
 
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
     Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
     CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls, \
     Publication, GrantApplications, GrantApplicationAttachment, FundingCallReviewers, \
-    AnnualReport
+    AnnualReport, Grants, Collaborators
 
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -180,6 +180,7 @@ def view_calls():
 @app.route("/calls/<call_id>", methods=["GET", "POST"])
 def view_call(call_id):
     call = SfiProposalCalls.query.filter_by(id=call_id).first_or_404()
+
     form = AddReviewerForm()
     if form.validate_on_submit():
         reviewer_usr = User.query.filter_by(username=form.reviewer_username.data).first()
@@ -190,21 +191,66 @@ def view_call(call_id):
             flash("Successfully invited reviewer for call for proposal.")
         else:
             flash("Reviewer of that username does not exist.")
+        
     return render_template("view_call.html", title="Funding Calls", call=call, form=form)
+
 
 @app.route("/apply/<call_id>", methods=["GET","POST"])
 def apply(call_id):
+    is_applied = GrantApplications.query.filter_by(user_id=current_user.id, call_id=call_id).first()
     form = GrantApplicationForm()
-    if form.validate_on_submit():
-        application = GrantApplications(user_id=current_user.id, call_id=call_id, title=form.title.data, duration=form.duration.data, \
-        nrp=form.nrp.data, legal_align=form.legal_align.data, country=form.country.data, \
-        sci_abstract=form.sci_abstract.data, lay_abstract=form.lay_abstract.data, is_draft=False)
-        db.session.add(application)
-        db.session.commit()
-        flash("You have completed the application")
-        return redirect(url_for("index"))
-    return render_template("application.html", title="Apply", form=form)
 
+    if request.method == "POST":
+        if form.validate_on_submit():
+            if is_applied is None:
+                is_applied = GrantApplications(user_id=current_user.id, call_id=call_id)
+                db.session.add(is_applied)
+              
+            is_applied.title=form.title.data
+            is_applied.duration=form.duration.data 
+            is_applied.nrp=form.nrp.data
+            is_applied.legal_align=form.legal_align.data
+            #is_applied.ethical_q1=form.ethical_q1.data
+            #is_applied.ethical_q2=form.ethical_q2.data
+            is_applied.country=form.country.data
+            is_applied.sci_abstract=form.sci_abstract.data 
+            is_applied.lay_abstract=form.lay_abstract.data
+            
+            db.session.commit()
+
+            flash("You have completed the application")
+
+        if "submit" in request.form:
+            if is_applied is not None:
+                is_applied.is_draft = False
+                is_applied.is_pending = True
+                db.session.commit()
+                flash("Submitted proposal")
+        if "draft" in request.form:
+            if is_applied is not None and is_applied.is_pending is False:
+                is_applied.is_draft = True
+                db.session.commit()
+                flash("Submitted draft")
+            if is_applied.is_pending is True:
+                flash("You have already applied for this award")
+
+        return redirect(url_for("index"))
+
+    if request.method == "GET":
+        if is_applied is not None and is_applied.is_pending is True:
+            flash("You have already applied for this award")
+            return redirect(url_for("view_calls"))
+        elif is_applied is not None and is_applied.is_draft is True:
+            
+            form.title.data = is_applied.title
+            form.duration.data  = is_applied.duration
+            form.nrp.data = is_applied.nrp
+            form.legal_align.data = is_applied.legal_align
+            form.country.data = is_applied.country
+            form.sci_abstract.data  = is_applied.sci_abstract
+            form.lay_abstract.data = is_applied.lay_abstract
+
+    return render_template("application.html", title="Apply", form=form)
 
 @app.route("/admin_register_user", methods=["GET", "POST"])
 def admin_register_user():
@@ -285,8 +331,9 @@ def proposals_to_review():
 @app.route("/applications")
 def view_applications():
     draft = GrantApplications.query.filter_by(is_draft=1).all()
-    pending = GrantApplications.query.filter_by(is_awarded=1).all()
-    awarded = GrantApplications.query.filter_by(is_pending=1).all()
+    #pending = GrantApplications.query.filter_by(is_awarded=1).all()
+    pending = GrantApplications.query.filter_by(is_pending=1).all()
+    awarded = Grants.query.all()
 
     return render_template("view_applications.html", title="MyGrants", draft=draft, pending=pending, awarded=awarded)
 
@@ -295,6 +342,25 @@ def view_application(grant_id):
     grant = GrantApplications.query.filter_by(id=grant_id).first_or_404()
     return render_template("view_application.html", title="Grant Application", grant=grant)
 
+@app.route("/view_grant/<id>", methods=["GET", "POST"])
+def view_grant(id):
+    grant = Grants.query.filter_by(id=id).first_or_404()
+    collabs = Collaborators.query.filter_by(grant_id=grant.id).all()
+    collabForm = AddCollaboratorForm()
+
+    if collabForm.validate_on_submit():
+        user = User.query.filter_by(email=collabForm.email.data).first_or_404()
+        check_exists = Collaborators.query.filter_by(user_id=user.id, grant_id=id).first()
+        if check_exists is None:
+            is_pi = False
+            if collabForm.is_pi.data == "yes":
+                is_pi = True
+            c = Collaborators(grant_id=id, user_id=user.id, is_pi=is_pi)
+            db.session.add(c)
+            db.session.commit()
+            flash("New collaborator added")
+
+    return render_template("view_grant.html", grant=grant, collabs=collabs, collabForm=collabForm)
 
 # not needed
 @app.route("/user/<username>")
