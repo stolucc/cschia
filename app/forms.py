@@ -52,6 +52,7 @@ class UpgradeUser(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
     Admin = BooleanField("Admin")
     Reviewer = BooleanField("Reviewer")
+    HostI = BooleanField("Host Institution")
     submit = SubmitField("Change Account Type")
 
     def validate_email(self, email):
@@ -310,7 +311,7 @@ class SfiFundingRatioForm(FlaskForm):
     sfiFundingRatioEdit = SubmitField("Update")
 
 class ProposalForm(FlaskForm):
-    deadline = DateField("Deadline")
+    deadline = DateField("Deadline yyyy-mm-dd")
     contact = StringField("Contact")
     title = TextAreaField("Title", validators = [Length(min=0,max=128)])
     overview = TextAreaField("Overview", validators = [Length(min=0,max=1500)])
