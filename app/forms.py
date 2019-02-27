@@ -319,7 +319,19 @@ class ProposalForm(FlaskForm):
     funding = TextAreaField("Funding", validators = [Length(min=0,max=1500)])
     key_dates = TextAreaField("Key Dates", validators = [Length(min=0,max=1500)])
     file_upload = FileField("Key Files")
-    submit = SubmitField("Add")
+    submit = SubmitField("Submit")
+
+
+
+class EditProposalForm(FlaskForm):
+    deadline = DateField("Deadline yyyy-mm-dd")
+    contact = StringField("Contact")
+    title = TextAreaField("Title", validators = [Length(min=0,max=128)])
+    overview = TextAreaField("Overview", validators = [Length(min=0,max=1500)])
+    funding = TextAreaField("Funding", validators = [Length(min=0,max=1500)])
+    key_dates = TextAreaField("Key Dates", validators = [Length(min=0,max=1500)])
+    file_upload = FileField("Key Files")
+    submit = SubmitField("Edit")
 
 class EducationAndPublicEngagementForm(FlaskForm):
     nameOfProject = TextAreaField("Name of project", \

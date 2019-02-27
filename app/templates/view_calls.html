@@ -10,7 +10,11 @@
     <ul class="list-group">
     {% for call in calls %}
         <li class="list-group-item">
-            <h3><a href="{{ url_for('view_call', call_id=call.id) }}">{{ call.title }}</a><t><a href="{{ url_for('apply', call_id=call.id) }}" class="btn btn-primary">Apply</a></h3>
+                <h3><a href="{{ url_for('view_call', call_id=call.id) }}">{{ call.title }}</a></h3>
+                <a href="{{ url_for('apply', call_id=call.id) }}" class="btn btn-primary">Apply</a>
+                <a href="{{ url_for('edit', call_id=call.id) }}" class="btn btn-primary">Edit</a>
+                <a href="{{ url_for('delete', call_id=call.id) }}" class="btn btn-primary">Delete</a>
+                
         </li>
     {% endfor %}
     </ul>

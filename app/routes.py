@@ -206,6 +206,53 @@ def apply(call_id):
     return render_template("application.html", title="Apply", form=form)
 
 
+@app.route("/edit/<call_id>", methods=["GET","POST"])
+def edit(call_id):
+    admin_required(current_user)
+    call = SfiProposalCalls.query.filter_by(id=call_id).first()
+
+
+    form = ProposalForm(obj=call)
+    if form.validate_on_submit():
+        call.title = form.title.data
+        call.deadline = form.deadline.data
+        call.contact=form.contact.data
+        call.overview=form.overview.data
+        call.funding=form.funding.data
+        call.key_dates=form.key_dates.data
+        db.session.add(call)
+        db.session.commit()
+        flash("The call for proposal has been edited!")
+        return redirect(url_for("index"))
+
+
+    """
+    search datebade for calls with that id
+    display form with that text filled in
+    editable and then send it back to 
+    """
+    return render_template("admin_edit_call_for_proposal.html", title="Edit Call For Proposal", form=form)
+
+
+
+
+@app.route("/delete/<call_id>", methods=["GET","POST"])
+def delete(call_id):
+    """
+    should take callid
+    search through table for first item with that id
+    then delete it and show a message
+    """
+    return 
+
+
+
+
+
+
+
+
+
 @app.route("/admin_register_user", methods=["GET", "POST"])
 def admin_register_user():
     admin_required(current_user)
