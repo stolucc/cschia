@@ -428,7 +428,6 @@ make_user("MaryamHines", "0000-0000-0000-0002", "MaryamHines@gmail.com", "test")
 make_user("AshantiCresswell", "0000-0000-0000-0003", "AshantiCresswell@gmail.com", "test")
 make_user("AprilCooper", "0000-0000-0000-0004", "AprilCooper@gmail.com", "test")
 
-
 class FundingCallReviewers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
