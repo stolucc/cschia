@@ -16,7 +16,7 @@ from app.models import User, GeneralInformation, EducationInformation, Employmen
     Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
     CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls, \
     Publication, GrantApplications, GrantApplicationAttachment, FundingCallReviewers, \
-    AnnualReport
+    AnnualReport, Grants, Collaborators
 
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -285,8 +285,9 @@ def proposals_to_review():
 @app.route("/applications")
 def view_applications():
     draft = GrantApplications.query.filter_by(is_draft=1).all()
-    pending = GrantApplications.query.filter_by(is_awarded=1).all()
-    awarded = GrantApplications.query.filter_by(is_pending=1).all()
+    #pending = GrantApplications.query.filter_by(is_awarded=1).all()
+    pending = GrantApplications.query.filter_by(is_pending=1).all()
+    awarded = Grants.query.all()
 
     return render_template("view_applications.html", title="MyGrants", draft=draft, pending=pending, awarded=awarded)
 
@@ -295,6 +296,11 @@ def view_application(grant_id):
     grant = GrantApplications.query.filter_by(id=grant_id).first_or_404()
     return render_template("view_application.html", title="Grant Application", grant=grant)
 
+@app.route("/view_grant/<id>")
+def view_grant(id):
+    grant = Grants.query.filter_by(id=id).first_or_404()
+    collabs = Collaborators.query.filter_by(grant_id=grant.id).all()
+    return render_template("view_grant.html", grant=grant, collabs=collabs)
 
 # not needed
 @app.route("/user/<username>")
