@@ -3,7 +3,7 @@ from app.models import User, Post, FundingCall, FundingCallAttachment, GeneralIn
 EducationInformation, EmploymentInformation, SocietiesInformation, AwardsInformation, \
 FundingDiversification, Impacts, InnovationAndCommercialisation, Presentations, \
 AcademicCollaborations, NonAcademicCollaborations, Events, CommunicationsOverview, SfiFundingRatio, \
-EducationPublicEngagement, AnnualReport
+EducationPublicEngagement, AnnualReport, Collaborators, Grants
 
 
 @app.shell_context_processor
@@ -30,7 +30,9 @@ def make_shell_context():
         "CommunicationsOverview" : CommunicationsOverview,
         "SfiFundingRatio" : SfiFundingRatio,
         "EducationPublicEngagement" : EducationPublicEngagement,
-        "AnnualReport" : AnnualReport
+        "AnnualReport" : AnnualReport,
+        "Grants" : Grants,
+        "Collaborators" :  Collaborators
 
         }
 
