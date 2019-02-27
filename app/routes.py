@@ -192,11 +192,11 @@ def view_call(call_id):
             flash("Reviewer of that username does not exist.")
     return render_template("view_call.html", title="Funding Calls", call=call, form=form)
 
-@app.route("/apply", methods=["GET","POST"])
-def apply():
+@app.route("/apply/<call_id>", methods=["GET","POST"])
+def apply(call_id):
     form = GrantApplicationForm()
     if form.validate_on_submit():
-        application = GrantApplications(user_id=current_user.id, title=form.title.data, duration=form.duration.data, \
+        application = GrantApplications(user_id=current_user.id, call_id=call_id, title=form.title.data, duration=form.duration.data, \
         nrp=form.nrp.data, legal_align=form.legal_align.data, country=form.country.data, \
         sci_abstract=form.sci_abstract.data, lay_abstract=form.lay_abstract.data, is_draft=False)
         db.session.add(application)

@@ -258,6 +258,9 @@ class GrantApplications(db.Model):
 
     attachment = db.relationship("GrantApplicationAttachment")
 
+    def __repr__(self):
+        return "<GrantApplications {} {} {}>".format(self.id, self.title, self.call_id)
+
 
 class GrantApplicationAttachment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
