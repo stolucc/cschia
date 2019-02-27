@@ -59,8 +59,8 @@ def edit_publication(id):
         return redirect(url_for("view_publication", id=publication.id))
     return render_template("publication.html", form=form)
 
-@app.route("/publications", defaults={"id": None})
-@app.route("/publications/by/<int:id>")
+@app.route("/list_publications", defaults={"id": None})
+@app.route("/list_publications/by/<int:id>")
 @login_required
 def list_publications(id):
     if id is None:
@@ -70,9 +70,9 @@ def list_publications(id):
         user = User.query.filter_by(id=id).first_or_404()
         publications = Publication.query.filter_by(primary_user=id).all()
 
-    return render_template("publications.html", user=user, publications=publications)
+    return render_template("list_publications.html", user=user, publications=publications)
 
-@app.route("/publications/<int:id>")
+@app.route("/list_publications/<int:id>")
 @login_required
 def view_publication(id):
     publication = Publication.query.filter_by(id=id).first_or_404()
