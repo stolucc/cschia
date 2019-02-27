@@ -262,9 +262,10 @@ def admin_edit_proposals():
 @login_required
 def admin_submitted_reviews():
     admin_required(current_user)
+    getAllFundingCalls = SfiProposalCalls.query.all()
     getSubmittedReviews = Reviews.query.all()
     
-    return render_template("admin_submitted_reviews.html", title="Submitted reviews", getSubmittedReviews=getSubmittedReviews)
+    return render_template("admin_submitted_reviews.html", title="Submitted reviews", getAllFundingCalls=getAllFundingCalls, getSubmittedReviews=getSubmittedReviews)
 
 
 @app.route("/review", methods=["GET", "POST"])
@@ -283,7 +284,8 @@ def proposals_to_review():
                 if not review:
                     to_add.append(prop)
             if len(to_add) > 0:
-                getPendingFunds.append(to_add)
+                title = SfiProposalCalls.query.filter_by(id=item.call_id).first().title
+                getPendingFunds.append([to_add, title])
     else:
         getPendingFunds = None
     

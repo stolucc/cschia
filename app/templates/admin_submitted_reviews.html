@@ -10,7 +10,7 @@
 			{% for item in getSubmittedReviews|sort(attribute='rating', reverse=True)|groupby(attribute='call_id') %}
 			<div class="card">
 				<div class="card-body">
-					<h2>Call {{ item[0] }}</h2>
+					<h2>{{ getAllFundingCalls[item[0]-1].title }}</h2>
 					{% for prop in item[1] %}
 					<div class="card">
 						<div class="card-body">Description: {{ prop["desc"] }}</div>

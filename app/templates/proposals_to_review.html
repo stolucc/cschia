@@ -10,8 +10,8 @@
 			{% for call in getPendingFunds %}
 			<div class="card">
 				<div class="card-body">
-					<h2>Call {{ loop.index }}</h2>
-					{% for prop in call %}
+					<h2>{{ call[1] }}</h2>
+					{% for prop in call[0] %}
 					<div class="card">
 						<div class="card-body"><a href="{{url_for("view_applications")}}/{{ prop.id }}">{{ prop["title"] }}</a></div>
 					</div><br>
