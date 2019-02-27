@@ -251,11 +251,11 @@ def admin_submitted_reviews():
 @login_required
 def proposals_to_review():
     reviewer_required(current_user)
-    jsonCallIds = FundingCallReviewers.query.filter_by(reviewer_id=current_user.id).all()
+    callIds = FundingCallReviewers.query.filter_by(reviewer_id=current_user.id).all()
     getPendingFunds = []
 
-    for item in jsonCallIds:
-        getPendingFunds.append(SfiProposalCalls.query.filter_by(id=item.call_id).first())
+    for item in callIds:
+        getPendingFunds.append(GrantApplications.query.filter_by(call_id=item.call_id).all())
 
     return render_template("proposals_to_review.html",
                             title="Pending reviews",
@@ -275,18 +275,19 @@ def view_application(grant_id):
     grant = GrantApplications.query.filter_by(id=grant_id).first_or_404()
     reviewer = FundingCallReviewers.query.filter_by(call_id=grant.call_id).first()
     
-    if reviewer is not None:
+    getReviewInfo = Reviews.query.filter_by(call_id=grant.call_id).filter_by(reviewer_id=current_user.id).all()
+    
+    if getReviewInfo is None and reviewer is not None:
         form = ReviewProposalForm()
+        if form.validate_on_submit():
+            review = Reviews(call_id=grant.call_id, reviewer_id=reviewer.reviewer_id, desc=form.description.data, rating=form.rating.data)
+            db.session.add(review)
+            db.session.commit()
+            flash("Your review has been successfully submitted.")
     else:
         form = None
     
-    if form.validate_on_submit():
-        review = Reviews(call_id=grant.call_id, reviewer_id=reviewer.reviewer_id, desc=form.description.data, rating=form.rating.data)
-        db.session.add(review)
-        db.session.commit()
-        flash("Your review has been successfully submitted.")
-    
-    return render_template("view_application.html", title="Grant Application", grant=grant, form=form)
+    return render_template("view_application.html", title="Grant Application", grant=grant, form=form, getReviewInfo=getReviewInfo)
 
 # not needed
 @app.route("/user/<username>")

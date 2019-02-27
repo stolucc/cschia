@@ -10,31 +10,15 @@
 			{% for item in getPendingFunds %}
 			<div class="card">
 				<div class="card-body">
-					<h2>{{ item["title"] }}</h2>
+					<h2>{{ item }}</h2>
+					{% for prop in item %}
 					<div class="card">
-						<div class="card-body">Proposal 1</div>
+						<div class="card-body"><a href="{{url_for("view_applications")}}/{{ loop.index }}">{{ prop["title"] }}</a></div>
 					</div><br>
-					<div class="card">
-						<div class="card-body">Proposal 2</div>
-					</div>
+					{% endfor %}
 				</div>
 			</div><br>
 			{% endfor %}
-			
-
-			<hr>
-
-            {% if current_user.is_reviewer %}
-            <!-- for item in getReviewInfo -->
-            <!-- submittedReviews table - get proposal ID and reviewer ID -->
-            <div class="card mb-3">
-                <div class="card-body">
-                    <p>Name of project: <!-- item["description"] --></p>
-                    <p>Rating: <!-- item["review"] --></p>
-                </div>
-            </div>
-            <!-- endfor -->
-            {% endif %}
 		</div>
 	</div>
 
