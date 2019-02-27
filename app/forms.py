@@ -48,6 +48,19 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError("An account with this orcid number already exists.")
 
+class UpgradeUser(FlaskForm):
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    Admin = BooleanField("Admin")
+    Reviewer = BooleanField("Reviewer")
+    submit = SubmitField("Change Account Type")
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError("Email doesnt exist.")
+
+
+
 
 class RegistrationFormAdmin(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
