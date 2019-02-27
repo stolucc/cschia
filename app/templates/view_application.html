@@ -53,17 +53,15 @@
 </div>
 {% endif %}
 
-{% if getReviewInfo != None %}
+{% if getReviewInfo %}
 <hr>
 
-{% for item in getReviewInfo %}
-<div class="card mb-3">
+<div class="card mb-5">
     <div class="card-body">
-        <p>Description: {{ item["description"] }}</p>
-        <p>Rating: {{ item["review"] }}</p>
+        <p>Description: {{ getReviewInfo["desc"] }}</p>
+        <p>Rating: {{ getReviewInfo["rating"] }}</p>
     </div>
 </div>
-{% endfor %}
 {% endif %}
 
 {% endblock %}

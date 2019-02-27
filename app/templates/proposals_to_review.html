@@ -5,21 +5,22 @@
 	<h1>Pending proposals to review</h1><br>
 	<div class="row">
 		<div class="col-md-2"></div>
-
+		{% if getPendingFunds != None %}
 		<div class="col-md-8">
-			{% for item in getPendingFunds %}
+			{% for call in getPendingFunds %}
 			<div class="card">
 				<div class="card-body">
-					<h2>{{ item }}</h2>
-					{% for prop in item %}
+					<h2>Call {{ loop.index }}</h2>
+					{% for prop in call %}
 					<div class="card">
-						<div class="card-body"><a href="{{url_for("view_applications")}}/{{ loop.index }}">{{ prop["title"] }}</a></div>
+						<div class="card-body"><a href="{{url_for("view_applications")}}/{{ prop.id }}">{{ prop["title"] }}</a></div>
 					</div><br>
 					{% endfor %}
 				</div>
 			</div><br>
 			{% endfor %}
 		</div>
+		{% endif %}
 	</div>
 
 {% endblock %}

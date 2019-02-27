@@ -272,11 +272,21 @@ def admin_submitted_reviews():
 def proposals_to_review():
     reviewer_required(current_user)
     callIds = FundingCallReviewers.query.filter_by(reviewer_id=current_user.id).all()
-    getPendingFunds = []
-
-    for item in callIds:
-        getPendingFunds.append(GrantApplications.query.filter_by(call_id=item.call_id).all())
-
+    
+    if callIds:
+        getPendingFunds = []
+        for item in callIds:
+            proposals = GrantApplications.query.filter_by(call_id=item.call_id).all()
+            to_add = []
+            for prop in proposals:
+                review = Reviews.query.filter_by(proposal_id=prop.id).first()
+                if not review:
+                    to_add.append(prop)
+            if len(to_add) > 0:
+                getPendingFunds.append(to_add)
+    else:
+        getPendingFunds = None
+    
     return render_template("proposals_to_review.html",
                             title="Pending reviews",
                             getPendingFunds=getPendingFunds)
@@ -295,15 +305,16 @@ def view_application(grant_id):
     grant = GrantApplications.query.filter_by(id=grant_id).first_or_404()
     reviewer = FundingCallReviewers.query.filter_by(call_id=grant.call_id).first()
     
-    getReviewInfo = Reviews.query.filter_by(call_id=grant.call_id).filter_by(reviewer_id=current_user.id).all()
+    getReviewInfo = Reviews.query.filter_by(proposal_id=grant_id).filter_by(reviewer_id=current_user.id).first()
     
-    if getReviewInfo is None and reviewer is not None:
+    if not getReviewInfo and reviewer is not None:
         form = ReviewProposalForm()
         if form.validate_on_submit():
-            review = Reviews(call_id=grant.call_id, reviewer_id=reviewer.reviewer_id, desc=form.description.data, rating=form.rating.data)
+            review = Reviews(call_id=grant.call_id, proposal_id=grant_id, reviewer_id=reviewer.reviewer_id, desc=form.description.data, rating=form.rating.data)
             db.session.add(review)
             db.session.commit()
             flash("Your review has been successfully submitted.")
+            return redirect(url_for("proposals_to_review"))
     else:
         form = None
     
