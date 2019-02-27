@@ -1,25 +1,52 @@
 from flask import render_template, flash, redirect, url_for, request
-from app import app, db, admin_required
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, GeneralInformationForm, \
+from app import app, db, admin_required, reviewer_required
+from app.forms import LoginForm, RegistrationForm,RegistrationFormAdmin, EditProfileForm, GeneralInformationForm, \
     EducationInformationForm, EmploymentInformationForm, \
     SocietiesInformationForm, AwardsInformationForm, \
     FundingDiversificationForm, TeamMembersForm, ImpactsForm, \
     InnovationAndCommercialisationForm, \
     PresentationsForm, AcademicCollaborationsForm, NonAcademicCollaborationsForm, \
     EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
-    ChangePassword, ChangeEmail, ProposalForm
+    ChangePassword, ChangeEmail, ProposalForm, GrantApplicationForm, CollaboratorForm, \
+    ReviewProposalForm, AddReviewerForm, ResetPasswordRequestForm, ResetPasswordForm, \
+    FreeTextForm
 
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
     Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
     CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls, \
-    Publication
+    Publication, GrantApplications, GrantApplicationAttachment, FundingCallReviewers, \
+    AnnualReport
 
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename
 from datetime import datetime
 import json
 
+def query_table(table):
+    return table.query.filter_by(user_id=current_user.id).all()
+
+def get_list(q):
+    lst = []
+    for item in q:
+        lst.append(json.loads(item.data))
+    return lst
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset.')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)
 
 @app.before_request
 def before_request():
@@ -27,19 +54,36 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
 
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash('Check your email for the instructions to reset your password')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html',
+                           title='Reset Password', form=form)
 
 @app.route("/")
 @login_required
 def index():
     formList = []
+    appList = []
 
     def check_if_filled(tableName, string):
         result = tableName.query.filter_by(user_id=current_user.id).first()
         if result is None:
             formList.append(string)
 
+    appList = GrantApplications.query.filter_by(user_id=current_user.id).filter_by(is_draft=1).all()
+
     check_if_filled(GeneralInformation, "General Information")
-    check_if_filled(EmploymentInformation, "Education")
+    check_if_filled(EducationInformation, "Education")
+    check_if_filled(EmploymentInformation, "Employment")
     check_if_filled(SocietiesInformation, "Societies")
     check_if_filled(AwardsInformation, "Awards")
     check_if_filled(FundingDiversification, "Funding Diversification")
@@ -51,13 +95,19 @@ def index():
     check_if_filled(CommunicationsOverview, "Communications Overview")
     check_if_filled(SfiFundingRatio, "SFI Funding Ratio")
     check_if_filled(EducationPublicEngagement, "Education and Public engagement")
-   
 
-    return render_template("index.html", title="Home ", form=formList)
+    q = AnnualReport.query.filter_by(user_id=current_user.id, is_submit=True).first()
+    if q is None:
+        formList.append("Annual Report")
+
+    proposals = SfiProposalCalls.query.all()
+
+    return render_template("index.html", title="Home ", form=formList, proposals=proposals, app=appList)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
     if current_user.is_authenticated:
         return redirect(url_for("index"))
     form = LoginForm()
@@ -85,9 +135,15 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for("index"))
     form = RegistrationForm()
+
+
+
     if form.validate_on_submit():
+
+
         user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data)
         user.set_password(form.password.data)
+
         db.session.add(user)
         db.session.commit()
         flash("Congratulations, you are now a registered user!")
@@ -101,18 +157,49 @@ def view_calls():
     return render_template("view_calls.html", title="Funding Calls", calls=calls)
 
 
-@app.route("/calls/<call_id>")
+@app.route("/calls/<call_id>", methods=["GET", "POST"])
 def view_call(call_id):
     call = SfiProposalCalls.query.filter_by(id=call_id).first_or_404()
-    return render_template("view_call.html", title="Funding Calls", call=call)
+    form = AddReviewerForm()
+    if form.validate_on_submit():
+        reviewer_usr = User.query.filter_by(username=form.reviewer_username.data).first()
+        if reviewer_usr is not None:
+            reviewer = FundingCallReviewers(call_id=call_id, reviewer_id=reviewer_usr.id)
+            db.session.add(reviewer)
+            db.session.commit()
+            flash("Successfully invited reviewer for call for proposal.")
+        else:
+            flash("Reviewer of that username does not exist.")
+    return render_template("view_call.html", title="Funding Calls", call=call, form=form)
+
+@app.route("/apply", methods=["GET","POST"])
+def apply():
+    form = GrantApplicationForm()
+    if form.validate_on_submit():
+        application = GrantApplications(user_id=current_user.id, title=form.title.data, duration=form.duration.data, \
+        nrp=form.nrp.data, legal_align=form.legal_align.data, country=form.country.data, \
+        sci_abstract=form.sci_abstract.data, lay_abstract=form.lay_abstract.data, is_draft=False)
+        db.session.add(application)
+        db.session.commit()
+        flash("You have completed the application")
+        return redirect(url_for("index"))
+    return render_template("application.html", title="Apply", form=form)
 
 
 @app.route("/admin_register_user", methods=["GET", "POST"])
 def admin_register_user():
     admin_required(current_user)
-    form = RegistrationForm()
+    form = RegistrationFormAdmin()
+    admin = 0
+    reviewer = 0
+
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data)
+        if form.prefix.data == "SFI ADMIN":
+            admin = 1
+        elif form.prefix.data == "Reviewer":
+            reviewer = 1
+
+        user = User(username=form.username.data, email=form.email.data, orcid=form.orcid.data , is_admin=admin , is_reviewer = reviewer)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
@@ -143,27 +230,80 @@ def publish_call():
     return render_template("admin_publish_call.html", title="Publish Call", form=form)
 
 
+@app.route("/admin_edit_proposals")
+@login_required
+def admin_edit_proposals():
+    admin_required(current_user)
+    print("testing testing 1 2 3 ")
+    return render_template("admin_edit_proposals.html", title="Admin Edit proposals")
+
+
+@app.route("/admin_reviews")
+@login_required
+def admin_submitted_reviews():
+    admin_required(current_user)
+    return render_template("admin_submitted_reviews.html", title="Submitted reviews")
+
+
+@app.route("/review", methods=["GET", "POST"])
+@login_required
+def proposals_to_review():
+    reviewer_required(current_user)
+    form = ReviewProposalForm()
+    jsonCallIds = FundingCallReviewers.query.filter_by(reviewer_id=current_user.id).all()
+    getPendingFunds = []
+
+    for item in jsonCallIds:
+        getPendingFunds.append(SfiProposalCalls.query.filter_by(id=item.call_id).first())
+
+    return render_template("proposals_to_review.html",
+                            title="Pending reviews",
+                            form=form,
+                            getPendingFunds=getPendingFunds)
+
+
+@app.route("/applications")
+def view_applications():
+    draft = GrantApplications.query.filter_by(is_draft=1).all()
+    pending = GrantApplications.query.filter_by(is_awarded=1).all()
+    awarded = GrantApplications.query.filter_by(is_pending=1).all()
+
+    return render_template("view_applications.html", title="MyGrants", draft=draft, pending=pending, awarded=awarded)
+
+@app.route("/applications/<grant_id>")
+def view_application(grant_id):
+    grant = GrantApplications.query.filter_by(id=grant_id).first_or_404()
+    return render_template("view_application.html", title="Grant Application", grant=grant)
+
+
 # not needed
 @app.route("/user/<username>")
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = [
-        {"author": user, "body": "Test post #1"},
-        {"author": user, "body": "Test post #2"}
+        {"author": user, "body": "Responding Funding call: Project1"},
+        {"author": user, "body": "Responding Funding call: Project12"}
     ]
     return render_template("user.html", user=user, posts=posts)
 
 
-@app.route("/profile", methods=["GET"])
+@app.route("/profile/<username>", methods=["GET"])
 @login_required
-def show_profile():
-    check_if_exists = GeneralInformation.query.filter_by(user_id=current_user.id).first()
+def show_profile(username):
 
-    return render_template("profile.html", title="View Profile", info=check_if_exists)
+    user = User.query.filter_by(username=username).first_or_404()
+    check_if_exists = GeneralInformation.query.filter_by(user_id=user.id).first()
+    gen_info = None
+    if check_if_exists is not None:
+        gen_info = json.loads(check_if_exists.data)
+
+    edu_info = get_list(query_table(EducationInformation))
 
 
-
+    return render_template("profile.html", title="View Profile", user=user,
+                                                                info=gen_info,
+                                                                edu_info=edu_info)
 
 
 @app.route("/edit_account", methods=["GET", "POST"])
@@ -243,47 +383,20 @@ def edit_profile():
     else:
         getGenInfo = ""
 
-    jsonEduInfo = EducationInformation.query.filter_by(user_id=current_user.id).all()
-    getEduInfo = get_list(jsonEduInfo)
-
-    jsonEmployInfo = EmploymentInformation.query.filter_by(user_id=current_user.id).all()
-    getEmployInfo = get_list(jsonEmployInfo)
-
-    jsonSocInfo = SocietiesInformation.query.filter_by(user_id=current_user.id).all()
-    getSocInfo = get_list(jsonSocInfo)
-
-    jsonAwardInfo = AwardsInformation.query.filter_by(user_id=current_user.id).all()
-    getAwardInfo = get_list(jsonAwardInfo)
-
-    jsonFundInfo = FundingDiversification.query.filter_by(user_id=current_user.id).all()
-    getFundInfo = get_list(jsonFundInfo)
-
-    jsonImpInfo = Impacts.query.filter_by(user_id=current_user.id).all()
-    getImpInfo = get_list(jsonImpInfo)
-
-    jsonInnInfo = InnovationAndCommercialisation.query.filter_by(user_id=current_user.id).all()
-    getInnInfo = get_list(jsonInnInfo)
-
-    jsonPresInfo = Presentations.query.filter_by(user_id=current_user.id).all()
-    getPresInfo = get_list(jsonPresInfo)
-
-    jsonAcInfo = AcademicCollaborations.query.filter_by(user_id=current_user.id).all()
-    getAcInfo = get_list(jsonAcInfo)
-
-    jsonNonAcInfo = NonAcademicCollaborations.query.filter_by(user_id=current_user.id).all()
-    getNonAcInfo = get_list(jsonNonAcInfo)
-
-    jsonEvInfo = Events.query.filter_by(user_id=current_user.id).all()
-    getEvInfo = get_list(jsonEvInfo)
-
-    jsonCommInfo = CommunicationsOverview.query.filter_by(user_id=current_user.id).all()
-    getCommInfo = get_list(jsonCommInfo)
-
-    jsonSfiInfo = SfiFundingRatio.query.filter_by(user_id=current_user.id).all()
-    getSfiInfo = get_list(jsonSfiInfo)
-
-    jsonEdInfo = EducationPublicEngagement.query.filter_by(user_id=current_user.id).all()
-    getEdInfo = get_list(jsonEdInfo)
+    getEduInfo = get_list(query_table(EducationInformation))
+    getEmployInfo = get_list(query_table(EmploymentInformation))
+    getSocInfo = get_list(query_table(SocietiesInformation))
+    getAwardInfo = get_list(query_table(AwardsInformation))
+    getFundInfo = get_list(query_table(FundingDiversification))
+    getImpInfo = get_list(query_table(Impacts))
+    getInnInfo = get_list(query_table(InnovationAndCommercialisation))
+    getPresInfo = get_list(query_table(Presentations))
+    getAcInfo = get_list(query_table(AcademicCollaborations))
+    getNonAcInfo = get_list(query_table(NonAcademicCollaborations))
+    getEvInfo = get_list(query_table(Events))
+    getCommInfo = get_list(query_table(CommunicationsOverview))
+    getSfiInfo = get_list(query_table(SfiFundingRatio))
+    getEdInfo = get_list(query_table(EducationPublicEngagement))
 
     if request.method == "POST":
 
@@ -754,24 +867,9 @@ def edit_profile():
         elif teamMemForm.validate_on_submit and "teamMemEdit" in request.form:
             # @TODO
             flash("testSuccessTea")
-        elif impactsForm.validate_on_submit and "impactsEdit" in request.form:
-            num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = InnovationAndCommercialisation.query.filter_by(user_id=current_user.id).all()[num-1]
-
-            info = {
-                "title" : impactsForm.title.data,
-                "category" : impactsForm.category.data,
-                "primaryBeneficiary" : impactsForm.primaryBeneficiary.data,
-                "primaryAttribution" : impactsForm.primaryAttribution.data
-            }
-
-            infoJson = json.dumps(info)
-            userInfo.data = infoJson
-            db.session.commit()
-            flash("Entry successfully updated.")
         elif innovForm.validate_on_submit and "innovEdit" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = Impacts.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = InnovationAndCommercialisation.query.filter_by(user_id=current_user.id).all()[num-1]
 
             info = {
                 "year" : innovForm.year.data,
@@ -784,19 +882,17 @@ def edit_profile():
             userInfo.data = infoJson
             db.session.commit()
             flash("Entry successfully updated.")
-        elif pubForm.validate_on_submit and "pubEdit" in request.form:
+        elif impactsForm.validate_on_submit and "impactsEdit" in request.form:
             num = int([s for s in request.form.keys() if s.isdigit()][0])
-            userInfo = Publications.query.filter_by(user_id=current_user.id).all()[num-1]
+            userInfo = Impacts.query.filter_by(user_id=current_user.id).all()[num-1]
 
             info = {
-                "year" : pubForm.year.data,
-                "type" : pubForm.type.data,
-                "title" : pubForm.title.data,
-                "name" : pubForm.name.data,
-                "publicationStatus" : pubForm.publicationStatus.data,
-                "doi" : pubForm.doi.data,
-                "primaryAttribution" : pubForm.primaryAttribution.data
+                "title" : impactsForm.title.data,
+                "category" : impactsForm.category.data,
+                "primaryBeneficiary" : impactsForm.primaryBeneficiary.data,
+                "primaryAttribution" : impactsForm.primaryAttribution.data
             }
+
 
             infoJson = json.dumps(info)
             userInfo.data = infoJson
@@ -925,7 +1021,7 @@ def edit_profile():
             userInfo.data = infoJson
             db.session.commit()
             flash("Entry successfully updated.")
-        
+
         return redirect(url_for("edit_profile"))
 
     return render_template("edit_profile.html",
@@ -964,7 +1060,8 @@ def edit_profile():
                            getEdInfo=getEdInfo)
 
 
-@app.route('/search')
+
+@app.route('/search',methods=['GET','POST'])
 @login_required
 def search():
     keyword = request.args.get('keyword')
@@ -973,4 +1070,334 @@ def search():
     if result:
         return render_template('user_result.html', user=result)
     else:
+        return render_template('search_result.html')
+
+
+# @app.route('/search')
+# @login_required
+# def search():
+#     keyword = request.args.get('keyword')
+
+#     result = User.query.filter(User.username.contains(keyword)).all()
+#     result_orcid = User.query.filter(User.orcid.contains(keyword)).all()
+
+#     if len(result) > 1 or len(result_orcid) > 1:
+#         return render_template("search_result2.html", results=result, results_orcid=result_orcid)
+#     elif len(result) > 0:
+#         r = result[0].username
+#         return redirect(url_for("show_profile", username=r))
+#     elif len(result_orcid) > 0:
+#         orcid_username = result_orcid[0].username
+#         return redirect(url_for("show_profile", username=orcid_username))
+#     else:
+#         return render_template('search_not_found.html')
+
+
+
+
+@app.route("/annual_report", methods=["GET", "POST"])
+@login_required
+def annual_report():
+
+    def query_table2(table):
+        year = int(datetime.now().year)
+        return table.query.filter_by(user_id=current_user.id, date=year).first()
+
+    def get_list2(q):
+        lst = []
+        for item in q:
+            if item.data is not None:
+                lst.append(json.loads(item.data))
+        return lst
+
+    def get_list(item):
+        if item is None:
+            return {}
+        temp, final, dev, hi, ch, act = {}, {}, {}, {}, {}, {}
+        if item.is_submit is not None:
+            final["submit"] = item.is_submit
+        if item.publications_data is not None:
+            pub = json.loads(item.publications_data)
+            final["publications_data"] = pub
+        if item.edu_pub_engagement is not None:
+            edu = json.loads(item.edu_pub_engagement)
+            final["edu_pub_engagement"] = edu
+        if item.academic_collab is not None:
+            ac = json.loads(item.academic_collab)
+            final["academic_collab"] = ac
+        if item.nonacademic_collab is not None:
+            non = json.loads(item.nonacademic_collab)
+            final["nonacademic_collab"] = non
+        if item.commerc is not None:
+            com = json.loads(item.commerc)
+            final["commerc"] = com
+        if item.impact is not None:
+            imp = json.loads(item.impact)
+            final["impact"] = imp
+        if item.deviations is not None:
+            dev["deviations"] = item.deviations
+        if item.highlights is not None:
+            hi = json.loads(item.highlights)
+        if item.challenges is not None:
+            ch["challenges"] = item.challenges
+        if item.activities is not None:
+            act["activities"] = item.activities
+        temp = {**act, **ch, **hi, **dev}
+        final["freeText"] = temp
+        return final
+
+    pubEngageForm = EducationAndPublicEngagementForm()
+    academicCollabsForm = AcademicCollaborationsForm()
+    nonAcademicCollabsForm = NonAcademicCollaborationsForm()
+    innovForm = InnovationAndCommercialisationForm()
+    impactsForm = ImpactsForm()
+    freeForm = FreeTextForm()
+
+    getImpInfo = get_list2(query_table(Impacts))
+    getAcInfo = get_list2(query_table(AcademicCollaborations))
+    getNonAcInfo = get_list2(query_table(NonAcademicCollaborations))
+    getEdInfo = get_list2(query_table(EducationPublicEngagement))
+    getInnovInfo = get_list2(query_table(InnovationAndCommercialisation))
+    getFreeTextInfo = get_list(query_table2(AnnualReport))
+
+    if request.method == "POST":
+        userInfo = query_table2(AnnualReport)
+
+        if pubEngageForm.validate_on_submit and "pubEngageSubmit" in request.form:
+            if userInfo is None:
+                userInfo = AnnualReport(user_id=current_user.id)
+            db.session.add(userInfo)
+            info = {
+                "nameOfProject": pubEngageForm.nameOfProject.data,
+                "startDate": pubEngageForm.startDate.data,
+                "endDate": pubEngageForm.endDate.data,
+                "activityType": pubEngageForm.activityType.data,
+                "otherType": pubEngageForm.otherType.data,
+                "projectTopic": pubEngageForm.projectTopic.data,
+                "otherTopic": pubEngageForm.otherTopic.data,
+                "target": pubEngageForm.target.data,
+                "localCountry": pubEngageForm.localCountry.data,
+            }
+            infoJson = json.dumps(info)
+            userInfo.edu_pub_engagement = infoJson
+
+            db.session.commit()
+            flash("Changes saved.")
+
+        elif academicCollabsForm.validate_on_submit and "academicCollabsSubmit" in request.form:
+            if userInfo is None:
+                userInfo = AnnualReport(user_id=current_user.id)
+            db.session.add(userInfo)
+            info = {
+                "startDate": academicCollabsForm.startDate.data,
+                "endDate": academicCollabsForm.endDate.data,
+                "nameOfInstitution": academicCollabsForm.nameOfInstitution.data,
+                "department": academicCollabsForm.department.data,
+                "location": academicCollabsForm.location.data,
+                "nameOfCollaborator": academicCollabsForm.nameOfCollaborator.data,
+                "goal": academicCollabsForm.goal.data,
+                "frequency": academicCollabsForm.frequency.data,
+                "primaryAttribution": academicCollabsForm.primaryAttribution.data
+            }
+            infoJson = json.dumps(info)
+            userInfo.academic_collab = infoJson
+
+            db.session.commit()
+            flash("Changes saved.")
+
+        elif nonAcademicCollabsForm.validate_on_submit and "nonAcademicCollabsSubmit" in request.form:
+            if userInfo is None:
+                userInfo = AnnualReport(user_id=current_user.id)
+            db.session.add(userInfo)
+            info = {
+                "startDate": nonAcademicCollabsForm.startDate.data,
+                "endDate": nonAcademicCollabsForm.endDate.data,
+                "nameOfInstitution": nonAcademicCollabsForm.nameOfInstitution.data,
+                "department": nonAcademicCollabsForm.department.data,
+                "location": nonAcademicCollabsForm.location.data,
+                "nameOfCollaborator": nonAcademicCollabsForm.nameOfCollaborator.data,
+                "goal": nonAcademicCollabsForm.goal.data,
+                "frequency": nonAcademicCollabsForm.frequency.data,
+                "primaryAttribution": nonAcademicCollabsForm.primaryAttribution.data
+            }
+            infoJson = json.dumps(info)
+            userInfo.nonacademic_collab = infoJson
+            db.session.commit()
+            flash("Changes saved.")
+
+        elif impactsForm.validate_on_submit and "impactsSubmit" in request.form:
+            if userInfo is None:
+                userInfo = AnnualReport(user_id=current_user.id)
+            db.session.add(userInfo)
+            info = {
+                "title": impactsForm.title.data,
+                "category": impactsForm.category.data,
+                "primaryBeneficiary": impactsForm.primaryBeneficiary.data,
+                "primaryAttribution": impactsForm.primaryAttribution.data
+            }
+            infoJson = json.dumps(info)
+            userInfo.impact = infoJson
+            db.session.commit()
+            flash("Changes saved.")
+
+        elif innovForm.validate_on_submit and "innovSubmit" in request.form:
+            if userInfo is None:
+                userInfo = AnnualReport(user_id=current_user.id)
+            db.session.add(userInfo)
+            info = {
+                "year": innovForm.year.data,
+                "type": innovForm.type.data,
+                "title": innovForm.title.data,
+                "primaryAttribution": innovForm.primaryAttribution.data
+            }
+            infoJson = json.dumps(info)
+            userInfo.commerc = infoJson
+
+            db.session.commit()
+            flash("Changes saved.")
+
+        elif freeForm.validate_on_submit and "freeTextSubmit" in request.form:
+            if userInfo is None:
+                userInfo = AnnualReport(user_id=current_user.id)
+            db.session.add(userInfo)
+            userInfo.deviations = freeForm.deviations.data
+            highlights = {
+                "highlight1" : freeForm.highlight1.data,
+                "highlight2" : freeForm.highlight2.data,
+                "highlight3" : freeForm.highlight3.data
+            }
+            userInfo.highlights = json.dumps(highlights)
+            userInfo.challenges = freeForm.challenges.data
+            userInfo.activities = freeForm.activities.data
+            db.session.commit()
+            flash("Changes saved.")
+
+        elif "submitFinalVersion" in request.form:
+            if len(getFreeTextInfo) < 11:
+                flash("You must complete all forms first")
+            else:
+                flash(getFreeTextInfo)
+                if userInfo is None:
+                    userInfo = AnnualReport(user_id=current_user.id)
+                db.session.add(userInfo)
+                userInfo.is_submit = True
+                db.session.commit()
+                flash("Report Submitted.")
+
+        elif "editDraft" in request.form:
+            if userInfo is None:
+                userInfo = AnnualReport(user_id=current_user.id)
+            db.session.add(userInfo)
+            userInfo.is_submit = False
+            db.session.commit()
+            flash("Report in draft mode.")
+
+        elif "viewDraft" in request.form:
+            form = getFreeTextInfo = get_list(query_table2(AnnualReport))
+            return render_template("annual_report_draft.html", form=form)
+
+        return redirect(url_for("annual_report"))
+
+    elif request.method == "GET":
+
+        getFreeTextInfo = query_table2(AnnualReport)
+        if getFreeTextInfo is not None:
+            getFreeTextInfo = get_list(query_table2(AnnualReport))
+        else:
+            t = AnnualReport(user_id=current_user.id)
+            db.session.add(t)
+            getFreeTextInfo = get_list(query_table2(AnnualReport))
+            db.session.commit()
+
+        if getFreeTextInfo["submit"]== True:
+           flash("Report already submitted for this year")
+
+        if "impact" in getFreeTextInfo:
+            impactsForm.title.data = getFreeTextInfo["impact"]["title"]
+            impactsForm.category.data = getFreeTextInfo["impact"]["category"]
+            impactsForm.primaryBeneficiary.data = getFreeTextInfo["impact"]["primaryBeneficiary"]
+            impactsForm.primaryAttribution.data = getFreeTextInfo["impact"]["primaryAttribution"]
+
+        if "edu_pub_engagement" in getFreeTextInfo:
+            pubEngageForm.nameOfProject.data = getFreeTextInfo["edu_pub_engagement"]["nameOfProject"]
+            pubEngageForm.startDate.data = getFreeTextInfo["edu_pub_engagement"]["startDate"]
+            pubEngageForm.endDate.data = getFreeTextInfo["edu_pub_engagement"]["endDate"]
+            pubEngageForm.activityType.data = getFreeTextInfo["edu_pub_engagement"]["activityType"]
+            pubEngageForm.otherType.data = getFreeTextInfo["edu_pub_engagement"]["otherType"]
+            pubEngageForm.projectTopic.data = getFreeTextInfo["edu_pub_engagement"]["projectTopic"]
+            pubEngageForm.otherTopic.data = getFreeTextInfo["edu_pub_engagement"]["otherTopic"]
+            pubEngageForm.target.data = getFreeTextInfo["edu_pub_engagement"]["target"]
+            pubEngageForm.localCountry.data = getFreeTextInfo["edu_pub_engagement"]["localCountry"]
+
+        if "academic_collab" in getFreeTextInfo:
+            academicCollabsForm.startDate.data = getFreeTextInfo["academic_collab"]["startDate"]
+            academicCollabsForm.endDate.data = getFreeTextInfo["academic_collab"]["endDate"]
+            academicCollabsForm.nameOfInstitution.data = getFreeTextInfo["academic_collab"]["nameOfInstitution"]
+            academicCollabsForm.department.data = getFreeTextInfo["academic_collab"]["department"]
+            academicCollabsForm.location.data = getFreeTextInfo["academic_collab"]["location"]
+            academicCollabsForm.nameOfCollaborator.data = getFreeTextInfo["academic_collab"]["nameOfCollaborator"]
+            academicCollabsForm.goal.data = getFreeTextInfo["academic_collab"]["goal"]
+            academicCollabsForm.frequency.data = getFreeTextInfo["academic_collab"]["frequency"]
+            academicCollabsForm.primaryAttribution.data = getFreeTextInfo["academic_collab"]["primaryAttribution"]
+
+        if "nonacademic_collab" in getFreeTextInfo:
+            nonAcademicCollabsForm.startDate.data = getFreeTextInfo["nonacademic_collab"]["startDate"]
+            nonAcademicCollabsForm.endDate.data = getFreeTextInfo["nonacademic_collab"]["endDate"]
+            nonAcademicCollabsForm.nameOfInstitution.data = getFreeTextInfo["nonacademic_collab"]["nameOfInstitution"]
+            nonAcademicCollabsForm.department.data = getFreeTextInfo["nonacademic_collab"]["department"]
+            nonAcademicCollabsForm.location.data = getFreeTextInfo["nonacademic_collab"]["location"]
+            nonAcademicCollabsForm.nameOfCollaborator.data = getFreeTextInfo["nonacademic_collab"]["nameOfCollaborator"]
+            nonAcademicCollabsForm.goal.data = getFreeTextInfo["nonacademic_collab"]["goal"]
+            nonAcademicCollabsForm.frequency.data = getFreeTextInfo["nonacademic_collab"]["frequency"]
+            nonAcademicCollabsForm.primaryAttribution.data = getFreeTextInfo["nonacademic_collab"]["primaryAttribution"]
+
+        if "commerc" in getFreeTextInfo:
+            innovForm.year.data = getFreeTextInfo["commerc"]["year"]
+            innovForm.type.data = getFreeTextInfo["commerc"]["type"]
+            innovForm.title.data = getFreeTextInfo["commerc"]["title"]
+            innovForm.primaryAttribution.data = getFreeTextInfo["commerc"]["primaryAttribution"]
+
+        if "freeText" in getFreeTextInfo:
+            if "deviations" in getFreeTextInfo["freeText"]:
+                freeForm.deviations.data = getFreeTextInfo["freeText"]["deviations"]
+            if "highlight1" in getFreeTextInfo["freeText"]:
+                freeForm.highlight1.data = getFreeTextInfo["freeText"]["highlight1"]
+            if "highlight2" in getFreeTextInfo["freeText"]:
+                freeForm.highlight2.data = getFreeTextInfo["freeText"]["highlight2"]
+            if "highlight3" in getFreeTextInfo["freeText"]:
+                freeForm.highlight3.data = getFreeTextInfo["freeText"]["highlight3"]
+            if "challenges" in getFreeTextInfo["freeText"]:
+                freeForm.challenges.data = getFreeTextInfo["freeText"]["challenges"]
+            if "activities" in getFreeTextInfo["freeText"]:
+                freeForm.activities.data = getFreeTextInfo["freeText"]["activities"]
+
+    return render_template("annual_report.html",
+                           title="Edit Profile",
+                           impactsForm=impactsForm,
+                           innovForm=innovForm,
+                           academicCollabsForm=academicCollabsForm,
+                           nonAcademicCollabsForm=nonAcademicCollabsForm,
+                           pubEngageForm=pubEngageForm,
+                           freeForm=freeForm,
+
+                           getImpInfo=getImpInfo,
+                           getInnovInfo=getInnovInfo,
+                           getAcInfo=getAcInfo,
+                           getNonAcInfo=getNonAcInfo,
+                           getEdInfo=getEdInfo,
+                           getFreeTextInfo=getFreeTextInfo)
+
+    """
+    if len(result) > 1 or len(result_orcid) > 1:
+
+        return render_template("search_result2.html", results=result, results_orcid=result_orcid)
+
+    elif len(result) > 0:
+        r = result[0].username
+        return redirect(url_for("show_profile", username=r))
+    elif len(result_orcid) > 0:
+        orcid_username = result_orcid[0].username
+        return redirect(url_for("show_profile", username=orcid_username))
+    else:
         return render_template('search_not_found.html')
+    """

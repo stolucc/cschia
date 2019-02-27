@@ -1,32 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>View Profile</h1>
-    <h3>General Information</h3>
-    <ul>
-        <li>
-            {{ info.firstName }}
-        </li>
-        <li>
-            {{ info.lastName }}
-        </li>
-        <li>
-            {{ info.jobTitle }}
-        </li>
-        <li>
-            {{ info.prefix }}
-        </li>
-        <li>
-            {{ info.suffix }}
-        </li>
-        <li>
-            {{ info.email }}
-        </li>
-        <li>
-            {{ info.orcid }}
-        </li>
-    </ul>
-    <a href="{{ url_for("edit_general_information", _anchor="general_info" ) }}">Edit General Information</a>
+    {% if info != None %}
+    <h1 class="mb-5">Viewing Profile of {{user.username}} ({{user.orcid}})! </h1>
+    <div class="row text-center">
+        <div class="col border-right">
+            <h3>General Info</h3>
+            <ul class="list-unstyled">
+                <li>
+                    <b>First name:</b> {{ info["prefix"] }}{{ info["firstName"] }}
+                </li>
+                <li>
+                    <b>Last name:</b> {{ info["lastName"] }}
+                </li>
+                <li>
+                    <b>Title:</b> {{ info["jobTitle"] }}
+                </li>
+                <li>
+                    <b>Email:</b> {{ info["email"] }}
+                </li>
+                <li>
+                    <b>ORCID#:</b> {{ info["orcid"] }}
+                </li>
+            </ul>
+        </div>
+        <div class="col border-right">
+            <h3>Publications</h3>
+        </div>
+        <div class="col">
+            <ul class="list-unstyled">
+                {% for info in edu_info %}
+                <h3>Education</h3>
+                <li><b>Degree:</b> {{ info["degree"] }}</li>
+                <li><b>Field of Study:</b> {{ info["fieldOfStudy"] }}</li>
+                <li><b>Institution:</b> {{ info["institution"] }}</li>
+                <li><b>Location:</b> {{ info["location"] }}</li>
+                <li class="mb-2"><b>Year of degree award:</b> {{ info["yearOfDegreeAward"] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% else %}
+    <h1> This profile has not been completed yet! </h1>
+    {% endif %}
 
     
 {% endblock %}

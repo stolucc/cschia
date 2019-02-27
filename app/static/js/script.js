@@ -86,8 +86,12 @@ $(document).ready(function() {
         $('#impact'+i+'-clone').click(function() {
             addMode('impact', 'Impacts', 'Add Impacts Information');
 
+            $('#impactsSubmit').removeClass('d-none');
+            $('#impactsEdit').addClass('d-none');
+            $('#impactsAddMode').addClass('d-none');
+
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
-            $('#impactsTitle').val($('#impact'+id+' .impactsTitle').text());
+            $('#impactsTitle').val($('#impact'+id+' .impactTitle').text());
             $('#impactCategory').val($('#impact'+id+' .impactCategory').text());
             $('#impactPrimaryBen').val($('#impact'+id+' .impactPrimaryBen').text());
             $('#impactPrimaryAttrib').val($('#impact'+id+' .impactPrimaryAttrib').text());
@@ -96,12 +100,21 @@ $(document).ready(function() {
 
     for (var i=1; i<parseInt($('#numInnovCom').text())+1; i++) {
         $('#innovCom'+i+'-clone').click(function() {
-            addMode('innovCom', 'InnovCom', 'Add Innovation and Commercialisation Information');
+            for (var j=1; j<parseInt($('#numInnovCom').text())+1; j++) {
+                $('#innovCom'+j).removeClass('bg-dark text-white');
+            }
+
+            $('#innovComTitle').text('Add Innovation and Commercialisation Information');
+            $('#innovComForm').trigger('reset');
+
+            $('#innovSubmit').removeClass('d-none');
+            $('#innovEdit').addClass('d-none');
+            $('#innovAddMode').addClass('d-none');
 
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#innovComYear').val($('#innovCom'+id+' .innovComYear').text());
             $('#innovComType').val($('#innovCom'+id+' .innovComType').text());
-            $('#innovComTitle2').val($('#innovCom'+id+' .innovComTitle2').text());
+            $('#innovComTitle2').val($('#innovCom'+id+' .innovComTitle').text());
             $('#innovComPrimaryAttrib').val($('#innovCom'+id+' .innovComPrimaryAttrib').text());
         });
     }
@@ -113,7 +126,7 @@ $(document).ready(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#pubYear').val($('#pub'+id+' .pubYear').text());
             $('#pubType').val($('#pub'+id+' .pubType').text()).change();
-            $('#pubTitle2').val($('#pub'+id+' .pubTitle2').text());
+            $('#pubTitle2').val($('#pub'+id+' .pubTitle').text());
             $('#pubName').val($('#pub'+id+' .pubName').text());
             $('#pubStatus').val($('#pub'+id+' .pubStatus').text()).change();
             $('#pubDOI').val($('#pub'+id+' .pubDOI').text());
@@ -127,7 +140,7 @@ $(document).ready(function() {
 
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#presYear').val($('#pres'+id+' .presYear').text());
-            $('#presTitle2').val($('#pres'+id+' .presTitle2').text());
+            $('#presTitle2').val($('#pres'+id+' .presTitle').text());
             $('#presEventType').val($('#pres'+id+' .presEventType').text()).change();
             $('#presOrganBody').val($('#pres'+id+' .presOrganBody').text());
             $('#presLoc').val($('#pres'+id+' .presLoc').text());
@@ -174,7 +187,7 @@ $(document).ready(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
             $('#eventStartDate').val($('#event'+id+' .eventStartDate').text());
             $('#eventEndDate').val($('#event'+id+' .eventEndDate').text());
-            $('#eventTitle2').val($('#event'+id+' .eventTitle2').text());
+            $('#eventTitle2').val($('#event'+id+' .eventTitle').text());
             $('#eventEventType').val($('#event'+id+' .eventEventType').text()).change();
             $('#eventRole').val($('#event'+id+' .eventRole').text());
             $('#eventLoc').val($('#event'+id+' .eventLoc').text());
@@ -369,7 +382,7 @@ $(document).ready(function() {
             $('#teamMemAddMode').removeClass('d-none');
 
             for (var j=1; j<parseInt($('#numTeam').text())+1; j++) {
-                $('#edu'+j).removeClass('bg-dark text-white');
+                $('#team'+j).removeClass('bg-dark text-white');
             }
 
             $('#team'+id).addClass('bg-dark text-white');
@@ -382,7 +395,7 @@ $(document).ready(function() {
         $('#impact'+i+'-edit').click(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
 
-            $('#impactsTitle').val($('#impact'+id+' .impactsTitle').text());
+            $('#impactsTitle').val($('#impact'+id+' .impactTitle').text());
             $('#impactCategory').val($('#impact'+id+' .impactCategory').text());
             $('#impactPrimaryBen').val($('#impact'+id+' .impactPrimaryBen').text());
             $('#impactPrimaryAttrib').val($('#impact'+id+' .impactPrimaryAttrib').text());
@@ -394,7 +407,7 @@ $(document).ready(function() {
             $('#impactsAddMode').removeClass('d-none');
 
             for (var j=1; j<parseInt($('#numImpacts').text())+1; j++) {
-                $('#edu'+j).removeClass('bg-dark text-white');
+                $('#impact'+j).removeClass('bg-dark text-white');
             }
 
             $('#impact'+id).addClass('bg-dark text-white');
@@ -409,7 +422,7 @@ $(document).ready(function() {
 
             $('#innovComYear').val($('#innovCom'+id+' .innovComYear').text());
             $('#innovComType').val($('#innovCom'+id+' .innovComType').text());
-            $('#innovComTitle2').val($('#innovCom'+id+' .innovComTitle2').text());
+            $('#innovComTitle2').val($('#innovCom'+id+' .innovComTitle').text());
             $('#innovComPrimaryAttrib').val($('#innovCom'+id+' .innovComPrimaryAttrib').text());
 
             $('#innovComTitle').text('Edit Innovation and Commercialisation Information');
@@ -419,7 +432,7 @@ $(document).ready(function() {
             $('#innovAddMode').removeClass('d-none');
 
             for (var j=1; j<parseInt($('#numInnovCom').text())+1; j++) {
-                $('#edu'+j).removeClass('bg-dark text-white');
+                $('#innovCom'+j).removeClass('bg-dark text-white');
             }
 
             $('#innovCom'+id).addClass('bg-dark text-white');
@@ -434,7 +447,7 @@ $(document).ready(function() {
 
             $('#pubYear').val($('#pub'+id+' .pubYear').text());
             $('#pubType').val($('#pub'+id+' .pubType').text()).change();
-            $('#pubTitle2').val($('#pub'+id+' .pubTitle2').text());
+            $('#pubTitle2').val($('#pub'+id+' .pubTitle').text());
             $('#pubName').val($('#pub'+id+' .pubName').text());
             $('#pubStatus').val($('#pub'+id+' .pubStatus').text()).change();
             $('#pubDOI').val($('#pub'+id+' .pubDOI').text());
@@ -447,7 +460,7 @@ $(document).ready(function() {
             $('#pubAddMode').removeClass('d-none');
 
             for (var j=1; j<parseInt($('#numPub').text())+1; j++) {
-                $('#edu'+j).removeClass('bg-dark text-white');
+                $('#pub'+j).removeClass('bg-dark text-white');
             }
 
             $('#pub'+id).addClass('bg-dark text-white');
@@ -461,7 +474,7 @@ $(document).ready(function() {
             var id = parseInt($(this).attr('id').replace(/[^0-9]/g, ''));
 
             $('#presYear').val($('#pres'+id+' .presYear').text());
-            $('#presTitle2').val($('#pres'+id+' .presTitle2').text());
+            $('#presTitle2').val($('#pres'+id+' .presTitle').text());
             $('#presEventType').val($('#pres'+id+' .presEventType').text()).change();
             $('#presOrganBody').val($('#pres'+id+' .presOrganBody').text());
             $('#presLoc').val($('#pres'+id+' .presLoc').text());
@@ -474,7 +487,7 @@ $(document).ready(function() {
             $('#presAddMode').removeClass('d-none');
 
             for (var j=1; j<parseInt($('#numPres').text())+1; j++) {
-                $('#edu'+j).removeClass('bg-dark text-white');
+                $('#pres'+j).removeClass('bg-dark text-white');
             }
 
             $('#pres'+id).addClass('bg-dark text-white');
@@ -503,7 +516,7 @@ $(document).ready(function() {
             $('#acAddMode').removeClass('d-none');
 
             for (var j=1; j<parseInt($('#numAc').text())+1; j++) {
-                $('#edu'+j).removeClass('bg-dark text-white');
+                $('#acCol'+j).removeClass('bg-dark text-white');
             }
 
             $('#acCol'+id).addClass('bg-dark text-white');
@@ -532,7 +545,7 @@ $(document).ready(function() {
             $('#nonAcAddMode').removeClass('d-none');
 
             for (var j=1; j<parseInt($('#numNonAc').text())+1; j++) {
-                $('#edu'+j).removeClass('bg-dark text-white');
+                $('#nonAcCol'+j).removeClass('bg-dark text-white');
             }
 
             $('#nonAcCol'+id).addClass('bg-dark text-white');
@@ -547,7 +560,7 @@ $(document).ready(function() {
 
             $('#eventStartDate').val($('#event'+id+' .eventStartDate').text());
             $('#eventEndDate').val($('#event'+id+' .eventEndDate').text());
-            $('#eventTitle2').val($('#event'+id+' .eventTitle2').text());
+            $('#eventTitle2').val($('#event'+id+' .eventTitle').text());
             $('#eventEventType').val($('#event'+id+' .eventEventType').text()).change();
             $('#eventRole').val($('#event'+id+' .eventRole').text());
             $('#eventLoc').val($('#event'+id+' .eventLoc').text());
@@ -560,7 +573,7 @@ $(document).ready(function() {
             $('#eventsAddMode').removeClass('d-none');
 
             for (var j=1; j<parseInt($('#numEvents').text())+1; j++) {
-                $('#edu'+j).removeClass('bg-dark text-white');
+                $('#event'+j).removeClass('bg-dark text-white');
             }
 
             $('#event'+id).addClass('bg-dark text-white');
@@ -585,7 +598,7 @@ $(document).ready(function() {
             $('#commAddMode').removeClass('d-none');
 
             for (var j=1; j<parseInt($('#numComm').text())+1; j++) {
-                $('#edu'+j).removeClass('bg-dark text-white');
+                $('#comm'+j).removeClass('bg-dark text-white');
             }
 
             $('#comm'+id).addClass('bg-dark text-white');
@@ -608,7 +621,7 @@ $(document).ready(function() {
             $('#sfiAddMode').removeClass('d-none');
 
             for (var j=1; j<parseInt($('#numSfi').text())+1; j++) {
-                $('#edu'+j).removeClass('bg-dark text-white');
+                $('#sfi'+j).removeClass('bg-dark text-white');
             }
 
             $('#sfi'+id).addClass('bg-dark text-white');
@@ -690,10 +703,23 @@ $(document).ready(function() {
 
     $('#impactsAddMode').click(function() {
         addMode('impact', 'Impacts', 'Add Impacts Information');
+
+        $('#impactsSubmit').removeClass('d-none');
+        $('#impactsEdit').addClass('d-none');
+        $('#impactsAddMode').addClass('d-none');
     });
 
     $('#innovAddMode').click(function() {
-        addMode('innovCom', 'InnovCom', 'Add Innovation and Commercialisation Information');
+        for (var j=1; j<parseInt($('#numInnovCom').text())+1; j++) {
+            $('#innovCom'+j).removeClass('bg-dark text-white');
+        }
+
+        $('#innovComTitle').text('Add Innovation and Commercialisation Information');
+        $('#innovComForm').trigger('reset');
+
+        $('#innovSubmit').removeClass('d-none');
+        $('#innovEdit').addClass('d-none');
+        $('#innovAddMode').addClass('d-none');
     });
 
     /*$('#pubAddMode').click(function() {

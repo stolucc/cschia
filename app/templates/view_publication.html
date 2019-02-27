@@ -18,8 +18,10 @@
         Status: {{ publication.status }}
     </li>
 </ul>
-    
+
+{% if current_user.id == author.id %} 
 <p>
     <a class="btn btn-primary" href="{{ url_for('edit_publication', id=publication.id) }}">Edit</a>
 </p>
+{% endif %}
 {% endblock %}

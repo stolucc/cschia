@@ -28,10 +28,10 @@
                     <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#fundingDiv" aria-expanded="false" aria-controls="fundingDiv">Funding Diversification
                     <span class="badge badge-dark badge-pill float-right" id="numFund">{% if getFundInfo %}{{ getFundInfo|length }}{% endif %}</span></button>
                 </li>
-                <li class="list-group-item">
+                <!--<li class="list-group-item">
                     <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#teamMembers" aria-expanded="false" aria-controls="teamMembers">Team Members
-                    <span class="badge badge-dark badge-pill float-right" id="numTeam"><!-- @TODO --></span></button>
-                </li>
+                    <span class="badge badge-dark badge-pill float-right" id="numTeam"></span></button>
+                </li>-->
                 <li class="list-group-item">
                     <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#impacts" aria-expanded="false" aria-controls="impacts">Impacts
                     <span class="badge badge-dark badge-pill float-right" id="numImpacts">{% if getImpInfo %}{{ getImpInfo|length }}{% endif %}</span></button>
@@ -57,8 +57,8 @@
                     <span class="badge badge-dark badge-pill float-right" id="numNonAc">{% if getNonAcInfo %}{{ getNonAcInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#events" aria-expanded="false" aria-controls="events">Events</button>
-                    <span class="badge badge-dark badge-pill float-right" id="numEvents">{% if getEvInfo %}{{ getEvInfo|length }}{% endif %}</span>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#events" aria-expanded="false" aria-controls="events">Events
+                    <span class="badge badge-dark badge-pill float-right" id="numEvents">{% if getEvInfo %}{{ getEvInfo|length }}{% endif %}</span></button>
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#communications" aria-expanded="false" aria-controls="communications">Communications
@@ -544,7 +544,7 @@
             </div>
 
             <!-- TEAM MEMBERS -->
-            <div class="collapse" id="teamMembers">
+            <!--<div class="collapse" id="teamMembers">
                 <div class="row">
                     <div class="col-md-7">
                         <h1 ic="teamTitle">Add New Team Information</h1>
@@ -598,7 +598,6 @@
                         </form>
                     </div>
                     
-                    <!-- @TODO: update this -->
                     <div class="collapse col-md-5 show" id="team-show">
                         {% for item in getNonAcInfo %}
 
@@ -622,7 +621,7 @@
                     </div>
                 </div>
                 <hr>
-            </div>
+            </div>-->
 
             <!-- IMPACTS -->
             <div class="collapse" id="impacts">
@@ -1216,7 +1215,7 @@
                                 <p>Year: <span class="commYear">{{ item["year"] }}</span></p>
                                 <p>Num. public lectures/demonstrations: <span class="commNumPublic">{{ item["numberOfLectures"] }}</span></p>
                                 <p>Num. visits: <span class="commNumVisits">{{ item["numberOfVisits"] }}</span></p>
-                                <p>Num. media interactions: <span class="commNumMedia">{{ item["numberOfMediaInteractions"] }}</span></p>
+                                <p>Num. media interactions: <span class="commNumMedia">{{ item["numberOfMediaInteracations"] }}</span></p>
 
                                 <button class="btn btn-secondary" type="button" id="comm{{ loop.index }}-clone">Copy</button>
                                 <button class="btn btn-secondary" type="button" id="comm{{ loop.index }}-edit">Edit</button>

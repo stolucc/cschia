@@ -58,6 +58,7 @@ coverage.xml
 local_settings.py
 db.sqlite3
 app.db
+chia.db
 
 # Flask stuff:
 instance/
@@ -119,8 +120,18 @@ dmypy.json
 .idea
 
 #Mac Stuff
+
 .DS_Storesendgrid.env
 sendgrid.env
 sendgrid.env
 sendgrid.env
 sendgrid.env
+
+.DS_Store
+
+#vscode stuff
+.vscode
+
+#DB stuff
+chia.db
+
