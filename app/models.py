@@ -97,6 +97,7 @@ class FundingCall(db.Model):
 
     attachments = db.relationship("FundingCallAttachment")
     applications = db.relationship("GrantApplications")
+    grants = db.relationship("Grants")
 
 
 class FundingCallAttachment(db.Model):
@@ -256,6 +257,9 @@ class GrantApplications(db.Model):
     is_awarded = db.Column(db.Boolean)
 
     attachment = db.relationship("GrantApplicationAttachment")
+
+    def __repr__(self):
+        return "<GrantApplications {} {} {}>".format(self.id, self.title, self.call_id)
 
 
 class GrantApplicationAttachment(db.Model):
@@ -440,3 +444,14 @@ class Reviews(db.Model):
     desc = db.Column(db.Text())
     rating = db.Column(db.Integer)
 
+class Grants(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
+    application_id = db.Column(db.Integer, db.ForeignKey("grant_applications.id"))
+    title = db.Column(db.Text)
+    duration = db.Column(db.Text)
+
+class Collaborators(db.Model):
+    grant_id = db.Column(db.Integer, db.ForeignKey("grants.id"), primary_key=True)
+    user_id = db.Column(db.String, db.ForeignKey("user.id"),  primary_key=True)
+    is_pi = db.Column(db.Boolean, default=False)
