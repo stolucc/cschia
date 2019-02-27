@@ -1,1 +1,39 @@
-<!-- search user -->
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block content %}
+
+<div class="row">
+        <div class="col-md-4">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                        {#class="btn btn-primary"#}
+    
+                    <a class="btn btn-primary btn-block" href="{{ url_for('admin_register_user') }}">Register</a>
+                </li>
+                <li class="list-group-item">
+                        <a class="btn btn-primary btn-block" href="{{ url_for('publish_call') }}">Publish call for proposals</a>    
+                </li> 
+                <li class="list-group-item">
+                    <a class="btn btn-primary btn-block" href="{{ url_for('admin_edit_proposals') }}">Edit proposals</a>    
+            </li>
+            
+            <li class="list-group-item">
+                <a class="btn btn-primary btn-block" href="{{ url_for('admin_edit_user') }}">Edit Users</a>    
+            </li> 
+                
+    
+    
+            </ul>
+        </div>
+
+    <div class="col-md-6">
+        <h1>Register a new type of user</h1>
+
+
+        {{ render_form(form, button_map={'submit': 'primary'}) }}
+
+    </div>
+<div class="col-sm-2"></div>
+
+{% endblock %}

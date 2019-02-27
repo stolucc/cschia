@@ -53,11 +53,12 @@ class UpgradeUser(FlaskForm):
     Admin = BooleanField("Admin")
     Reviewer = BooleanField("Reviewer")
     HostI = BooleanField("Host Institution")
+    
     submit = SubmitField("Change Account Type")
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
-        if user is not None:
+        if user is None:
             raise ValidationError("Email doesnt exist.")
 
 

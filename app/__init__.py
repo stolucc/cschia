@@ -46,4 +46,4 @@ def reviewer_required(current_user):
 
 
 
-from app import routes, models, errors, groups , publications
+from app import routes, models, errors, groups , publications, edituser

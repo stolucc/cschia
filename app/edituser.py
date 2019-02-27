@@ -3,6 +3,8 @@ from flask import render_template, flash, redirect, url_for, request, abort
 from app.models import User, Publication
 from flask_login import current_user, login_user, logout_user, login_required
 
+from app.forms import UpgradeUser
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, FileField, \
 TextAreaField, IntegerField, SelectField, TextAreaField
@@ -16,16 +18,35 @@ from app.models import User
 @app.route("/admin_edit_user/", methods=["GET", "POST"])
 @login_required
 def admin_edit_user():
+    # print("hello1")
+
+    def check_exists(name):
+        # print("hello2")
+        return User.query.filter_by(email=name).first()
+
     form = UpgradeUser()
+    # print("form:",form)
+
+    if form.validate_on_submit():
+        emailForUser = form.email.data
+        admin = form.Admin.data
+        hostI = form.HostI.data
+        reviewer = form.Reviewer.data
+        # print("email:",emailForUser)
+        # print("admin:",admin)
+        # print("hostI:",hostI)
+        # print("reviewer:",reviewer)
 
 
-    keyword = request.args.get('keyword')
-        result = User.query.filter(User.email.contains(keyword)).order_by(
-            User.email.contains(keyword)).first()
-        if result:
-            return render_template('user_result.html', user=result)
-        else:
-            return render_template('search_result.html')
+        user = User.query.filter_by(email=form.email.data).first()
+        # print(user)
+        user.is_admin = admin
+        user.is_reviewer = reviewer
+        db.session.add(user)
+        db.session.commit()
+        
+
+    return render_template("admin_edit_user.html", title="Edit user", form=form)
     
 
 

@@ -16,6 +16,10 @@
                 </li> 
                 <li class="list-group-item">
                     <a class="btn btn-primary btn-block" href="{{ url_for('admin_edit_proposals') }}">Edit proposals</a>    
+            </li>
+            
+            <li class="list-group-item">
+                <a class="btn btn-primary btn-block" href="{{ url_for('admin_edit_user') }}">Edit Users</a>    
             </li> 
                 
     
@@ -27,7 +31,7 @@
         <h1>Register a new type of user</h1>
 
 
-        {{ render_form(form) }}
+        {{ render_form(form, button_map={'submit': 'primary'}) }}
 
     </div>
 <div class="col-sm-2"></div>
