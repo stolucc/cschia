@@ -276,7 +276,7 @@ def edit(call_id):
         db.session.add(call)
         db.session.commit()
         flash("The call for proposal has been edited!")
-        return redirect(url_for("index"))
+        return redirect(url_for("view_calls"))
 
 
     """
@@ -294,8 +294,7 @@ def delete(call_id):
     SfiProposalCalls.query.filter_by(id=call_id).delete()
     db.session.commit()
     flash("The call for proposal has been deleted!")
-    return redirect(url_for("index"))
-
+    return redirect(url_for("view_calls"))
 
     return render_template("viewcalls.html", title="Funding Calls")
 
@@ -348,7 +347,7 @@ def publish_call():
         db.session.add(call)
         db.session.commit()
         flash("Your call for proposal has been published!")
-        return redirect(url_for("index"))
+        return redirect(url_for("view_calls"))
     return render_template("admin_publish_call.html", title="Publish Call", form=form)
 
 

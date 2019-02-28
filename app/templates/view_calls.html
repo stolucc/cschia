@@ -11,6 +11,12 @@
         <tr>
             <th scope="col">Title</th>
             {% if not current_user.is_admin %}<th scope="col">Application</th>{% endif %}
+            {% if current_user.is_admin %}
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+            {% endif %}
+
+        
         </tr>
         {% for call in calls %}
         <tr>
