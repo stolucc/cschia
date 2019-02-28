@@ -203,7 +203,6 @@ def view_call(call_id):
 @app.route("/apply/<call_id>", methods=["GET","POST"])
 def apply(call_id):
     call = SfiProposalCalls.query.filter_by(id=call_id).first_or_404()
-    flash(call.title)
     is_applied = GrantApplications.query.filter_by(user_id=current_user.id, call_id=call_id).first()
     form = GrantApplicationForm()
 
@@ -424,8 +423,9 @@ def view_applications():
 
     awarded = []
     for grant in grant_ids:
-        if g is not None:
-            awarded.append(Grants.query.filter_by(id=grant).first())
+        q = Grants.query.filter_by(id=grant).first()
+        if grant is not None and q is not None:
+            awarded.append(q)
 
     return render_template("view_applications.html", title="MyGrants", draft=draft, pending=pending, awarded=awarded)
 

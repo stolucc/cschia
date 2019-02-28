@@ -4,29 +4,44 @@
     <h1>My Grant Applications</h1>
 
     <h2>Draft Grants</h2>
-    <ul class="list-group">
-    {% for d in draft %}
-        <li class="list-group-item">
-            <h3><a href="{{ url_for('view_application', grant_id=d.id) }}">{{ d.title }}</a></h3>
-        </li>
-    {% endfor %}
-    </ul>
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>View Application</th>
+        </tr>
+        {% for d in draft %}
+        <tr>
+            <td>
+                <a href="{{ url_for('view_application', grant_id=d.id) }}">{{ d.title }}</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 
     <h2>Pending Grants</h2>
-    <ul class="list-group">
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>View Application</th>
+        </tr>
     {% for p in pending %}
-        <li class="list-group-item">
-            <h3><a href="{{ url_for('view_application', grant_id=p.id) }}">{{ p.title }}</a></h3>
-        </li>
+        <tr>
+            <td>
+            <a href="{{ url_for('view_application', grant_id=p.id) }}">{{ p.title }}</a>
+            </td>
+        </tr>
     {% endfor %}
-    </ul>
+    </table>
 
     <h2>Awarded Grants</h2>
-    <ul class="list-group">
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>View Grant</th>
+        </tr>
     {% for award in awarded %}
-        <li class="list-group-item">
-            <h3> {{ award.title }} <t><a href="{{ url_for('view_grant', id=award.id) }}" class="btn btn-primary">View</a></h3>
-        </li>
+        <tr>
+            <td>
+            <a href="{{ url_for('view_grant', id=award.id) }}">{{ award.title }}</a>
+            </td>
+        </tr>
     {% endfor %}
-    </ul>
+    </table>
 {% endblock %}

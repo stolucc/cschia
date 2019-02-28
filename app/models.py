@@ -470,6 +470,8 @@ class Collaborators(db.Model):
     user_id = db.Column(db.String, db.ForeignKey("user.id"),  primary_key=True)
     is_pi = db.Column(db.Boolean, default=False)
     users = db.relationship("User")
+    publications = db.Column(db.Text)
+    events = db.Column(db.Text)
 
     def __repr__(self):
         return "<Collaborators {} {} {}>".format(self.grant_id, self.user_id, self.is_pi)
