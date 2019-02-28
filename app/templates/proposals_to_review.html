@@ -5,61 +5,22 @@
 	<h1>Pending proposals to review</h1><br>
 	<div class="row">
 		<div class="col-md-2"></div>
-
+		{% if getPendingFunds != None %}
 		<div class="col-md-8">
-			{% for item in getPendingFunds %}
+			{% for call in getPendingFunds %}
 			<div class="card">
 				<div class="card-body">
-					<h2>{{ item["title"] }}</h2>
+					<h2>{{ call[1] }}</h2>
+					{% for prop in call[0] %}
 					<div class="card">
-						<div class="card-body">Proposal 1</div>
+						<div class="card-body"><a href="{{url_for("view_applications")}}/{{ prop.id }}">{{ prop["title"] }}</a></div>
 					</div><br>
-					<div class="card">
-						<div class="card-body">Proposal 2</div>
-					</div>
+					{% endfor %}
 				</div>
 			</div><br>
 			{% endfor %}
-			
-
-			<hr>
-
-			{% if current_user.is_reviewer %}
-			<h2>Review form (to be moved to individual proposals)</h2>
-			<form action="" method="post">
-                {{ form.hidden_tag() }}
-                <div class="form-group">
-                    {{ form.description.label }}
-                    {{ form.description(class="form-control") }}
-                    {% for error in form.description.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ form.rating.label }}
-                    {{ form.rating(class="form-control w-25") }}
-                    {% for error in form.rating.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ form.submit(class="btn btn-primary") }}
-                </div>
-            </form><br>
-            {% endif %}
-
-            {% if current_user.is_reviewer %}
-            <!-- for item in getReviewInfo -->
-            <!-- submittedReviews table - get proposal ID and reviewer ID -->
-            <div class="card mb-3">
-                <div class="card-body">
-                    <p>Name of project: <!-- item["description"] --></p>
-                    <p>Rating: <!-- item["review"] --></p>
-                </div>
-            </div>
-            <!-- endfor -->
-            {% endif %}
 		</div>
+		{% endif %}
 	</div>
 
 {% endblock %}

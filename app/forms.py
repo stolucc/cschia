@@ -428,3 +428,4 @@ class AddCollaboratorForm(FlaskForm):
     email = StringField("Researcher's email", validators=[DataRequired() ])
     is_pi = SelectField(u"PI", choices=[("no","No"),("yes","Yes")])
     submit = SubmitField("Add collaborator")
+

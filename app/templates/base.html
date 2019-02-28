@@ -67,7 +67,6 @@
                     </li></span>
                     <span class="border-right"><li class="nav-item"><a class="nav-link" href="{{url_for("list_publications")}}">Publications</a></li></span>
                     {% endif %}
-
                     <li class="nav-item"><a class="nav-link" href="{{ url_for("logout") }}">Logout</a>
                     {% endif %}
 
@@ -89,8 +88,6 @@
             </div>
         </div>
         {% endif %} -->
-
-
 
         {% with messages = get_flashed_messages() %}
         {% if messages %}

@@ -7,20 +7,19 @@
 		<div class="col-md-2"></div>
 
 		<div class="col-md-8">
-			<!-- for item in getSubmittedReviews -->
-			<!-- @TODO: order table by best average review -->
+			{% for item in getSubmittedReviews|sort(attribute='rating', reverse=True)|groupby(attribute='call_id') %}
 			<div class="card">
 				<div class="card-body">
-					<h2>Funding call name here</h2>
+					<h2>{{ getAllFundingCalls[item[0]-1].title }}</h2>
+					{% for prop in item[1] %}
 					<div class="card">
-						<div class="card-body">Review 1: rating</div>
+						<div class="card-body">Description: {{ prop["desc"] }}</div>
+						<div class="card-body">Rating: {{ prop["rating"] }}</div>
 					</div><br>
-					<div class="card">
-						<div class="card-body">Review 2: rating</div>
-					</div>
+					{% endfor %}
 				</div>
 			</div><br>
-			<!-- endfor -->
+			{% endfor %}
 		</div>
 	</div>
 
