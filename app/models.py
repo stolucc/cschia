@@ -449,6 +449,11 @@ class Reviews(db.Model):
     desc = db.Column(db.Text)
     rating = db.Column(db.Integer)
 
+    def __repr__(self):
+        return "<Grants {} {} {} {} {} {}>".format(self.id, self.call_id, \
+                        self.proposal_id, self.proposal_title, self.reviewer_id, self.user_id,\
+                            self.username)
+
 class Grants(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
