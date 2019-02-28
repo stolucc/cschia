@@ -202,6 +202,7 @@ class Events(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     data = db.Column(db.Text)
+    user = db.relationship("User")
 
     def __repr__(self):
         return "<Events {}>".format(self.data, self.id)
@@ -301,6 +302,7 @@ class Publication(db.Model):
     doi = db.Column(db.String(64))
     title = db.Column(db.Text)
     journal = db.Column(db.Text)
+    user = db.relationship("User")
 
 class AnnualReport(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -467,11 +469,23 @@ class Grants(db.Model):
 
 class Collaborators(db.Model):
     grant_id = db.Column(db.Integer, db.ForeignKey("grants.id"), primary_key=True)
-    user_id = db.Column(db.String, db.ForeignKey("user.id"),  primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
     is_pi = db.Column(db.Boolean, default=False)
     users = db.relationship("User")
-    publications = db.Column(db.Text)
-    events = db.Column(db.Text)
+    publications = db.Column(db.Integer, db.ForeignKey("publication.id"))
+    events = db.Column(db.Integer, db.ForeignKey("events.id"))
+    pubTable = db.relationship("Publication")
+    eventsTable = db.relationship("Events")
 
     def __repr__(self):
         return "<Collaborators {} {} {}>".format(self.grant_id, self.user_id, self.is_pi)
+
+class GrantPublications(db.Model):
+    grant_id = db.Column(db.Integer, db.ForeignKey("grants.id"), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
+    pub_row = db.Column(db.Integer, db.ForeignKey("publication.id"), primary_key=True)
+
+class GrantEvents(db.Model):
+    grant_id = db.Column(db.Integer, db.ForeignKey("grants.id"), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
+    event_row = db.Column(db.Integer, db.ForeignKey("events.id"), primary_key=True)

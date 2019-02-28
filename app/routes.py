@@ -9,20 +9,22 @@ from app.forms import LoginForm, RegistrationForm,RegistrationFormAdmin, EditPro
     EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
     ChangePassword, ChangeEmail, ProposalForm, GrantApplicationForm, CollaboratorForm, \
     ReviewProposalForm, AddReviewerForm, ResetPasswordRequestForm, ResetPasswordForm, \
-    FreeTextForm, AddCollaboratorForm
+    FreeTextForm, AddCollaboratorForm, PublicationForm, BibtexPublicationForm
 
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
     Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
     CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls, \
     Publication, GrantApplications, GrantApplicationAttachment, FundingCallReviewers, \
-    AnnualReport, Grants, Collaborators, Reviews
+    AnnualReport, Grants, Collaborators, Reviews, GrantPublications, GrantEvents
 
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import json
+from bibtexparser.bparser import BibTexParser
+from bibtexparser.bibdatabase import as_text
 
 def query_table(table):
     return table.query.filter_by(user_id=current_user.id).all()
@@ -222,9 +224,9 @@ def apply(call_id):
             is_applied.sci_abstract=form.sci_abstract.data 
             is_applied.lay_abstract=form.lay_abstract.data
 
-            if Collaborators.query.filter_by(grant_id=is_applied.id, user_id=current_user.id).first() is None:
-                collab_row = Collaborators(grant_id=is_applied.id, user_id=current_user.id, is_pi=True)
-                db.session.add(collab_row)
+            #if Collaborators.query.filter_by(grant_id=is_applied.id, user_id=current_user.id).first() is None:
+             #   collab_row = Collaborators(grant_id=is_applied.id, user_id=current_user.id, is_pi=True)
+               # db.session.add(collab_row)
             
             db.session.commit()
 
@@ -472,6 +474,111 @@ def view_grant(id):
             flash("New collaborator added")
 
     return render_template("view_grant.html", user=userC, grant=grant, collabs=collabs, collabForm=collabForm)
+
+@app.route("/pi_forms/<grant_id>/<user_id>", methods=["GET", "POST"])
+def pi_form(grant_id, user_id):
+    pubForm = PublicationForm()
+    bibForm = BibtexPublicationForm()
+    eventsForm = EventsForms()
+
+    if request.method == "POST":
+        if pubForm.validate_on_submit():
+            new_publication = Publication(title=pubForm.title.data, doi=pubForm.doi.data, year=pubForm.year.data, \
+                                journal=pubForm.journal.data, type=pubForm.type.data, status=pubForm.status.data, \
+                                primary_user=user_id)
+            db.session.add(new_publication)
+            db.session.commit()
+
+            new_grantpub = GrantPublications(grant_id=grant_id, user_id=user_id, pub_row=new_publication.id)
+            db.session.add(new_grantpub)
+            db.session.commit()
+            flash("New publications form has been submitted")
+            
+            
+        elif eventsForm.validate_on_submit():
+            
+            userInfo = Events(user_id=user_id)
+            db.session.add(userInfo)
+            info = {
+                "startDate": eventsForm.startDate.data.strftime("%Y/%m/%d"),
+                "endDate": eventsForm.endDate.data.strftime("%Y/%m/%d"),
+                "title": eventsForm.title.data,
+                "eventType": eventsForm.eventType.data,
+                "role": eventsForm.role.data,
+                "location": eventsForm.location.data,
+                "primaryAttribution": eventsForm.primaryAttribution.data
+            }
+
+            infoJson = json.dumps(info)
+            userInfo.data = infoJson
+            db.session.commit()
+
+            new_grantev = GrantEvents(grant_id=grant_id, user_id=user_id, event_row=userInfo.id)
+            db.session.add(new_grantev)
+            db.session.commit()
+
+            flash("New events form has been submitted")
+
+        elif bibForm.validate_on_submit():
+
+            bp = BibTexParser(interpolate_strings=False)
+            bib_database = bp.parse(bibForm.parse.data)
+            bib_database.entries[0]
+
+            def value(key):
+                return bib_database.entries[0][key]
+            
+            keys = ("author", "title", "doi", "year", "ID", "journal", "status")
+            if set(keys) <= set(bib_database.entries[0]):
+                publication = Publication(title=value("title"), doi=value("doi"), year=value("year"), journal=value("journal"), type=value("ENTRYTYPE"), status=value("status"), primary_user=user_id)
+                db.session.add(publication)
+                db.session.commit()
+                
+                new_grantpub = GrantPublications(grant_id=grant_id, user_id=user_id, pub_row=new_publication.id)
+                db.session.add(new_grantpub)
+                db.session.commit()
+                flash("New publications form has been submitted")
+            
+        return redirect(url_for("view_grant", id=grant_id))
+
+    return render_template("fill_pi_form.html", grant_id=grant_id, user_id=user_id, pubForm=pubForm, bibForm=bibForm, eventsForm=eventsForm)
+
+@app.route("/grant_forms/<grant_id>", methods=["GET"])
+def view_grant_forms(grant_id):
+
+    pub_grant = GrantPublications.query.filter_by(grant_id=grant_id).all()
+    event_grant = GrantEvents.query.filter_by(grant_id=grant_id).all()
+
+    publications = []
+    events = []
+
+    for item in pub_grant:
+        q = Publication.query.filter_by(id=item.pub_row).all()
+        for query in q:
+            if query is not None:
+                publications.append(query)
+
+    for item in event_grant:
+        q = Events.query.filter_by(id=item.event_row).all()
+        for query in q:
+            if query is not None:
+                events.append(query)
+
+    return render_template("grant_forms.html", publications=publications, events=events, grant_id=grant_id)
+
+@app.route("/grant_pub/<grant_id>/<form_id>", methods=["GET"])
+def view_grant_pub(grant_id, form_id):
+    publication = Publication.query.filter_by(id=form_id).first_or_404()
+
+    return render_template("grant_form.html", publication=publication, event=False, data=None)
+
+@app.route("/grant_event/<grant_id>/<form_id>", methods=["GET"])
+def view_grant_event(grant_id, form_id):
+    event = Events.query.filter_by(id=form_id).first_or_404()
+    data = json.loads(event.data)
+
+    return render_template("grant_form.html", publication=False, event=event, data=data)
+
 
 # not needed
 @app.route("/user/<username>")

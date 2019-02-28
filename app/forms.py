@@ -429,3 +429,30 @@ class AddCollaboratorForm(FlaskForm):
     is_pi = SelectField(u"PI", choices=[("no","No"),("yes","Yes")])
     submit = SubmitField("Add collaborator")
 
+class PublicationForm(FlaskForm):
+    title = StringField("Title", validators=[DataRequired()])
+    doi = StringField("DOI")
+    year = IntegerField("Year of Publication", validators=[DataRequired()])
+    journal = StringField("Journal / Conference", validators=[DataRequired()])
+    type = SelectField("Publication type", validators=[DataRequired()], choices=[(x,x) for x in [
+        "Refereed original article",
+        "Refereed review article",
+        "Refereed conference paper",
+        "Book",
+        "Technical report"]])
+    status = SelectField("Publication status", validators=[DataRequired()], choices=[(x,x) for x in [
+        "Published",
+        "In press"]])
+    pubsubmit = SubmitField("Submit")
+
+class BibtexPublicationForm(FlaskForm):
+    parse = TextAreaField("BIBTex format", validators=[DataRequired(), Length(min=0,max=800)], \
+        description="""@(Refereed original article|Refereed review article|Refereed conference paper|
+                        Book|Technical report)Refereed original article{ \n
+                        title = {The ABC of Software Engineering Research},\n
+                        doi = {10.1145/3241743},\n
+                        year = {2018},\n
+                        journal =  {ACM Transactions on Software Engineering and Methodology},\n
+                        status(Published|In-press) = {Published}\n
+                    }""")
+    submitBib = SubmitField("Submit")
