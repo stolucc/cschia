@@ -442,8 +442,11 @@ class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
     proposal_id = db.Column(db.Integer, db.ForeignKey("grant_applications.id"))
+    proposal_title = db.Column(db.Text, db.ForeignKey("grant_applications.title"))
     reviewer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    desc = db.Column(db.Text())
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    username = db.Column(db.Integer, db.ForeignKey("user.username"))
+    desc = db.Column(db.Text)
     rating = db.Column(db.Integer)
 
 class Grants(db.Model):

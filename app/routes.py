@@ -184,11 +184,16 @@ def view_call(call_id):
     form = AddReviewerForm()
     if form.validate_on_submit():
         reviewer_usr = User.query.filter_by(username=form.reviewer_username.data).first()
-        if reviewer_usr is not None and reviewer_usr.is_reviewer == 1:
-            reviewer = FundingCallReviewers(call_id=call_id, reviewer_id=reviewer_usr.id)
-            db.session.add(reviewer)
-            db.session.commit()
-            flash("Successfully invited reviewer for call for proposal.")
+        if reviewer_usr is not None:
+            already_reviewer = FundingCallReviewers.query.filter_by(call_id=call_id, reviewer_id=reviewer_usr.id).first()
+            if already_is reviewer None and reviewer_usr.is_reviewer == 1:
+                reviewer = FundingCallReviewers(call_id=call_id, reviewer_id=reviewer_usr.id)
+                db.session.add(reviewer)
+                db.session.commit()
+                flash("Successfully invited reviewer for call for proposal.")
+                return redirect(url_for("view_calls"))
+            else:
+                flash("Reviewer of that username already assigned to this funding call.")
         else:
             flash("Reviewer of that username does not exist.")
         
@@ -415,14 +420,15 @@ def view_applications():
 @app.route("/applications/<grant_id>", methods=["GET", "POST"])
 def view_application(grant_id):
     grant = GrantApplications.query.filter_by(id=grant_id).first_or_404()
+    user = User.query.filter_by(id=grant.user_id).first()
     reviewer = FundingCallReviewers.query.filter_by(call_id=grant.call_id).first()
     
     getReviewInfo = Reviews.query.filter_by(proposal_id=grant_id).filter_by(reviewer_id=current_user.id).first()
     
-    if not getReviewInfo and reviewer is not None:
+    if not getReviewInfo and reviewer is not None and reviewer.reviewer_id == current_user.id:
         form = ReviewProposalForm()
         if form.validate_on_submit():
-            review = Reviews(call_id=grant.call_id, proposal_id=grant_id, reviewer_id=reviewer.reviewer_id, desc=form.description.data, rating=form.rating.data)
+            review = Reviews(call_id=grant.call_id, proposal_id=grant_id, proposal_title=grant.title, reviewer_id=reviewer.reviewer_id, user_id=grant.user_id, username=user.username, desc=form.description.data, rating=form.rating.data)
             db.session.add(review)
             db.session.commit()
             flash("Your review has been successfully submitted.")
