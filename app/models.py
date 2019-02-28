@@ -236,7 +236,7 @@ class SfiProposalCalls(db.Model):
     upload_data = db.Column(db.Text)
 
     def __repr__(self):
-        return "<SfiProposalCalls {}>".format(self.deadline, self.id)
+        return "<SfiProposalCalls {} {}>".format( self.id, self.deadline)
 
 class GrantApplications(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -460,6 +460,7 @@ class Collaborators(db.Model):
     grant_id = db.Column(db.Integer, db.ForeignKey("grants.id"), primary_key=True)
     user_id = db.Column(db.String, db.ForeignKey("user.id"),  primary_key=True)
     is_pi = db.Column(db.Boolean, default=False)
+    users = db.relationship("User")
 
     def __repr__(self):
         return "<Collaborators {} {} {}>".format(self.grant_id, self.user_id, self.is_pi)

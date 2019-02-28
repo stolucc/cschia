@@ -396,7 +396,8 @@ def view_applications():
 
     awarded = []
     for grant in grant_ids:
-        awarded.append(Grants.query.filter_by(id=grant).first())
+        if g is not None:
+            awarded.append(Grants.query.filter_by(id=grant).first())
 
     return render_template("view_applications.html", title="MyGrants", draft=draft, pending=pending, awarded=awarded)
 
