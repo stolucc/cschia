@@ -4,7 +4,7 @@ EducationInformation, EmploymentInformation, SocietiesInformation, AwardsInforma
 FundingDiversification, Impacts, InnovationAndCommercialisation, Presentations, \
 AcademicCollaborations, NonAcademicCollaborations, Events, CommunicationsOverview, SfiFundingRatio, \
 EducationPublicEngagement, AnnualReport, Collaborators, Grants, GrantApplications, \
-GrantApplicationAttachment, SfiProposalCalls
+GrantApplicationAttachment, SfiProposalCalls, Reviews
 
 
 @app.shell_context_processor
@@ -36,7 +36,7 @@ def make_shell_context():
         "Collaborators" :  Collaborators,
         "GrantApplications" : GrantApplications,
         "GrantApplicationAttachment" : GrantApplicationAttachment,
-        "SfiProposalCalls" : SfiProposalCalls
-
+        "SfiProposalCalls" : SfiProposalCalls,
+        "Reviews" : Reviews
         }
 

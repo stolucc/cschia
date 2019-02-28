@@ -442,9 +442,17 @@ class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
     proposal_id = db.Column(db.Integer, db.ForeignKey("grant_applications.id"))
+    proposal_title = db.Column(db.Text, db.ForeignKey("grant_applications.title"))
     reviewer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    desc = db.Column(db.Text())
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    username = db.Column(db.Integer, db.ForeignKey("user.username"))
+    desc = db.Column(db.Text)
     rating = db.Column(db.Integer)
+
+    def __repr__(self):
+        return "<Grants {} {} {} {} {} {}>".format(self.id, self.call_id, \
+                        self.proposal_id, self.proposal_title, self.reviewer_id, self.user_id,\
+                            self.username)
 
 class Grants(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -462,6 +470,8 @@ class Collaborators(db.Model):
     user_id = db.Column(db.String, db.ForeignKey("user.id"),  primary_key=True)
     is_pi = db.Column(db.Boolean, default=False)
     users = db.relationship("User")
+    publications = db.Column(db.Text)
+    events = db.Column(db.Text)
 
     def __repr__(self):
         return "<Collaborators {} {} {}>".format(self.grant_id, self.user_id, self.is_pi)
