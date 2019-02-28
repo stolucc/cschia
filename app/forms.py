@@ -429,3 +429,6 @@ class AddCollaboratorForm(FlaskForm):
     is_pi = SelectField(u"PI", choices=[("no","No"),("yes","Yes")])
     submit = SubmitField("Add collaborator")
 
+class ResearcherReport(FlaskForm):
+    title=StringField('Title',[DataRequired(),Length(max=255)])
+    text=TextAreaField('Content',[DataRequired()])

@@ -1,6 +1,8 @@
+from uuid import uuid4
+
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db, admin_required, reviewer_required
-from app.forms import LoginForm, RegistrationForm,RegistrationFormAdmin, EditProfileForm, GeneralInformationForm, \
+from app.forms import LoginForm, RegistrationForm, RegistrationFormAdmin, EditProfileForm, GeneralInformationForm, \
     EducationInformationForm, EmploymentInformationForm, \
     SocietiesInformationForm, AwardsInformationForm, \
     FundingDiversificationForm, TeamMembersForm, ImpactsForm, \
@@ -9,7 +11,7 @@ from app.forms import LoginForm, RegistrationForm,RegistrationFormAdmin, EditPro
     EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
     ChangePassword, ChangeEmail, ProposalForm, GrantApplicationForm, CollaboratorForm, \
     ReviewProposalForm, AddReviewerForm, ResetPasswordRequestForm, ResetPasswordForm, \
-    FreeTextForm, AddCollaboratorForm
+    FreeTextForm, AddCollaboratorForm, ResearcherReport
 
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
@@ -184,16 +186,11 @@ def view_call(call_id):
     form = AddReviewerForm()
     if form.validate_on_submit():
         reviewer_usr = User.query.filter_by(username=form.reviewer_username.data).first()
-        if reviewer_usr is not None:
-            already_reviewer = FundingCallReviewers.query.filter_by(call_id=call_id, reviewer_id=reviewer_usr.id).first()
-            if already_reviewer is None and reviewer_usr.is_reviewer == 1:
-                reviewer = FundingCallReviewers(call_id=call_id, reviewer_id=reviewer_usr.id)
-                db.session.add(reviewer)
-                db.session.commit()
-                flash("Successfully invited reviewer for call for proposal.")
-                return redirect(url_for("view_calls"))
-            else:
-                flash("Reviewer of that username already assigned to this funding call.")
+        if reviewer_usr is not None and reviewer_usr.is_reviewer == 1:
+            reviewer = FundingCallReviewers(call_id=call_id, reviewer_id=reviewer_usr.id)
+            db.session.add(reviewer)
+            db.session.commit()
+            flash("Successfully invited reviewer for call for proposal.")
         else:
             flash("Reviewer of that username does not exist.")
         
@@ -203,6 +200,7 @@ def view_call(call_id):
 @app.route("/apply/<call_id>", methods=["GET","POST"])
 def apply(call_id):
     call = SfiProposalCalls.query.filter_by(id=call_id).first_or_404()
+    flash(call.title)
     is_applied = GrantApplications.query.filter_by(user_id=current_user.id, call_id=call_id).first()
     form = GrantApplicationForm()
 
@@ -212,7 +210,7 @@ def apply(call_id):
                 is_applied = GrantApplications(user_id=current_user.id, call_id=call_id)
                 db.session.add(is_applied)
               
-            is_applied.title=form.title.data
+            is_applied.title=call.title
             is_applied.duration=form.duration.data 
             is_applied.nrp=form.nrp.data
             is_applied.legal_align=form.legal_align.data
@@ -362,24 +360,12 @@ def admin_edit_proposals():
     return render_template("admin_edit_proposals.html", title="Admin Edit proposals")
 
 
-@app.route("/admin_reviews", methods=["GET", "POST"])
+@app.route("/admin_reviews")
 @login_required
 def admin_submitted_reviews():
     admin_required(current_user)
     getAllFundingCalls = SfiProposalCalls.query.all()
     getSubmittedReviews = Reviews.query.all()
-    
-    if request.method == "POST" and "accept" in request.form:
-        review = Reviews.query.filter_by(id=request.form["review_id"]).first()
-        db.session.delete(review)
-        
-        proposal = GrantApplications.query.filter_by(id=review.proposal_id).first()
-        accepted_grant = Grants(call_id=proposal.call_id, application_id=proposal.id, title=proposal.title, duration=proposal.duration)
-        db.session.add(accepted_grant)
-        
-        db.session.commit()
-        flash("Proposal successfully accepted.")
-        return redirect(url_for("admin_submitted_reviews"))
     
     return render_template("admin_submitted_reviews.html", title="Submitted reviews", getAllFundingCalls=getAllFundingCalls, getSubmittedReviews=getSubmittedReviews)
 
@@ -423,26 +409,22 @@ def view_applications():
 
     awarded = []
     for grant in grant_ids:
-        q = Grants.query.filter_by(id=grant).first()
-        if grant is not None and q is not None:
-            awarded.append(q)
+        if g is not None:
+            awarded.append(Grants.query.filter_by(id=grant).first())
 
     return render_template("view_applications.html", title="MyGrants", draft=draft, pending=pending, awarded=awarded)
 
 @app.route("/applications/<grant_id>", methods=["GET", "POST"])
 def view_application(grant_id):
     grant = GrantApplications.query.filter_by(id=grant_id).first_or_404()
-    user = User.query.filter_by(id=grant.user_id).first()
     reviewer = FundingCallReviewers.query.filter_by(call_id=grant.call_id).first()
-    
-    awarded = Grants.query.filter_by(application_id=grant_id).first()
     
     getReviewInfo = Reviews.query.filter_by(proposal_id=grant_id).filter_by(reviewer_id=current_user.id).first()
     
-    if not getReviewInfo and awarded is None and reviewer is not None and reviewer.reviewer_id == current_user.id:
+    if not getReviewInfo and reviewer is not None:
         form = ReviewProposalForm()
         if form.validate_on_submit():
-            review = Reviews(call_id=grant.call_id, proposal_id=grant_id, proposal_title=grant.title, reviewer_id=reviewer.reviewer_id, user_id=grant.user_id, username=user.username, desc=form.description.data, rating=form.rating.data)
+            review = Reviews(call_id=grant.call_id, proposal_id=grant_id, reviewer_id=reviewer.reviewer_id, desc=form.description.data, rating=form.rating.data)
             db.session.add(review)
             db.session.commit()
             flash("Your review has been successfully submitted.")
@@ -1598,3 +1580,31 @@ def annual_report():
     else:
         return render_template('search_not_found.html')
     """
+
+@app.route("/new_report",methods=['GET','POST'])
+def new_report():
+    form = ResearcherReport()
+    if form.validate_on_submit():
+        report=ResearcherReport(id=str(uuid4()),title=form.title.data)
+        report.text=form.text.data
+        report.report_publish_date=datetime.now()
+        db.session.add(new_report)
+        db.session.commit()
+        return render_template('index.html')
+    # @TODO 如果提交重定向至发布结果界面
+    return render_template('new_report.html',form=form)
+
+@app.route("/edit/<string:id>",methods=['GET','POST'])
+def edit_report(id):
+    report=ResearcherReport.query.get_or_404(id)
+    form=ResearcherReport()
+    if form.validate_on_submit():
+        report.title = form.title.data
+        report.text = form.text.data
+        report.publish_date = datetime.now()
+        db.session.add(report)
+        db.session.commit()
+        return render_template('index.html')
+        form.title.data=ResearcherReport.title
+        form.text.data=ResearcherReport.text
+    return render_template("edit_report.html",report_id=report.id)

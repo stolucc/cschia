@@ -1,4 +1,6 @@
 from datetime import datetime
+from uuid import uuid4
+
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -442,17 +444,9 @@ class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     call_id = db.Column(db.Integer, db.ForeignKey("funding_call.id"))
     proposal_id = db.Column(db.Integer, db.ForeignKey("grant_applications.id"))
-    proposal_title = db.Column(db.Text, db.ForeignKey("grant_applications.title"))
     reviewer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    username = db.Column(db.Integer, db.ForeignKey("user.username"))
-    desc = db.Column(db.Text)
+    desc = db.Column(db.Text())
     rating = db.Column(db.Integer)
-
-    def __repr__(self):
-        return "<Grants {} {} {} {} {} {}>".format(self.id, self.call_id, \
-                        self.proposal_id, self.proposal_title, self.reviewer_id, self.user_id,\
-                            self.username)
 
 class Grants(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -470,8 +464,60 @@ class Collaborators(db.Model):
     user_id = db.Column(db.String, db.ForeignKey("user.id"),  primary_key=True)
     is_pi = db.Column(db.Boolean, default=False)
     users = db.relationship("User")
-    publications = db.Column(db.Text)
-    events = db.Column(db.Text)
 
     def __repr__(self):
         return "<Collaborators {} {} {}>".format(self.grant_id, self.user_id, self.is_pi)
+
+report_tags = db.Table(
+    'posts_tags',
+    db.Column('report_id', db.String(45), db.ForeignKey('reoprt.id')),
+    # @TODO 增加report.py文件
+    db.Column('tag_id', db.String(45), db.ForeignKey('tags.id')))
+
+class Report(db.Model):
+    report_id=db.Column(db.String(45),primary_key=True)
+    report_title=db.Column(db.String(255))
+    report_text=db.Column(db.Text())
+    report_publish_date=db.Column(db.DateTime)
+    report_auther=db.Column(db.String(45),db.ForeignKey('user.id'))
+    user=db.relationship(
+        'User',
+        back_populates='posts'
+    )
+    comments=db.relationship(
+        'Comment',
+        backref='posts',
+        lazy='dynamic'
+    )
+    tags=db.relationship(
+        'Tag',
+        secondary=report_tags,
+        backref=db.backref('posts',lazy='dynamic')
+    )
+    def __init__(self):
+        self.report_id=str(uuid4())
+
+    def __repr__(self):
+        return "<Model Report `{}`>".format(self.report_title)
+
+class Comment(db.Model):
+    id = db.Column(db.String(45), primary_key=True)
+    name = db.Column(db.String(255))
+    text = db.Column(db.Text())
+    date = db.Column(db.DateTime())
+    post_id = db.Column(db.String(45), db.ForeignKey('report.id'))
+    def __init__(self):
+        self.id = str(uuid4())
+
+    def __repr__(self):
+        return '<Model Comment `{}`>'.format(self.name)
+
+class Tag(db.Model):
+    id = db.Column(db.String(45), primary_key=True)
+    name = db.Column(db.String(255))
+
+    def __init__(self):
+        self.id = str(uuid4())
+
+    def __repr__(self):
+        return '<Model Tag `{}`>'.format(self.name)
