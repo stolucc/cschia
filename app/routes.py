@@ -234,23 +234,25 @@ def edit(call_id):
     return render_template("admin_edit_call_for_proposal.html", title="Edit Call For Proposal", form=form)
 
 
-
-
 @app.route("/delete/<call_id>", methods=["GET","POST"])
 def delete(call_id):
+    admin_required(current_user)
+    print("omg is this working")
+    SfiProposalCalls.query.filter_by(id=call_id).delete()
+    db.session.commit()
+    flash("The call for proposal has been deleted!")
+    return redirect(url_for("index"))
+
+
+    return render_template("viewcalls.html", title="Funding Calls")
+
+
+
     """
     should take callid
     search through table for first item with that id
     then delete it and show a message
     """
-    return 
-
-
-
-
-
-
-
 
 
 @app.route("/admin_register_user", methods=["GET", "POST"])

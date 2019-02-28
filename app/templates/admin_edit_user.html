@@ -26,7 +26,7 @@
     
             </ul>
         </div>
-
+        {% if current_user.is_admin %}
     <div class="col-md-6">
         <h1>Register a new type of user</h1>
 
@@ -35,5 +35,6 @@
 
     </div>
 <div class="col-sm-2"></div>
+{% endif %}
 
 {% endblock %}

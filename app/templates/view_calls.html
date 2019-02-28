@@ -12,9 +12,11 @@
         <li class="list-group-item">
                 <h3><a href="{{ url_for('view_call', call_id=call.id) }}">{{ call.title }}</a></h3>
                 <a href="{{ url_for('apply', call_id=call.id) }}" class="btn btn-primary">Apply</a>
+                {% if current_user.is_admin %}
+
                 <a href="{{ url_for('edit', call_id=call.id) }}" class="btn btn-primary">Edit</a>
                 <a href="{{ url_for('delete', call_id=call.id) }}" class="btn btn-primary">Delete</a>
-                
+                {% endif %}
         </li>
     {% endfor %}
     </ul>
