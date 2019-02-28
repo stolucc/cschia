@@ -16,6 +16,11 @@
         <tr>
             <td class="mr-5"><a href="{{ url_for('view_call', call_id=call.id) }}">{{ call.title }}</a></td>
             {% if not current_user.is_admin %}<td class="mr-5"><a href="{{ url_for('apply', call_id=call.id) }}", class="btn btn-primary">Apply</a></td>{% endif %}
+            {% if current_user.is_admin %}
+
+                <td><a href="{{ url_for('edit', call_id=call.id) }}" class="btn btn-primary">Edit</a></td>
+                <td><a href="{{ url_for('delete', call_id=call.id) }}" class="btn btn-primary">Delete</a></td>
+                {% endif %}
         </tr>
         {% endfor %}
     </table>

@@ -1,4 +1,4 @@
-from app import app, db
+from app import app, db, admin_required
 from flask import render_template, flash, redirect, url_for, request, abort
 from app.models import User, Publication
 from flask_login import current_user, login_user, logout_user, login_required
@@ -17,7 +17,9 @@ from app.models import User
 
 @app.route("/admin_edit_user/", methods=["GET", "POST"])
 @login_required
+
 def admin_edit_user():
+    admin_required(current_user)
     # print("hello1")
 
     def check_exists(name):
