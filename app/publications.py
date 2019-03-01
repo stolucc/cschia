@@ -97,14 +97,13 @@ class PublicationForm(FlaskForm):
 
 class BibtexPublicationForm(FlaskForm):
     parse = TextAreaField("BIBTex format", validators=[DataRequired(), Length(min=0,max=800)], \
-        description="""@(Refereed original article|Refereed review article|Refereed conference paper|\
-                        Book|Technical report)Refereed original article{
+        render_kw={"placeholder": """@(Refereed original article|Refereed review article|Refereed conference paper|Book|Technical report)Refereed original article { 
                         title = {The ABC of Software Engineering Research},
                         doi = {10.1145/3241743},
                         year = {2018},
                         journal =  {ACM Transactions on Software Engineering and Methodology},
-                        status(Published|In-press) = {Published} 
-                    }""")
+                        status(Published|In-press) = {Published}
+                    }"""})
     submitBib = SubmitField("Submit")
 
 

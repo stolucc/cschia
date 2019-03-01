@@ -82,6 +82,12 @@ def index():
             formList.append(string)
 
     appList = GrantApplications.query.filter_by(user_id=current_user.id).filter_by(is_draft=1).all()
+    
+    genInfo = None
+    if current_user.is_admin == False and current_user.is_reviewer == False:
+        q = GeneralInformation.query.filter_by(user_id=current_user.id).first()
+        if q is not None:
+            genInfo = json.loads(q.data)
 
     check_if_filled(GeneralInformation, "General Information")
     check_if_filled(EducationInformation, "Education")
@@ -113,7 +119,7 @@ def index():
 
     return render_template("index.html", title="Home ", form=formList, \
                             proposals=proposals, app=appList, applications=applications,\
-                            annualReport=annualReport)
+                            annualReport=annualReport, genInfo=genInfo)
 
 
 @app.route("/login", methods=["GET", "POST"])

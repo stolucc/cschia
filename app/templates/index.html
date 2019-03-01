@@ -3,6 +3,8 @@
 {% block content %}
 {% if current_user.is_admin %}
 <h1 class="mb-5">Welcome, SFI-administrator!</h1>
+{% elif genInfo is defined %}
+<h1 class="mb-5">Hello, {{ genInfo["firstName"] }} {{ genInfo["lastName"] }} ({{ current_user.orcid }})!</h1>
 {% else %}
 <h1 class="mb-5">Hello, {{ current_user.username }} ({{ current_user.orcid }})!</h1>
 {% endif %}
