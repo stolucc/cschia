@@ -175,6 +175,11 @@ def register():
 
 @app.route("/calls")
 def view_calls():
+    complete_general = GeneralInformation.query.filter_by(user_id=current_user.id).first()
+    if complete_general is None:
+        flash("Please complete your General Information form first!")
+        return redirect("edit_profile")
+
     calls = SfiProposalCalls.query.all()
     return render_template("view_calls.html", title="Funding Calls", calls=calls)
 
@@ -681,6 +686,8 @@ def edit_profile():
     fundRatioForm = SfiFundingRatioForm()
     pubEngageForm = EducationAndPublicEngagementForm()
 
+    user_info = User.query.filter_by(id=current_user.id).first()
+
     jsonGenInfo = GeneralInformation.query.filter_by(user_id=current_user.id).first()
     if jsonGenInfo is not None:
         getGenInfo = json.loads(jsonGenInfo.data)
@@ -702,6 +709,10 @@ def edit_profile():
     getSfiInfo = get_list(query_table(SfiFundingRatio))
     getEdInfo = get_list(query_table(EducationPublicEngagement))
 
+    if request.method == "GET":
+        genInfoForm.email.data = user_info.email
+        genInfoForm.orcid.data = user_info.orcid
+
     if request.method == "POST":
 
         if genInfoForm.validate_on_submit and "genSubmit" in request.form:
@@ -716,8 +727,8 @@ def edit_profile():
                 "suffix": genInfoForm.suffix.data,
                 "phoneNumPrefix": genInfoForm.phoneNumPrefix.data,
                 "phoneNum": genInfoForm.phoneNum.data,
-                "email": genInfoForm.email.data,
-                "orcid": genInfoForm.orcid.data
+                "email": user_info.email,
+                "orcid": user_info.orcid
             }
 
             infoJson = json.dumps(info)
