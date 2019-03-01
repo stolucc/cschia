@@ -99,12 +99,19 @@ def index():
     check_if_filled(EducationPublicEngagement, "Education and Public engagement")
 
     q = AnnualReport.query.filter_by(user_id=current_user.id, is_submit=True).first()
-    if q is None:
-        formList.append("Annual Report")
+
+    if q is not None:
+        q = False
+    else:
+        q = True
 
     proposals = SfiProposalCalls.query.all()
 
-    return render_template("index.html", title="Home ", form=formList, proposals=proposals, app=appList)
+    applications = GrantApplications.query.filter_by(user_id=current_user.id, is_draft=True).all()
+
+    return render_template("index.html", title="Home ", form=formList, \
+                            proposals=proposals, app=appList, applications=applications,\
+                            annualReport=q)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -176,7 +183,7 @@ def register():
 @app.route("/calls")
 def view_calls():
     complete_general = GeneralInformation.query.filter_by(user_id=current_user.id).first()
-    if complete_general is None:
+    if current_user.is_admin == False and complete_general is None:
         flash("Please complete your General Information form first!")
         return redirect("edit_profile")
 
@@ -687,10 +694,12 @@ def edit_profile():
     pubEngageForm = EducationAndPublicEngagementForm()
 
     user_info = User.query.filter_by(id=current_user.id).first()
-
+    user_name = False
     jsonGenInfo = GeneralInformation.query.filter_by(user_id=current_user.id).first()
     if jsonGenInfo is not None:
         getGenInfo = json.loads(jsonGenInfo.data)
+        user_name =  getGenInfo["firstName"] + " " + getGenInfo["lastName"]
+
     else:
         getGenInfo = ""
 
@@ -1372,7 +1381,8 @@ def edit_profile():
                            getEvInfo=getEvInfo,
                            getCommInfo=getCommInfo,
                            getSfiInfo=getSfiInfo,
-                           getEdInfo=getEdInfo)
+                           getEdInfo=getEdInfo,
+                           user_name=user_name)
 
 
 

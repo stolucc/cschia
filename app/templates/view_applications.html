@@ -11,7 +11,7 @@
         {% for d in draft %}
         <tr>
             <td>
-                <a href="{{ url_for('view_application', grant_id=d.id) }}">{{ d.title }}</a>
+                <a href="{{ url_for('apply', call_id=d.call_id) }}">{{ d.title }}</a>
             </td>
         </tr>
         {% endfor %}

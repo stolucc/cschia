@@ -34,6 +34,10 @@
                             {% for p in proposals %}
                                     <li> {{p.title}} </li>
                             {% endfor %}
+                            {% if annualReport != False %}
+                            <li>test</li>
+                            <li><a href="{{url_for('annual_report') }}">Annual Report</a></li>
+                            {% endif %}
                             </ul>
                     </div>
                 </div>
@@ -47,7 +51,9 @@
                     <div class="card-body">
                         <h4>My Draft Applications</h4>
                         <ul class="list-unstyled">
-                        
+                        {% for a in applications %}
+                            <li><a href="{{ url_for('apply', call_id=a.call_id) }}">{{a.title}}</a></li>
+                        {% endfor %}
                         </ul>
                     </div>
                 </div>
