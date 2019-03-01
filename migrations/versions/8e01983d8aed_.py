@@ -1,8 +1,8 @@
-"""init
+"""empty message
 
-Revision ID: 46eb56be6a71
+Revision ID: 8e01983d8aed
 Revises: 
-Create Date: 2019-02-27 14:08:23.925297
+Create Date: 2019-03-01 15:07:28.897384
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '46eb56be6a71'
+revision = '8e01983d8aed'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -156,8 +156,8 @@ def upgrade():
     sa.Column('title', sa.Text(), nullable=True),
     sa.Column('duration', sa.Text(), nullable=True),
     sa.Column('nrp', sa.Text(), nullable=True),
-    sa.Column('ethical_q1', sa.Boolean(), nullable=True),
-    sa.Column('ethical_q2', sa.Boolean(), nullable=True),
+    sa.Column('ethical_q1', sa.String(), nullable=True),
+    sa.Column('ethical_q2', sa.String(), nullable=True),
     sa.Column('country', sa.Text(), nullable=True),
     sa.Column('coapps', sa.Text(), nullable=True),
     sa.Column('collabs', sa.Text(), nullable=True),
@@ -227,16 +227,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['primary_user'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('reviews',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('call_id', sa.Integer(), nullable=True),
-    sa.Column('reviewer_id', sa.Integer(), nullable=True),
-    sa.Column('desc', sa.Text(), nullable=True),
-    sa.Column('rating', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['call_id'], ['funding_call.id'], ),
-    sa.ForeignKeyConstraint(['reviewer_id'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
     op.create_table('sfi_funding_ratio',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
@@ -272,16 +262,78 @@ def upgrade():
     sa.ForeignKeyConstraint(['grant_id'], ['grant_applications.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('grants',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('call_id', sa.Integer(), nullable=True),
+    sa.Column('application_id', sa.Integer(), nullable=True),
+    sa.Column('title', sa.Text(), nullable=True),
+    sa.Column('duration', sa.Text(), nullable=True),
+    sa.ForeignKeyConstraint(['application_id'], ['grant_applications.id'], ),
+    sa.ForeignKeyConstraint(['call_id'], ['funding_call.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('reviews',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('call_id', sa.Integer(), nullable=True),
+    sa.Column('proposal_id', sa.Integer(), nullable=True),
+    sa.Column('proposal_title', sa.Text(), nullable=True),
+    sa.Column('reviewer_id', sa.Integer(), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('username', sa.Integer(), nullable=True),
+    sa.Column('desc', sa.Text(), nullable=True),
+    sa.Column('rating', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['call_id'], ['funding_call.id'], ),
+    sa.ForeignKeyConstraint(['proposal_id'], ['grant_applications.id'], ),
+    sa.ForeignKeyConstraint(['proposal_title'], ['grant_applications.title'], ),
+    sa.ForeignKeyConstraint(['reviewer_id'], ['user.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.ForeignKeyConstraint(['username'], ['user.username'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('collaborators',
+    sa.Column('grant_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('is_pi', sa.Boolean(), nullable=True),
+    sa.Column('publications', sa.Integer(), nullable=True),
+    sa.Column('events', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['events'], ['events.id'], ),
+    sa.ForeignKeyConstraint(['grant_id'], ['grants.id'], ),
+    sa.ForeignKeyConstraint(['publications'], ['publication.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('grant_id', 'user_id')
+    )
+    op.create_table('grant_events',
+    sa.Column('grant_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('event_row', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['event_row'], ['events.id'], ),
+    sa.ForeignKeyConstraint(['grant_id'], ['grants.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('grant_id', 'user_id', 'event_row')
+    )
+    op.create_table('grant_publications',
+    sa.Column('grant_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('pub_row', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['grant_id'], ['grants.id'], ),
+    sa.ForeignKeyConstraint(['pub_row'], ['publication.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('grant_id', 'user_id', 'pub_row')
+    )
     # ### end Alembic commands ###
 
 
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
+    op.drop_table('grant_publications')
+    op.drop_table('grant_events')
+    op.drop_table('collaborators')
+    op.drop_table('reviews')
+    op.drop_table('grants')
     op.drop_table('grant_application_attachment')
     op.drop_table('societies_information')
     op.drop_table('sfi_proposal_calls')
     op.drop_table('sfi_funding_ratio')
-    op.drop_table('reviews')
     op.drop_table('publication')
     op.drop_table('presentations')
     op.drop_index(op.f('ix_post_timestamp'), table_name='post')

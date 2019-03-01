@@ -416,7 +416,7 @@ class GrantApplicationForm(FlaskForm):
     ethical_q2 = SelectField(u"Does the research involve human participants, human biological material, or identifiable data?", choices=[("No","No"),("Yes","Yes")])
     country = StringField("Country of applicant")
     coapps = TextAreaField("Coapplicants(eg. applicant1@email.com, applicant2@email.com)", validators=[Length(min=0,max=200)])
-    collabs = FieldList(FormField(CollaboratorForm), min_entries=2)
+    # collabs = FieldList(FormField(CollaboratorForm), min_entries=2)
     sci_abstract = TextAreaField("Scientific Abstract", validators=[Length(min=0,max=200)])
     lay_abstract = TextAreaField("Lay Abstract", validators=[Length(min=0,max=200)])
     doc_uplaod = MultipleFileField("Programme Documents")
