@@ -10,7 +10,7 @@
     <table class="table table-striped table-hover">
         <tr>
             <th scope="col">Title</th>
-            {% if not current_user.is_admin %}<th scope="col">Application</th>{% endif %}
+            {% if current_user.is_anonymous == False and not current_user.is_admin %}<th scope="col">Application</th>{% endif %}
             {% if current_user.is_admin %}
             <th scope="col">Edit</th>
             <th scope="col">Delete</th>
@@ -21,7 +21,7 @@
         {% for call in calls %}
         <tr>
             <td class="mr-5"><a href="{{ url_for('view_call', call_id=call.id) }}">{{ call.title }}</a></td>
-            {% if not current_user.is_admin %}<td class="mr-5"><a href="{{ url_for('apply', call_id=call.id) }}", class="btn btn-primary">Apply</a></td>{% endif %}
+            {% if current_user.is_anonymous == False and not current_user.is_admin %}<td class="mr-5"><a href="{{ url_for('apply', call_id=call.id) }}", class="btn btn-primary">Apply</a></td>{% endif %}
             {% if current_user.is_admin %}
 
                 <td><a href="{{ url_for('edit', call_id=call.id) }}" class="btn btn-primary">Edit</a></td>

@@ -184,8 +184,10 @@ def register():
 
 @app.route("/calls")
 def view_calls():
-    complete_general = GeneralInformation.query.filter_by(user_id=current_user.id).first()
-    if current_user.is_admin == False and current_user.is_reviewer == False and complete_general is None:
+    if current_user.is_anonymous == False:
+        complete_general = GeneralInformation.query.filter_by(user_id=current_user.id).first()
+    
+    if current_user.is_anonymous == False and current_user.is_admin == False and current_user.is_reviewer == False and complete_general is None:
         flash("Please complete your General Information form first!")
         return redirect("edit_profile")
 
