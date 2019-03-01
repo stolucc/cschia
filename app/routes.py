@@ -265,7 +265,7 @@ def apply(call_id):
         return redirect(url_for("index"))
 
     if request.method == "GET":
-        form.title.data = call.title
+        #form.title.data = call.title
         if is_applied is not None and is_applied.is_pending is True:
             flash("You have already applied for this award")
             return redirect(url_for("view_calls"))
