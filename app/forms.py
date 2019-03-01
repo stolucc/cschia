@@ -419,7 +419,7 @@ class GrantApplicationForm(FlaskForm):
     collabs = FieldList(FormField(CollaboratorForm), min_entries=2)
     sci_abstract = TextAreaField("Scientific Abstract", validators=[Length(min=0,max=200)])
     lay_abstract = TextAreaField("Lay Abstract", validators=[Length(min=0,max=200)])
-    doc_upload = MultipleFileField("Programme Documents")
+    doc_uplaod = MultipleFileField("Programme Documents")
     declare = BooleanField()
     submit = SubmitField("Submit")
     draft = SubmitField("Save Draft")
