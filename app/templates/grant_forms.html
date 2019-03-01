@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Publications and events associated iwith grant </h1> 
+    
+
+    <table class="table table-striped table-hover">
+        <tr>
+            <th scope="col">Publications</th>
+        </tr>
+
+        {% for publication in publications %}
+        <tr>
+            <td class="mr-5"><a href="{{ url_for('view_grant_pub', grant_id=grant_id, form_id=publication.id) }}"> {{ publication.title }} </a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <table class="table table-striped table-hover">
+        <tr>
+            <th scope="col">Events</th>
+        </tr>
+
+        {% for event in events %}
+        <tr>
+            <td class="mr-5"><a href="{{ url_for('view_grant_event', grant_id=grant_id, form_id=event.id) }}">Hosted / attended by {{ event.user.email }}</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

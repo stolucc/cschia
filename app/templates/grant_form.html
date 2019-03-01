@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if publication != False%}
+    <h2>Author: {{ publication.user.email }}</a></h2>
+    <ul class="list-group">
+        <li class="list-group-item">
+            Year: {{ publication.year }}
+        </li>
+        <li class="list-group-item">
+            Journal / Conference: {{ publication.journal }}
+        </li>
+        <li class="list-group-item">
+            Type: {{ publication.type }}
+        </li>
+        <li class="list-group-item">
+            Status: {{ publication.status }}
+        </li>
+    </ul>
+
+{% elif events != False %}
+    <h1> Event {{ event.id, event.user.email }} </h1>
+    <ul>
+        <li>Start date: {{ data["startDate"] }} </li>
+        <li>End date: {{ data["endDate"] }} </li>
+        <li>Title: {{ data["title"] }} </li>
+        <li>Event type: {{ data["eventType"] }} </li>
+        <li>Role: {{ data["role"] }} </li>
+        <li>Location: {{ data["location"] }} </li>
+        <li>Primary attribution: {{ data["primaryAttribution"] }} </li>
+    </ul>
+
+{% endif %}
+
+{% endblock %}

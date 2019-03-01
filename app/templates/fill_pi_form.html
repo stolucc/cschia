@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-5"> Grant( {{ grant_id }} ) forms for {{ user_id }} </h1>
+
+    <div class="row">
+        <div class="col mb-2">
+            <h2> Publications </h2>
+            {{ render_form(pubForm) }} <br>
+            {{ render_form(bibForm) }}
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="row">
+        <div class="col mb-2">
+            <h2 class="mt-5"> Events </h2>
+            <form method="post">
+                {{ render_field(eventsForm.startDate) }}
+                {{ render_field(eventsForm.endDate) }}
+                {{ render_field(eventsForm.title) }}
+                {{ render_field(eventsForm.eventType) }}
+                {{ render_field(eventsForm.role) }}
+                {{ render_field(eventsForm.location) }}
+                {{ render_field(eventsForm.primaryAttribution) }}
+                {{ render_field(eventsForm.eventsSubmit) }}
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}

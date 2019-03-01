@@ -20,6 +20,11 @@
                             {% for f in form %}
                                     <li> {{f}} </li>
                             {% endfor %}
+                            {% if annualReport == True %}
+                                <li>test</li>
+                                <li><a href="{{url_for('annual_report') }}">Annual Report</a></li>
+                            {% endif %}
+                            </ul>
                             </ul>
                             <p class="text-center"><a class="btn btn-primary" href="{{ url_for("edit_profile")}}">Go to forms page</a></p>
                     </div>
@@ -34,10 +39,6 @@
                             {% for p in proposals %}
                                     <li> {{p.title}} </li>
                             {% endfor %}
-                            {% if annualReport != False %}
-                            <li>test</li>
-                            <li><a href="{{url_for('annual_report') }}">Annual Report</a></li>
-                            {% endif %}
                             </ul>
                     </div>
                 </div>

@@ -98,12 +98,14 @@ def index():
     check_if_filled(SfiFundingRatio, "SFI Funding Ratio")
     check_if_filled(EducationPublicEngagement, "Education and Public engagement")
 
-    q = AnnualReport.query.filter_by(user_id=current_user.id, is_submit=True).first()
 
+    year = int(datetime.now().year)
+    q = AnnualReport.query.filter_by(user_id=current_user.id, is_submit=True, date=year).first()
     if q is not None:
         q = False
     else:
         q = True
+    annualReport=q
 
     proposals = SfiProposalCalls.query.all()
 
@@ -111,7 +113,7 @@ def index():
 
     return render_template("index.html", title="Home ", form=formList, \
                             proposals=proposals, app=appList, applications=applications,\
-                            annualReport=q)
+                            annualReport=annualReport)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -183,7 +185,7 @@ def register():
 @app.route("/calls")
 def view_calls():
     complete_general = GeneralInformation.query.filter_by(user_id=current_user.id).first()
-    if current_user.is_admin == False and complete_general is None:
+    if current_user.is_admin == False and current_user.is_reviewer == False and complete_general is None:
         flash("Please complete your General Information form first!")
         return redirect("edit_profile")
 
