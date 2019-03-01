@@ -1,32 +1,54 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ call.title }}</h1>
-<h2>Overview</h2>
-<p>{{ call.overview }}</p>
-<h2>Funding</h2>
-<p>{{ call.funding }}</p>
-<h2>Key Dates</h2>
-<p>{{ call.key_dates }}</p>
 
-{% if current_user.is_admin %}
-<div class="card w-25">
-	<div class="card-body">
-		<form action="" method="post">
-		    {{ form.hidden_tag() }}
-		    <div class="form-group">
-		        {{ form.reviewer_username.label }}
-		        {{ form.reviewer_username(class="form-control") }}
-		        {% for error in form.reviewer_username.errors %}
-		        <span style="color: red;">[{{ error }}]</span>
-		        {% endfor %}
-		    </div>
-		    <div class="form-group">
-		        {{ form.submit(class="btn btn-primary") }}
-		    </div>
-		</form>
+<div = class="container">
+	<h1>{{ call.title }}</h1>
+	<div class="row">
+
+		<div class="col-md-8">
+			<h2>Overview</h2>
+			<p>{{ call.overview }}</p>
+			<h2>Funding</h2>
+			<p>{{ call.funding }}</p>
+			<h2>Key Dates</h2>
+			<p>{{ call.key_dates }}</p>
+
+			{% if current_user.is_admin %}
+			<div class="card w-30">
+				<div class="card-body">
+					<form action="" method="post">
+						{{ form.hidden_tag() }}
+						<div class="form-group">
+							{{ form.reviewer_username.label }}
+							{{ form.reviewer_username(class="form-control") }}
+							{% for error in form.reviewer_username.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+							{% endfor %}
+						</div>
+						<div class="form-group">
+							{{ form.submit(class="btn btn-primary") }}
+						</div>
+					</form>
+				</div>
+			</div><br>
+		</div>
+
+		<div class="col-md-4">
+			<table class="table table-striped table-hover">
+				<tr>
+					<th> Reasercher's proposals for this Call </th>
+				</tr>
+				{% for proposal in proposals %}
+				<tr>
+					<td><a href="{{ url_for('view_application', grant_id=proposal.id) }}"> {{ proposal.title}}</a></td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	
 	</div>
-</div><br>
+</div>
 {% endif %}
 
 {% endblock %}

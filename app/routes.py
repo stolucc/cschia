@@ -198,10 +198,11 @@ def view_calls():
 @app.route("/calls/<call_id>", methods=["GET", "POST"])
 def view_call(call_id):
     call = SfiProposalCalls.query.filter_by(id=call_id).first_or_404()
+    proposals = GrantApplications.query.filter_by(call_id=call_id).all()
 
     form = AddReviewerForm()
     if form.validate_on_submit():
-        reviewer_usr = User.query.filter_by(username=form.reviewer_username.data).first()
+        reviewer_usr = User.query.filter_by(email=form.reviewer_username.data).first()
         if reviewer_usr is not None:
             already_reviewer = FundingCallReviewers.query.filter_by(call_id=call_id, reviewer_id=reviewer_usr.id).first()
             if already_reviewer is None and reviewer_usr.is_reviewer == 1:
@@ -215,7 +216,7 @@ def view_call(call_id):
         else:
             flash("Reviewer of that username does not exist.")
         
-    return render_template("view_call.html", title="Funding Calls", call=call, form=form)
+    return render_template("view_call.html", title="Funding Calls", call=call, form=form, proposals=proposals)
 
 
 @app.route("/apply/<call_id>", methods=["GET","POST"])

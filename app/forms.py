@@ -385,12 +385,12 @@ class ReviewProposalForm(FlaskForm):
     submit = SubmitField("Submit")
 
 class AddReviewerForm(FlaskForm):
-    reviewer_username = StringField("Reviewer Username", validators=[DataRequired() ])
+    reviewer_username = StringField("Reviewer Email", validators=[DataRequired() ])
     submit = SubmitField("Add")
 
 class CollaboratorForm(FlaskForm):
     name = StringField("Name")
-    org = StringField("Organisation")
+    org = StringField("Organization")
     email = StringField("Email")
 
 class GrantApplicationForm(FlaskForm):
@@ -407,11 +407,11 @@ class GrantApplicationForm(FlaskForm):
             ("PAI","Priority Level I - Sustainable Food Production and Processing"), \
             ("PAJ","Priority Area J - Marine Renewable Energy"), \
             ("PAK","Priority Area K - Smart Grids & Smart Cities"), \
-            ("PAL","Priority Area L - Manufactoring Competitiveness"), \
+            ("PAL","Priority Area L - Manufacturing Competitiveness"), \
             ("PAM","Priority Area M - Processing Technologies and Novel Materials"), \
             ("PAN","Priority Area N - Innovation in Services and Business Processes"),\
             ("Software","Software"),("Other","Other")])
-    legal_align = TextAreaField("Plese describe how your proposal is aligned with SFI's legal remit (max 250 words)", validators = [Length(min=0,max=250)])
+    legal_align = TextAreaField("Please describe how your proposal is aligned with SFI's legal remit (max 250 words)", validators = [Length(min=0,max=250)])
     ethical_q1 = SelectField(u"Does the research involve the use of animals?", choices=[("No","No"),("Yes","Yes")])
     ethical_q2 = SelectField(u"Does the research involve human participants, human biological material, or identifiable data?", choices=[("No","No"),("Yes","Yes")])
     country = StringField("Country of applicant")
@@ -419,7 +419,7 @@ class GrantApplicationForm(FlaskForm):
     collabs = FieldList(FormField(CollaboratorForm), min_entries=2)
     sci_abstract = TextAreaField("Scientific Abstract", validators=[Length(min=0,max=200)])
     lay_abstract = TextAreaField("Lay Abstract", validators=[Length(min=0,max=200)])
-    doc_uplaod = MultipleFileField("Programme Documents")
+    doc_upload = MultipleFileField("Programme Documents")
     declare = BooleanField()
     submit = SubmitField("Submit")
     draft = SubmitField("Save Draft")
