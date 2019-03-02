@@ -190,12 +190,12 @@ def register():
 
 @app.route("/calls")
 def view_calls():
-    if current_user.is_anonymous == False:
-        complete_general = GeneralInformation.query.filter_by(user_id=current_user.id).first()
+    # if current_user.is_anonymous == False:
+    #     complete_general = GeneralInformation.query.filter_by(user_id=current_user.id).first()
     
-    if current_user.is_anonymous == False and current_user.is_admin == False and current_user.is_reviewer == False and complete_general is None:
-        flash("Please complete your General Information form first!")
-        return redirect("edit_profile")
+    # if current_user.is_anonymous == False and current_user.is_admin == False and current_user.is_reviewer == False and complete_general is None:
+    #     flash("Please complete your General Information form first!")
+    #     return redirect("edit_profile")
 
     calls = SfiProposalCalls.query.all()
     return render_template("view_calls.html", title="Funding Calls", calls=calls)
@@ -227,6 +227,15 @@ def view_call(call_id):
 
 @app.route("/apply/<call_id>", methods=["GET","POST"])
 def apply(call_id):
+
+    if current_user.is_anonymous == False:
+        complete_general = GeneralInformation.query.filter_by(user_id=current_user.id).first()
+    
+    if current_user.is_anonymous == False and current_user.is_admin == False and current_user.is_reviewer == False and complete_general is None:
+        flash("Please complete your General Information form first!")
+        return redirect("edit_profile")
+
+
     call = SfiProposalCalls.query.filter_by(id=call_id).first_or_404()
     is_applied = GrantApplications.query.filter_by(user_id=current_user.id, call_id=call_id).first()
     form = GrantApplicationForm()
