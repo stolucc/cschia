@@ -1,11 +1,34 @@
-{% extends "admin_nav.html" %}
+{% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form %}
 
 
 {% block content %}
+<div class="row">
+<div class="col-md-4">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+                {#class="btn btn-primary"#}
+
+            <a class="btn btn-primary btn-block" href="{{ url_for('admin_register_user') }}">Register</a>
+        </li>
+        <li class="list-group-item">
+                <a class="btn btn-primary btn-block" href="{{ url_for('publish_call') }}">Publish call for proposals</a>    
+        </li> 
+        <li class="list-group-item">
+            <a class="btn btn-primary btn-block" href="{{ url_for('admin_edit_proposals') }}">Edit proposals</a>    
+        </li> 
+
+        <li class="list-group-item">
+            <a class="btn btn-primary btn-block" href="{{ url_for('admin_edit_user') }}">Edit Users</a>    
+        </li> 
+        
 
 
-            <h1>Publish Call for Proposal</h1>
+    </ul>
+</div>
+<div class="col-md-6">
+
+            <h1>Edit Call for Proposal</h1>
             <form action="" enctype="multipart/form-data" method="post" novalidate>
                 <div class="form-group" >
                 {{ form.hidden_tag() }}
@@ -74,7 +97,8 @@
             {{ form.submit(class="btn btn-primary") }}
             
             </form>
-    
+        </div>   
 
-
+<div class="col-sm-2"></div>
+</div>
 {% endblock %}
