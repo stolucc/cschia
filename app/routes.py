@@ -250,8 +250,8 @@ def apply(call_id):
             is_applied.duration=form.duration.data 
             is_applied.nrp=form.nrp.data
             is_applied.legal_align=form.legal_align.data
-            #is_applied.ethical_q1=form.ethical_q1.data
-            #is_applied.ethical_q2=form.ethical_q2.data
+            is_applied.ethical_q1=form.ethical_q1.data
+            is_applied.ethical_q2=form.ethical_q2.data
             is_applied.country=form.country.data
             is_applied.sci_abstract=form.sci_abstract.data 
             is_applied.lay_abstract=form.lay_abstract.data
@@ -281,13 +281,14 @@ def apply(call_id):
         return redirect(url_for("index"))
 
     if request.method == "GET":
-        #form.title.data = call.title
+        
         if is_applied is not None and is_applied.is_pending is True:
             flash("You have already applied for this award")
             return redirect(url_for("view_calls"))
             
         elif is_applied is not None:
             
+            form.title.data = is_applied.title
             form.duration.data  = is_applied.duration
             form.nrp.data = is_applied.nrp
             form.legal_align.data = is_applied.legal_align
@@ -408,9 +409,14 @@ def admin_submitted_reviews():
         db.session.delete(review)
         
         proposal = GrantApplications.query.filter_by(id=review.proposal_id).first()
+        proposal.is_pending = False
         accepted_grant = Grants(call_id=proposal.call_id, application_id=proposal.id, title=proposal.title, duration=proposal.duration)
         db.session.add(accepted_grant)
+        db.session.commit()
         
+        collab = Collaborators(grant_id=accepted_grant.id, user_id=proposal.user_id, is_pi=True)
+        db.session.add(collab)
+
         db.session.commit()
         flash("Proposal successfully accepted.")
         return redirect(url_for("admin_submitted_reviews"))
@@ -466,6 +472,7 @@ def view_applications():
 @app.route("/applications/<grant_id>", methods=["GET", "POST"])
 def view_application(grant_id):
     grant = GrantApplications.query.filter_by(id=grant_id).first_or_404()
+    call = SfiProposalCalls.query.filter_by(id=grant.call_id).first()
     user = User.query.filter_by(id=grant.user_id).first()
     reviewer = FundingCallReviewers.query.filter_by(call_id=grant.call_id).first()
     
@@ -484,7 +491,7 @@ def view_application(grant_id):
     else:
         form = None
     
-    return render_template("view_application.html", title="Grant Application", grant=grant, form=form, getReviewInfo=getReviewInfo)
+    return render_template("view_application.html", title="Grant Application", grant=grant, form=form, getReviewInfo=getReviewInfo, call=call)
 
 @app.route("/view_grant/<id>", methods=["GET", "POST"])
 def view_grant(id):
