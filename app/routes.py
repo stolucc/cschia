@@ -545,8 +545,8 @@ def pi_form(grant_id, user_id):
             userInfo = Events(user_id=user_id)
             db.session.add(userInfo)
             info = {
-                "startDate": eventsForm.startDate.data.strftime("%Y/%m/%d"),
-                "endDate": eventsForm.endDate.data.strftime("%Y/%m/%d"),
+                "startDate": eventsForm.startDate.data, #.strftime("%Y/%m/%d"),
+                "endDate": eventsForm.endDate.data, #.strftime("%Y/%m/%d"),
                 "title": eventsForm.title.data,
                 "eventType": eventsForm.eventType.data,
                 "role": eventsForm.role.data,
@@ -1525,8 +1525,8 @@ def annual_report():
             db.session.add(userInfo)
             info = {
                 "nameOfProject": pubEngageForm.nameOfProject.data,
-                "startDate": pubEngageForm.startDate.data,
-                "endDate": pubEngageForm.endDate.data,
+                "startDate": pubEngageForm.startDate.data, #.strftime("%Y/%m/%d"),
+                "endDate": pubEngageForm.endDate.data, #.strftime("%Y/%m/%d"),
                 "activityType": pubEngageForm.activityType.data,
                 "otherType": pubEngageForm.otherType.data,
                 "projectTopic": pubEngageForm.projectTopic.data,
@@ -1545,8 +1545,8 @@ def annual_report():
                 userInfo = AnnualReport(user_id=current_user.id)
             db.session.add(userInfo)
             info = {
-                "startDate": academicCollabsForm.startDate.data,
-                "endDate": academicCollabsForm.endDate.data,
+                "startDate": academicCollabsForm.startDate.data, #.strftime("%Y/%m/%d"),
+                "endDate": academicCollabsForm.endDate.data, #.strftime("%Y/%m/%d"),
                 "nameOfInstitution": academicCollabsForm.nameOfInstitution.data,
                 "department": academicCollabsForm.department.data,
                 "location": academicCollabsForm.location.data,

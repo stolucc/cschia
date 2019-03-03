@@ -152,8 +152,8 @@ class EmploymentInformationForm(FlaskForm):
     employEdit = SubmitField("Update")
 
 class SocietiesInformationForm(FlaskForm):
-    startDate = DateField("Start date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
-    endDate = DateField("End date", validators=[Optional() ], render_kw={"placeholder": "YYYY-MM-DD"})
+    startDate = StringField("Start date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
+    endDate = StringField("End date", validators=[Optional() ], render_kw={"placeholder": "YYYY-MM-DD"})
     nameOfSociety = StringField("Name of society", validators=[DataRequired() ])
     typeOfMembership = StringField("Type of membership", validators=[DataRequired() ])
     #This field will depend on the date - grey out it end date entered
@@ -172,8 +172,8 @@ class AwardsInformationForm(FlaskForm):
     awardsEdit = SubmitField("Update")
 
 class FundingDiversificationForm(FlaskForm):
-    startDate = DateField("Start date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
-    endDate = DateField("End date", validators=[Optional() ], render_kw={"placeholder": "YYYY-MM-DD"})
+    startDate = StringField("Start date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
+    endDate = StringField("End date", validators=[Optional() ], render_kw={"placeholder": "YYYY-MM-DD"})
     amount = StringField("Amount of funding", validators=[DataRequired() ])
     fundingBody = StringField("Funding Body", validators=[DataRequired() ])
     fundingProgramme = StringField("Funding programme", validators=[DataRequired() ])
@@ -186,8 +186,8 @@ class FundingDiversificationForm(FlaskForm):
     fundingDivEdit = SubmitField("Update")
 
 class TeamMembersForm(FlaskForm):
-    startDate = DateField("Start date with team", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
-    departureDate = DateField("Departure date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
+    startDate = StringField("Start date with team", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
+    departureDate = StringField("Departure date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
     name = StringField("Name", validators=[DataRequired() ])
     position = StringField("Position within the team", validators=[DataRequired() ])
     primaryAttribution = StringField("Primary attribution(grant number)", \
@@ -243,8 +243,8 @@ class PresentationsForm(FlaskForm):
     presEdit = SubmitField("Update")
 
 class AcademicCollaborationsForm(FlaskForm):
-    startDate = DateField("Start date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
-    endDate = DateField("End date", validators=[DataRequired()], render_kw={"placeholder": "YYYY-MM-DD"})
+    startDate = StringField("Start date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
+    endDate = StringField("End date", validators=[DataRequired()], render_kw={"placeholder": "YYYY-MM-DD"})
     nameOfInstitution = StringField("Name of institution", validators=[DataRequired() ])
     department =  StringField("Department within institution", validators=[DataRequired() ])
     location = StringField("Location", validators=[DataRequired() ])
@@ -261,8 +261,8 @@ class AcademicCollaborationsForm(FlaskForm):
     academicCollabsEdit = SubmitField("Update")
 
 class NonAcademicCollaborationsForm(FlaskForm):
-    startDate = DateField("Start date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
-    endDate = DateField("End date", validators=[DataRequired()], render_kw={"placeholder": "YYYY-MM-DD"})
+    startDate = StringField("Start date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
+    endDate = StringField("End date", validators=[DataRequired()], render_kw={"placeholder": "YYYY-MM-DD"})
     nameOfInstitution = StringField("Name of institution", validators=[DataRequired() ])
     department =  StringField("Department within institution", validators=[DataRequired() ])
     location = StringField("Location", validators=[DataRequired() ])
@@ -279,8 +279,8 @@ class NonAcademicCollaborationsForm(FlaskForm):
     nonAcademicCollabsEdit = SubmitField("Update")
 
 class EventsForms(FlaskForm):
-    startDate = DateField("Start date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
-    endDate = DateField("End date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
+    startDate = StringField("Start date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
+    endDate = StringField("End date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
     title = TextAreaField("Title", validators = [Length(min=0, max=140) ])
     eventType = SelectField(u"Event Type", choices=\
     [("Conference", "Conference"), ("Workshop", "Workshop"), \
@@ -334,8 +334,8 @@ class EditProposalForm(FlaskForm):
 class EducationAndPublicEngagementForm(FlaskForm):
     nameOfProject = TextAreaField("Name of project", \
     validators = [Length(min=0, max=140) ])
-    startDate = DateField("Start date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
-    endDate = DateField("End date", validators=[DataRequired()], render_kw={"placeholder": "YYYY-MM-DD"})
+    startDate = StringField("Start date", validators=[DataRequired() ], render_kw={"placeholder": "YYYY-MM-DD"})
+    endDate = StringField("End date", validators=[DataRequired()], render_kw={"placeholder": "YYYY-MM-DD"})
     activityType = SelectField(u"Activity type", choices=\
     [("Public event", "Public event"), ("In-class activities", "In-class activities"), \
     ("Career experience programme", "Career experience programme"), ("Other (please specify)", "Other (please specify)")], \
