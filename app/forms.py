@@ -453,3 +453,10 @@ class BibtexPublicationForm(FlaskForm):
                         status(Published|In-press) = {Published}
                     }"""})
     submitBib = SubmitField("Submit")
+
+class FullSearchForm(FlaskForm):
+    choices=[('Proposal','Proposal'),
+             ('User','User'),
+             ('Orcid','Orcid')]
+    select=SelectField('What you want search?', choices=choices)
+    search=StringField('')

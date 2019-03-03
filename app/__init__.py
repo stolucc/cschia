@@ -43,7 +43,4 @@ def reviewer_required(current_user):
     if not current_user.is_reviewer:
         abort(403)
 
-
-
-
 from app import routes, models, errors, groups , publications, edituser
