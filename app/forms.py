@@ -70,7 +70,7 @@ class RegistrationFormAdmin(FlaskForm):
     password2 = PasswordField("Repeat password", validators=[DataRequired(), \
     EqualTo("password")])
     prefix = SelectField(u"Account Type", choices=\
-    [("SFI ADMIN", "SFI ADMIN"), ("Reviewer", "Reviewer"), ("Researcher", "Researcher")], \
+    [("Researcher", "Researcher"), ("Reviewer", "Reviewer"),("SFI ADMIN", "SFI Admin") ], \
     validators=[DataRequired() ])
 
     submit = SubmitField("Register")
