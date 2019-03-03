@@ -79,6 +79,9 @@ def reset_password_request():
 @app.route("/")
 @login_required
 def index():
+    if current_user.is_reviewer:
+        return redirect(url_for("proposals_to_review"))
+
     formList = []
     appList = []
 
@@ -1629,10 +1632,11 @@ def annual_report():
             flash("Changes saved.")
 
         elif "submitFinalVersion" in request.form:
-            if len(getFreeTextInfo) < 11:
+            #flash(getFreeTextInfo)
+            if len(getFreeTextInfo) < 6:
                 flash("You must complete all forms first")
             else:
-                flash(getFreeTextInfo)
+                #flash(getFreeTextInfo)
                 if userInfo is None:
                     userInfo = AnnualReport(user_id=current_user.id)
                 db.session.add(userInfo)
