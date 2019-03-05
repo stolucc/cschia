@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Le
 Optional
 from app.models import User
 
+
 #Account forms
 class ResetPasswordRequestForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -120,7 +121,6 @@ class ChangeEmail(FlaskForm):
     """
 
 # Edit profile forms
-
 class GeneralInformationForm(FlaskForm):
     firstName = StringField("First name", validators=[DataRequired()])
     lastName = StringField("Last name", validators=[DataRequired() ])
@@ -460,3 +460,10 @@ class FullSearchForm(FlaskForm):
              ('Orcid','Orcid')]
     select=SelectField('What you want search?', choices=choices)
     search=StringField('')
+
+class ResearcherReport(FlaskForm):
+    title = StringField("Title", [DataRequired(), Length(max=255)])
+    text = TextAreaField("Content", [DataRequired()])
+    repSubmit = SubmitField("Save")
+    repEdit = SubmitField("Update")
+
