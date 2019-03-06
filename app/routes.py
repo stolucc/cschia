@@ -206,7 +206,7 @@ def view_calls():
 @app.route("/calls/<call_id>", methods=["GET", "POST"])
 def view_call(call_id):
     call = SfiProposalCalls.query.filter_by(id=call_id).first_or_404()
-    proposals = GrantApplications.query.filter_by(call_id=call_id).all()
+    proposals = GrantApplications.query.filter_by(call_id=call_id,is_draft=0).all()
 
     form = AddReviewerForm()
     if form.validate_on_submit():
@@ -437,7 +437,7 @@ def proposals_to_review():
     if callIds:
         getPendingFunds = []
         for item in callIds:
-            proposals = GrantApplications.query.filter_by(call_id=item.call_id).all()
+            proposals = GrantApplications.query.filter_by(call_id=item.call_id,is_draft=0).all()
             to_add = []
             for prop in proposals:
                 review = Reviews.query.filter_by(proposal_id=prop.id).first()
