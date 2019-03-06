@@ -25,7 +25,7 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
-    orcid = StringField("Orcid number", validators=[DataRequired() ])
+    orcid = StringField("Orcid number", validators=[Optional() ],render_kw={"placeholder": "XXXX-XXXX-XXXX-XXXX"},description="Not for Reviewers" )
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField("Repeat password", validators=[DataRequired(), \
     EqualTo("password")])
@@ -65,7 +65,7 @@ class UpgradeUser(FlaskForm):
 class RegistrationFormAdmin(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
-    orcid = StringField("Orcid number", validators=[DataRequired() ])
+    orcid = StringField("Orcid number", validators=[Optional() ],render_kw={"placeholder": "XXXX-XXXX-XXXX-XXXX"},description="Not for Reviewers" )
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField("Repeat password", validators=[DataRequired(), \
     EqualTo("password")])
