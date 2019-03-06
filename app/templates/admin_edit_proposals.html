@@ -5,22 +5,26 @@
 <h1> Your administrative operations </h1><br>
 <div class="row">
     <div class="col-md-4">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                    {#class="btn btn-primary"#}
-
-                <a class="btn btn-primary btn-block" href="{{ url_for('admin_register_user') }}">Register</a>
-            </li>
-            <li class="list-group-item">
-                    <a class="btn btn-primary btn-block" href="{{ url_for('publish_call') }}">Publish call for proposals</a>    
-            </li> 
-        <li class="list-group-item">
-            <a class="btn btn-primary btn-block" href="{{ url_for('admin_edit_user') }}">Edit Users</a>    
-        </li> 
-            
-
-
-        </ul>
+            <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                            <a class="btn btn-primary btn-block" href="{{ url_for('publish_call') }}">Publish call for proposals</a>    
+                    </li>
+                
+                <li class="list-group-item">
+                        {#class="btn btn-primary"#}
+    
+                    <a class="btn btn-primary btn-block" href="{{ url_for('admin_register_user') }}">Register a new user</a>
+                </li>
+                 
+                
+    
+                <li class="list-group-item">
+                    <a class="btn btn-primary btn-block" href="{{ url_for('admin_edit_user') }}">Change account type of user</a>    
+                </li> 
+                
+    
+    
+            </ul>
     </div>
 
 <div class="col-md-6">
