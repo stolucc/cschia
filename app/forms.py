@@ -49,10 +49,11 @@ class RegistrationForm(FlaskForm):
             raise ValidationError("An account with this orcid number already exists.")
 
 class UpgradeUser(FlaskForm):
-    email = StringField("Email", validators=[DataRequired(), Email()])
+    email = StringField("Email", validators=[DataRequired(), Email()],description="Select One Button")
     Admin = BooleanField("Admin")
+    Researcher = BooleanField("Researcher")
     Reviewer = BooleanField("Reviewer")
-    HostI = BooleanField("Host Institution")
+    
     
     submit = SubmitField("Change Account Type")
 

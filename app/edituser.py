@@ -32,9 +32,10 @@ def admin_edit_user():
 
     if form.validate_on_submit():
         emailForUser = form.email.data
+        researcher = form.Researcher.data
         admin = form.Admin.data
-        hostI = form.HostI.data
         reviewer = form.Reviewer.data
+
         # print("email:",emailForUser)
         # print("admin:",admin)
         # print("hostI:",hostI)
@@ -43,6 +44,10 @@ def admin_edit_user():
 
         user = User.query.filter_by(email=form.email.data).first()
         # print(user)
+        if researcher == True:
+            admin = 0
+            reviewer = 0
+
         user.is_admin = admin
         user.is_reviewer = reviewer
         db.session.add(user)
@@ -52,7 +57,7 @@ def admin_edit_user():
         
         
 
-    return render_template("admin_edit_user.html", title="Edit user", form=form)
+    return render_template("admin_edit_user.html", title="Change account type of user", form=form)
     
 
 
