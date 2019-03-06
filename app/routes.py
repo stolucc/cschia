@@ -329,10 +329,12 @@ def edit(call_id):
 @app.route("/delete/<call_id>", methods=["GET", "POST"])
 def delete(call_id):
     admin_required(current_user)
-    print("omg is this working")
-    SfiProposalCalls.query.filter_by(id=call_id).delete()
-    db.session.commit()
-    flash("The call for proposal has been deleted!")
+    if GrantApplications.query.filter_by(id=call_id).first():
+        flash("This call cannot be deleted becuase it has an application")
+    else:
+        flash("The call for proposal has been deleted!")
+        SfiProposalCalls.query.filter_by(id=call_id).delete()
+        db.session.commit()
     return redirect(url_for("view_calls"))
 
     return render_template("viewcalls.html", title="Funding Calls")
