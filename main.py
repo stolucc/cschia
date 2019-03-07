@@ -1,10 +1,10 @@
 from app import app, db
 from app.models import User, Post, FundingCall, FundingCallAttachment, GeneralInformation, \
-EducationInformation, EmploymentInformation, SocietiesInformation, AwardsInformation, \
-FundingDiversification, Impacts, InnovationAndCommercialisation, Presentations, \
-AcademicCollaborations, NonAcademicCollaborations, Events, CommunicationsOverview, SfiFundingRatio, \
-EducationPublicEngagement, AnnualReport, Collaborators, Grants, GrantApplications, \
-GrantApplicationAttachment, SfiProposalCalls, Reviews, GrantEvents, GrantPublications
+    EducationInformation, EmploymentInformation, SocietiesInformation, AwardsInformation, \
+    FundingDiversification, Impacts, InnovationAndCommercialisation, Presentations, \
+    AcademicCollaborations, NonAcademicCollaborations, Events, CommunicationsOverview, SfiFundingRatio, \
+    EducationPublicEngagement, AnnualReport, Collaborators, Grants, GrantApplications, \
+    GrantApplicationAttachment, SfiProposalCalls, Reviews, GrantEvents, GrantPublications, Report
 
 
 @app.shell_context_processor
@@ -39,6 +39,7 @@ def make_shell_context():
         "SfiProposalCalls" : SfiProposalCalls,
         "Reviews" : Reviews,
         "GrantPublications" : GrantPublications,
-        "GrantEvents" : GrantEvents
+        "GrantEvents" : GrantEvents,
+        "Report":Report
         }
 

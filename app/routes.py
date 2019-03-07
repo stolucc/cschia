@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db, admin_required, reviewer_required
 from app.forms import LoginForm, RegistrationForm, RegistrationFormAdmin, EditProfileForm, GeneralInformationForm, \
@@ -9,14 +11,14 @@ from app.forms import LoginForm, RegistrationForm, RegistrationFormAdmin, EditPr
     EventsForms, CommunicationsOverviewForm, SfiFundingRatioForm, EducationAndPublicEngagementForm, \
     ChangePassword, ChangeEmail, ProposalForm, GrantApplicationForm, CollaboratorForm, \
     ReviewProposalForm, AddReviewerForm, ResetPasswordRequestForm, ResetPasswordForm, \
-    FreeTextForm, AddCollaboratorForm, PublicationForm, BibtexPublicationForm, FullSearchForm
+    FreeTextForm, AddCollaboratorForm, PublicationForm, BibtexPublicationForm, FullSearchForm, ResearcherReport
 
 from app.models import User, GeneralInformation, EducationInformation, EmploymentInformation, \
     SocietiesInformation, AwardsInformation, FundingDiversification, Impacts, InnovationAndCommercialisation, \
     Presentations, AcademicCollaborations, NonAcademicCollaborations, Events, \
     CommunicationsOverview, SfiFundingRatio, EducationPublicEngagement, SfiProposalCalls, \
     Publication, GrantApplications, GrantApplicationAttachment, FundingCallReviewers, \
-    AnnualReport, Grants, Collaborators, Reviews, GrantPublications, GrantEvents
+    AnnualReport, Grants, Collaborators, Reviews, GrantPublications, GrantEvents, Report
 
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -1815,3 +1817,46 @@ def search_results(search):
     else:
         return render_template('search_result.html')
 
+
+
+@app.route("/report",methods=['GET','POST'])
+def publish_report():
+    form=ResearcherReport()
+    if form.validate_on_submit():
+        report=Report(title=form.title.data,text=form.text.data)
+        db.session.add(report)
+        db.session.commit()
+        flash("Your report has been published!")
+        return redirect(url_for("view_reports"))
+    return render_template("publish_report.html",title="Report", form=form)
+
+@app.route("/reports")
+def view_reports():
+    reports=Report.query.all()
+    return render_template("view_report.html", title="Report list", reports=reports)
+
+@app.route("/reports/<report_id>",methods=["GET","POST"])
+def view_report(report_id):
+    reports=Report.query.filter_by(id=report_id).first_or_404()
+    return render_template("view_reports.html", title="Report List",reports=reports)
+
+@app.route("/edit_reports/<report_id>",methods=["GET","POST"])
+def edit_report(report_id):
+    report=Report.query.filter_by(id=report_id).first()
+    form=ResearcherReport(obj=report)
+    if form.validate_on_submit():
+        ResearcherReport.title=form.title.data
+        ResearcherReport.text=form.text.data
+        db.session.add(report)
+        db.session.commit()
+        flash("The report has been changed!")
+        return redirect(url_for(view_reports))
+    return render_template("publish_report.html",report=report,form=form)
+
+@app.route("/del_report/<report_id>",methods=["GET","POST"])
+def delete_report(report_id):
+    ResearcherReport.query.filter_by(id=report_id).delete()
+    db.session.commit()
+    flash("This report has been deleted")
+    return redirect(url_for(view_reports))
+    return render_template("view_reports.html")
