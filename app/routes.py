@@ -405,6 +405,7 @@ def admin_submitted_reviews():
     admin_required(current_user)
     getAllFundingCalls = SfiProposalCalls.query.all()
     getSubmittedReviews = Reviews.query.all()
+    
 
     if request.method == "POST" and "accept" in request.form:
         review = Reviews.query.filter_by(id=request.form["review_id"]).first()
@@ -423,6 +424,22 @@ def admin_submitted_reviews():
         db.session.commit()
         flash("Proposal successfully accepted.")
         return redirect(url_for("admin_submitted_reviews"))
+
+    if request.method == "POST" and "delete" in request.form:
+        flash("omg your amazing")
+        review = Reviews.query.filter_by(id=request.form["review_id"]).first()
+        db.session.delete(review)
+        proposal = GrantApplications.query.filter_by(id=review.proposal_id).first()
+        db.session.delete(proposal)
+        db.session.commit()
+        return redirect(url_for("admin_submitted_reviews"))
+
+
+
+
+
+
+
 
     return render_template("admin_submitted_reviews.html", title="Submitted reviews",
                            getAllFundingCalls=getAllFundingCalls, getSubmittedReviews=getSubmittedReviews)
