@@ -514,6 +514,7 @@ def view_application(grant_id):
             return redirect(url_for("proposals_to_review"))
     else:
         form = None
+        flash("review already submitted")
 
     return render_template("view_application.html", title="Grant Application", grant=grant, form=form,
                            getReviewInfo=getReviewInfo, call=call)
