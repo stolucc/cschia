@@ -285,7 +285,8 @@ def apply(call_id):
 
     if request.method == "GET":
 
-        if is_applied is not None and is_applied.is_pending is True:
+        #grant = Grants.query.filter_by(call_id=call_id, application_id=is_applied.id)
+        if is_applied is not None and (is_applied.is_pending is True or is_applied.is_awarded is True):
             flash("You have already applied for this award")
             return redirect(url_for("view_calls"))
 

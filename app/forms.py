@@ -26,7 +26,7 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
-    orcid = StringField("Orcid number", validators=[Optional() ],render_kw={"placeholder": "XXXX-XXXX-XXXX-XXXX"},description="Not for Reviewers" )
+    orcid = StringField("Orcid number", validators=[Optional() ],render_kw={"placeholder": "XXXX-XXXX-XXXX-XXXX"},description="Leave empty for Reviewers" )
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField("Repeat password", validators=[DataRequired(), \
     EqualTo("password")])
@@ -50,7 +50,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError("An account with this orcid number already exists.")
 
 class UpgradeUser(FlaskForm):
-    email = StringField("Email", validators=[DataRequired(), Email()],description="Select One Button")
+    email = StringField("Email", validators=[DataRequired(), Email()])
     Admin = BooleanField("Admin")
     Researcher = BooleanField("Researcher")
     Reviewer = BooleanField("Reviewer")
@@ -67,7 +67,7 @@ class UpgradeUser(FlaskForm):
 class RegistrationFormAdmin(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
-    orcid = StringField("Orcid number", validators=[Optional() ],render_kw={"placeholder": "XXXX-XXXX-XXXX-XXXX"},description="Not for Reviewers" )
+    orcid = StringField("Orcid number", validators=[Optional() ],render_kw={"placeholder": "XXXX-XXXX-XXXX-XXXX"},description="Leave empty for Reviewers" )
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField("Repeat password", validators=[DataRequired(), \
     EqualTo("password")])
