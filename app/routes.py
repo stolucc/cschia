@@ -429,7 +429,7 @@ def admin_submitted_reviews():
         return redirect(url_for("admin_submitted_reviews"))
 
     if request.method == "POST" and "delete" in request.form:
-        flash("omg your amazing")
+        flash("Proposal declined.")
         review = Reviews.query.filter_by(id=request.form["review_id"]).first()
         db.session.delete(review)
         proposal = GrantApplications.query.filter_by(id=review.proposal_id).first()
@@ -457,7 +457,7 @@ def proposals_to_review():
     if callIds:
         getPendingFunds = []
         for item in callIds:
-            proposals = GrantApplications.query.filter_by(call_id=item.call_id,is_draft=0).all()
+            proposals = GrantApplications.query.filter_by(call_id=item.call_id,is_pending=1).all()
             to_add = []
             for prop in proposals:
                 review = Reviews.query.filter_by(proposal_id=prop.id).first()
