@@ -7,4 +7,4 @@ Open the archive<br>
 Move into the directory<br>
 Chmod Startup<span></span>.sh 755<br>
 Run ./Startup.sh<br>
-Go to 127.0.0.1:5000
+Go to http://127.0.0.1:5000/
