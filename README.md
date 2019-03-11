@@ -1,18 +1,10 @@
-to get started:
+#Setup Guide
 
-- install pipenv ( `pip install --user pipenv` )
-- copy dev.db to app.db ( `cp dev.db app.db` )
-- install pipenv in project directory ( `pipenv install` )
-- start server ( `pipenv run flask run` )
-
-
-- remove the chia.db
-- remove the migrations folder
-- run pipenv run flask db init
-- run pipenv run flask db migrate
-- run pipenv run flask db update
-
-
-Accounts:
-Host institution
-SFI admin
+Install python 3.5+ <br>
+Install pip for python 3<br>
+Install pipenv (pip install pipenv)<br>
+Open the archive<br>
+Move into the directory<br>
+Chmod Startup<span></span>.sh 755<br>
+Run ./Startup.sh<br>
+Go to 127.0.0.1:5000
